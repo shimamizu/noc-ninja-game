@@ -182,3 +182,10 @@ technical review tasks should check applicability and scenario consistency rathe
 these supplied headers, units or interpretation again. No real capture of each authored fault
 is required. For flapping, use a complete reviewed sequence of timestamped state observations;
 do not manufacture a vendor log format from this MAC-detail sample.
+
+## U6 — Later complete interface examples
+
+The owner supplied complete output for both named endpoints while reviewing realism. See
+[full-interface-samples.md](full-interface-samples.md) for those examples and the current
+source-to-simulation mapping. U6 supersedes the initial abbreviated interface display, and
+provides direct leaf interface-format evidence; U4 remains the basis for optics/MAC history.

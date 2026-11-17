@@ -2,7 +2,7 @@
 
 **Branch:** main · **Created / amended:** 2026-11-17
 **Status:** Revised to the owner's gameplay correction; implemented, browser acceptance pending.
-**Governance:** [Constitution 1.1.0](../.specify/memory/constitution.md).
+**Governance:** [Constitution 1.2.2](../.specify/memory/constitution.md).
 **Aligned working specification:** [spec.md](../specs/001-noc-ninja-training/spec.md).
 **Companion documents:** [CONSTITUTION.md](CONSTITUTION.md) and [PLAN.md](PLAN.md).
 
@@ -38,13 +38,25 @@ categories it supports. I learn from an explanation tied to the measurements.
 - **AC3:** A wrong category records one throw, explains the unsupported reasoning using its
   measurements, and keeps the same incident retryable. It never awards progress.
 - **AC4:** Empty, malformed, or unknown selections give guidance without counting a throw.
-- **AC11:** Both endpoints always expose Interface now, Optics, CRC snapshots, and State history.
+- **AC11:** Both endpoints always expose Interface now, Port status, Optics, Error snapshots, and MAC / history.
   Topology, IPv6 context, units, timestamps, counter pairs, and history window are available.
   Inspecting a tool or aiming at a target never submits or advances.
 - **AC12:** All six independent cases below and boundary cases match their expected diagnoses.
   Choice labels/order and incident titles cannot determine correctness.
 - **AC13:** Wrong feedback gives a useful next step; correct feedback names the condition and
   affected endpoint. Neither claims repair, IPv6 connectivity, or a proven failed component.
+
+- **AC23:** Both current and earlier interface snapshots retain the complete supplied field set:
+  hardware/MAC, peer description, MTU/MRU, duplex/uni-link, state age, link-change total,
+  counter-clear age, rates, packets/bytes, broadcast/multicast, runts/giants, errors/discards,
+  collisions and PAUSE. Preserve each platform's layout. Ages, changes and counters must agree
+  with the incident's timed evidence; fields must not be shortened to only diagnostic clues.
+
+- **AC24:** Error snapshots show paired `show interfaces … counters errors` tables with all
+  seven error columns. MAC / history shows system time and all four rows with Current State,
+  Changes and Last Change; earlier snapshots remain inspectable separately. Port status uses
+  the supplied table format. FCS must match graded CRC/FCS observations; an Rx/runts increase
+  must not be called an FCS increase. Fault flags describe direction, not proven failed components.
 
 ### US2 — Practice safely and finish (P1)
 
@@ -75,7 +87,7 @@ categories it supports. I learn from an explanation tied to the measurements.
 ### US4 — Trust the evidence (P1)
 
 - **AC19:** Missing/unreviewed evidence, contradictory tool states, or zero/multiple supported
-  endpoint/category findings disable grading with a content error, never a learner penalty.
+  independent diagnoses disable grading (identical paired flap histories count once) with a content error, never a learner penalty.
 - **AC20:** Sources identify exact supported claims and deployment applicability. Simulations are
   labeled; displayed values, observations, hints and explanations agree. Source review does not
   claim independent hardware qualification. See the [mixed review](../specs/001-noc-ninja-training/evidence/mixed-incident-review.md).
@@ -93,10 +105,10 @@ The sequence is fixed and interleaved; neutral incident titles do not name the f
 | --- | --- | --- | --- |
 | L1-R1 | leaf-gw1 CRC 900→900; spine-gw1 5→17, both up; normal Rx, stable history | CRC / errors | spine-gw1 gained 12 errors in 60s |
 | L1-R2 | leaf-gw1 down; four Rx rows −30 dBm; unchanged CRC and stable down history | Light levels | leaf-gw1 absent receive light |
-| L2-R1 | spine-gw1 initially down; up at 5s, down 15s, up 35s, down 55s; normal Rx, no CRC increase | Link flapping | Four changes, ending down |
+| L2-R1 | Both endpoints initially down; up at 5s, down 15s, up 35s, down 55s; normal Rx, no CRC increase | Link flapping | Four changes, ending down |
 | L2-R2 | leaf-gw1 CRC 120→145, up; spine-gw1 2400→2400; normal Rx, stable history | CRC / errors | leaf-gw1 gained 25; old peer total is irrelevant |
 | L3-R1 | spine-gw1 down; Rx −17.20, −16.80, −17.00, −16.90 dBm; no CRC increase or transitions | Light levels | Very bad light below −15.70, not absent |
-| L3-R2 | leaf-gw1 initially up; down 10s, up 20s, down 40s, up 60s; normal Rx, no CRC increase | Link flapping | Four changes, ending up |
+| L3-R2 | Both endpoints initially up; down 10s, up 20s, down 40s, up 60s; normal Rx, no CRC increase | Link flapping | Four changes, ending up |
 
 Boundary checks include same-state reports, inclusive history boundaries, out-of-window events,
 unchanged high counters, invalid/decreasing counters, resets, incomplete evidence, mismatched
@@ -115,7 +127,7 @@ ambiguous diagnoses. Exact low-alarm equality is not “below”; this is not a 
 - **FR-007:** Derive flapping from ≥4 actual changes inside an inclusive 60-second window; disclose
   that this is a teaching threshold, not a universal EOS definition.
 - **FR-008:** Evaluate all three methods at both endpoints, requiring exactly one supported
-  finding. No conditionType, targetInterfaceId, title, choice index, or correct-answer flag selects it.
+  diagnosis; matching paired flap histories count once. No conditionType, targetInterfaceId, title, choice index, or correct-answer flag selects it.
 - **FR-009:** Explain the chosen diagnosis using computed values, with no unsupported causal claim.
 - **FR-010:** Safe retry, invalid-input guidance, one completion, and no duplicate scoring.
 - **FR-011:** Ordered assistance remains separate from submission and completion.
@@ -132,6 +144,21 @@ ambiguous diagnoses. Exact low-alarm equality is not “below”; this is not a 
 - **FR-021:** Whole-document validation prevents grading unsupported or inconsistent content.
 - **FR-022:** Native static frontend; no backend, external grading, account, or runtime AI.
 - **FR-023:** Document simplifications, source limits and actual acceptance results.
+
+- **FR-024:** Use complete platform-specific interface output in every snapshot. Preserve the
+  supplied leaf MTU 9214/uni-link n/a format and spine MTU 10218/MRU 10240/uni-link disabled
+  format. Include non-diagnostic background fields, while keeping all values consistent with
+  observed state, counter pairs and history. Fictional MACs and authored measurements are labeled
+  as simulation. Source layouts are recorded in full-interface-samples.md. (AC23)
+
+- **FR-025:** Use the supplied counters-errors, MAC-detail and status command layouts (U7).
+  Keep full interface detail available. Explicitly pair earlier/later error-command outputs;
+  separate authored timeline aids from CLI text. Keep per-column counters and MAC row times
+  consistent with the observations and distinguish receive-path evidence from component cause. (AC24)
+
+- **FR-026 / AC25:** All authored command snapshots share one link timeline. At the same observation time, both endpoints show matching Interface State, Up/Down duration and MAC Interface State Last Change ages. Stable-up histories align all four MAC rows. Down/flapping histories retain independent PHY and fault events at each endpoint; PHY up does not imply Interface State up. Compare absolute event times when snapshot clocks differ. Reconcile system timestamps, full interface output, port status, counters and historical MAC snapshots. Matching flaps at both ends count once. Device-local counter-clear ages and accumulated totals may differ; full-interface counts since clear are independent of MAC row totals.
+
+- **FR-027 / AC26:** In the authored flapping examples, Remote Fault False has the same Last Change age as the shared link event in every current and historical snapshot. Supporting fault-change totals must remain temporally consistent. Give both endpoints distinct transceiver profiles, with matching displayed/structured Rx values; preserve the intended absent/degraded readings and all supplied thresholds.
 
 ## Success criteria
 
@@ -158,8 +185,9 @@ manufacturer “ColorChip ltd”, QSFP28 100G CWDM4, four lanes, over single-mod
 leaf-gw1 uses `2001:db8:51::1/126` and spine-gw1 uses `2001:db8:51::2/126`. Counters have
 no reset/rollover; complete history uses a shared authored UTC time basis.
 
-The user confirmed the working spine-gw1 capture's source setup. leaf-gw1 formatting is an explicit
-same-release adaptation. The evidence package distinguishes captures, user reference, authored
+The user confirmed the working spine-gw1 capture's source setup and subsequently supplied full
+interface examples for both named switches. Each interface layout follows its own supplied
+sample; leaf optics and MAC-history layouts remain explicit same-release adaptations. The evidence package distinguishes captures, user reference, authored
 arithmetic and simulations; it does not claim independent hardware or vendor qualification.
 
 No configuration changes, repairs, IPv6 faults, routing, VLANs, port channels, MLAG, spanning tree,

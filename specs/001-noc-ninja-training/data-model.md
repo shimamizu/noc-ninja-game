@@ -1,6 +1,6 @@
 # Data Model: Mixed Incident Dojo
 
-**Updated:** 2026-11-17 · **Schema:** 2 · **Revision:** noc-v2.1-2026-11-17
+**Updated:** 2026-11-17 · **Schema:** 2 · **Revision:** noc-v2.6-2026-11-17
 This supersedes the single-condition schema used in the initial build.
 
 ## Content Document
@@ -30,10 +30,10 @@ a distinct worked example and source references. Only the opening briefing is sh
 ## Round
 
 `id`, neutral `title`, `contentRevision`, `prompt`, `topology`, `scopeInterfaceIds`, `commandOutputs`,
-`observations`, `choices`, `hints`, `sourceIds`, `review`. Both interfaces are always in scope.
+`observations`, `linkTimeline`, `choices`, `hints`, `sourceIds`, `review`. Both interfaces are always in scope.
 
 There is no `conditionType`, `targetInterfaceId`, or correct-choice flag. Those old routing/key
-fields are rejected. Runtime derives the single supported endpoint/category from all observations.
+fields are rejected. Runtime derives the single supported diagnosis from all observations; identical paired flap histories describe one link condition.
 
 ## Topology
 
@@ -51,13 +51,19 @@ unchanged; unknown broader alarm semantics are not invented.
 
 ## CommandOutput
 
-Each endpoint has exactly one output of each `kind`: `status`, `optics`, `counters`, `history`.
+Each endpoint has one visible output of each `kind`: `status`, `port-status`, `optics`, `counters`, `history`.
 Each output has `id`, `deviceId`, `interfaceIds`, `command`, `label`, plain `text`, UTC `observedAt`,
 `origin`, `sourceIds`, and review. Output identity is unique within the round.
 
-`status` is the later interface snapshot; `counters` is the earlier one. The CRC tool displays
-both together and a structured comparison. Optical diagnostics are current. History is labeled
-a complete authored snapshot series, not an invented vendor log. All tools exist in every case.
+`status` is current full interface detail. `counters` is the earlier counters-errors table and
+`pairedOutputId` references a hidden later `counter-snapshot`. The Error snapshots tool displays
+both tables and a per-column comparison. The earlier full interface detail is retained as a hidden
+`interface-snapshot`. `history` is current full MAC detail; `historicalOutputIds` reference hidden
+`mac-snapshot` records shown in an expandable area. `toolVisible: false` suppresses duplicate tool
+buttons, not evidence access. `port-status` is the compact status table. All tools exist in every case. Interface text retains the complete U6 field inventory and each
+platform’s format; state age, change totals, counter-clear age and traffic totals must agree
+with the interval/history. Full output remains plain authored text, with source review and
+regression checks; there is no general EOS parser.
 
 ## Observations
 
@@ -67,8 +73,8 @@ An object with three arrays, each containing exactly one record per scoped inter
   interpretationSourceIds, and four opticalReadings (unique channel, rx_power metric, finite
   value, dBm unit, sourceIds). Receive-signal classification is computed, not an authored answer.
 - **counters:** interfaceId, noReset=true, sourceIds, and two snapshots. Each snapshot records
-  observedAt, operationalState, counterKind (same crc/fcs), safe nonnegative integer count and
-  outputIds. Times increase; counts do not decrease. A reset or rollover violates this model.
+  observedAt, operationalState, counterKind (same crc/fcs), safe nonnegative integer FCS count, `errorCounters` with FCS/Align/Symbol/Rx/Runts/Giants/Tx,
+  and outputIds for the error table plus corresponding full interface detail. FCS must equal count. Times increase; counts do not decrease. A reset or rollover violates this model.
 - **history:** interfaceId, windowStart/windowEnd exactly 60 seconds apart, historyStart no later
   than the window start, known stateBeforeHistory, historyComplete=true, minimumTransitions=4,
   sourceIds and strictly time-ordered reports (observedAt, operationalState, outputIds).
@@ -95,3 +101,35 @@ Views are loading, content-error, briefing, challenge, session-summary. Feedback
 inspecting or changing aim. Next directly advances after success, including across content groups.
 The sixth success leads to a final summary. Restart confirmation/cancel is orthogonal; confirmed
 restart and reload create fresh in-memory state. No level-summary view is used.
+
+MAC histories additionally contain `macSnapshots`: observedAt, outputId and four named rows with
+state, cumulative changes and nonnegative lastChangeSeconds. Source review and regression tests
+check them against displayed MAC tables and the known timeline. The raw command output contains
+only command-format text; authored time labels and the timeline are rendered outside it.
+
+For stable-up authored histories (initially up with no down reports), all four MAC rows share the
+Interface State Last Change age in every snapshot. Static-down histories retain directional event-specific ages. In authored flapping histories,
+Remote Fault False aligns with the Interface State age, with consistent supporting changes.
+
+## Shared link timeline
+
+`linkTimeline` contains UTC `windowStart`, `windowEnd`, `initialState`, `initialStateSince`
+and ordered `transitions: [{observedAt, operationalState}]`. Both endpoint histories
+use this same 60-second window, preceding state and transitions. Full interface Up/Down ages
+and Interface State Last Change ages derive from the latest shared event at each snapshot.
+PHY and fault rows have independent per-endpoint states, counts and event times. An unchanged
+row retains its absolute event time as the observation clock advances. Stable-up fault row
+ages still match the link event by the owner’s authored convention. MAC row totals and full
+interface counters since clear have separate histories. Each counter snapshot includes a
+nonnegative integer `linkStatusChanges`; its delta must follow shared interface transitions
+without a reset, and its displayed value must match. It need not equal a MAC change total. `engine/timeline.js` rejects inconsistent authored displays.
+
+The flap fixture models a brief Remote Fault assertion one second before each interface
+transition, cleared at that transition. Snapshots show False; each assert/clear pair adds two
+fault changes. These synthetic pulses explain updated Last Change ages and are not additional
+Interface State flaps or a claim that every real link behaves this way. Stable-down directional
+examples retain their independent fault clocks.
+
+Leaf telemetry uses 32.32 °C / 3.27 V with lane-specific bias and Tx from the U8 working
+peer; normal Rx is −0.30, 1.26, 1.20, 1.14 dBm. Spine keeps its distinct U4 working profile.
+The absent leaf and degraded spine Rx values are preserved. Display and structured Rx agree.

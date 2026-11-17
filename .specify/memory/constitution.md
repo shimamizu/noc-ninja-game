@@ -149,7 +149,7 @@ snapshots, and complete state history at both endpoints. The three answer target
 3. **Link flapping**: identify at least four actual operational changes in an inclusive
    60-second window, even when the final state is up. This is an authored teaching threshold.
 
-All three methods run for every incident. Exactly one endpoint/category must be supported;
+All three methods run for every incident. Exactly one diagnosis must be supported; matching flaps at both endpoints count as one link condition;
 missing, contradictory, or ambiguous evidence prevents grading. Learners choose the category;
 feedback derives the affected endpoint. No diagnosis establishes a specific failed component.
 
@@ -204,7 +204,7 @@ generated questions, and free-text AI grading require an explicit constitution, 
 and verification change before implementation. A scope exception MUST NOT silently bypass a
 principle.
 
-**Version**: 1.1.0 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-17
+**Version**: 1.2.2 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-17
 
 ## Amendment record — 2026-11-17
 
@@ -213,3 +213,32 @@ problem categories, not lessons that disclose and repeat the answer. C2 and rele
 require mixed investigations and graphical shuriken submission. C1 and C3–C7 remain binding.
 The spec, plan, data and interaction contracts, authored evidence, tests, tasks, and README are
 updated together. Automated checks are rerun; unavailable browser checks stay visibly pending.
+
+## Amendment record — version 1.2.0, 2026-11-17
+
+Version 1.2.0 expands shared-event evidence guidance and clarifies the paired-flap diagnosis.
+
+For these authored incidents, both endpoints MUST use one synchronized link-state timeline.
+Uptime/downtime and MAC Interface State event ages MUST agree across endpoints
+at the same snapshot time. PHY and local/remote fault rows have independent event histories;
+a PHY-up endpoint may have Interface State down with Remote Fault True. Stable-up examples align all four MAC row ages; down/flapping
+examples retain consistent endpoint-specific PHY and fault histories. Full-interface link-change
+counts since clear MUST be modeled separately from MAC row change totals. Device-local counter-clear ages
+and accumulated counts may differ. Matching flap observations describe one link condition.
+This is the simulation convention requested by the owner, not a claim about all hardware behavior.
+
+## Amendment record — version 1.2.1, 2026-11-17
+
+Correct the overbroad shared-MAC-row rule using the owner’s paired down-link capture: only
+Interface State follows the shared link timeline. PHY/fault events and counter-clear histories
+remain independent. This corrects evidence modeling without changing the release scope.
+
+## Flap and telemetry clarification — 2026-11-17
+
+In the authored flapping cases, Remote Fault False MUST share the link event’s Last Change
+age, with a consistent fault-change history. Endpoint transceiver profiles MUST be distinct,
+with source-derived normal ranges and explicitly authored fault values. This does not override
+the directional PHY/fault histories in the owner’s static down-link examples.
+
+Version 1.2.2 records the owner’s flap timestamp and distinct endpoint telemetry corrections;
+the diagnosis rules and selected deployment remain unchanged.

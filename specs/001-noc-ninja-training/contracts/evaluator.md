@@ -19,9 +19,12 @@ The light rule is restricted to the supplied ColorChip reference; it is not a un
 classifier. The history threshold is authored teaching policy, not EOS's universal definition.
 Absent light with a current up state is contradictory and prevents grading.
 History state at each counter timestamp and final light state must agree. Equal-time spellings in
-shipped data use canonical UTC strings. Exactly one supported endpoint/category is required.
+shipped data use canonical UTC strings. Exactly one supported diagnosis is required. Identical flap histories at both endpoints count as one link condition; all other multiple supported findings remain ambiguous.
 
-`expected` contains the computed condition, interfaceId and deviceId. Choices contain category
+`expected` contains the computed condition, interfaceId and deviceId. For shared flapping,
+interfaceId/deviceId are null and interfaceIds/deviceIds identify both endpoints. Shared
+flapping requires exactly two supported flap findings with identical window, preceding state
+and timestamped reports, and no supported optical or CRC finding. Choices contain category
 only. Exactly three uniquely named choices with one of each category are required. Display order,
 label, incident title and group cannot alter evaluation. Source/evidence errors precede input errors.
 

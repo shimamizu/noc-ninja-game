@@ -1,4 +1,6 @@
 import {evaluate,timestamp} from './rules.js';
+import {technicianDispatch} from './dispatch.js';
+import {linkTimelineErrors} from './timeline.js';
 const text=v=>typeof v==='string'&&v.trim().length>0;
 const list=v=>Array.isArray(v)&&v.length>0;
 const object=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
@@ -108,13 +110,32 @@ function validateDocument(document){
         check(text(output.command)&&text(output.text)&&timestamp(output.observedAt)&&['reviewed-capture','authored-simulation'].includes(output.origin),path+'.commandOutputs','Output text, command, timestamp or origin missing.');
         refs(output.sourceIds,path+'.commandOutputs.sourceIds');review(output.review,path+'.commandOutputs.review');
       }
-      for(const id of intIds)check(['status','optics','counters','history'].every(kind=>round.commandOutputs.filter(o=>o.interfaceIds.includes(id)&&o.kind===kind).length===1),path+'.commandOutputs','Each endpoint needs the same four diagnostic tools.');
+      for(const id of intIds)check(['status','port-status','optics','counters','history'].every(kind=>round.commandOutputs.filter(o=>o.interfaceIds.includes(id)&&o.kind===kind&&o.toolVisible!==false).length===1),path+'.commandOutputs','Each endpoint needs the same five diagnostic tools.');
+      for(const output of round.commandOutputs){
+        if(output.kind==='counters'){
+          const later=outputMap.get(output.pairedOutputId);
+          check(later?.kind==='counter-snapshot'&&later.toolVisible===false&&later.deviceId===output.deviceId&&Date.parse(later.observedAt)>Date.parse(output.observedAt),path+'.commandOutputs','Error snapshots need a later counters-errors output for the same endpoint.','invalid-reference');
+          check(output.command.endsWith(' counters errors')&&later?.command===output.command,path+'.commandOutputs','Error snapshots must use the counters errors command.');
+        }
+        if(output.kind==='history')check(Array.isArray(output.historicalOutputIds)&&output.historicalOutputIds.length>0&&output.historicalOutputIds.every(id=>outputMap.get(id)?.kind==='mac-snapshot'&&outputMap.get(id)?.deviceId===output.deviceId),path+'.commandOutputs','Historical MAC snapshots must resolve to this endpoint.','invalid-reference');
+      }
       for(const [kind,records] of Object.entries(round.observations||{}))for(const o of records||[]){
         const observations=kind==='counters'?o.snapshots:kind==='history'?o.reports:[o];
         if(kind==='light'){
           refs(o.interpretationSourceIds,path+'.observations.interpretationSourceIds');claim(o.interpretationSourceIds,'no-light',path+'.observations');
-          for(const reading of o.opticalReadings||[])refs(reading.sourceIds,path+'.observations.opticalReadings.sourceIds');
+          check(Array.isArray(o.txReadings)&&o.txReadings.length===4,path+'.observations.light','Four Tx readings are required.');
+          const optics=round.commandOutputs.find(v=>v.kind==='optics'&&v.interfaceIds.includes(o.interfaceId));
+          const displayed=optics?.text.split('\n').filter(line=>line.startsWith('Et')).map(line=>line.trim().split(/\s+/));
+          check(displayed?.length===4&&displayed.every((row,n)=>Number(row[4])===o.txReadings[n]?.value&&Number(row[5])===o.opticalReadings[n]?.value),path+'.observations.light','Displayed Tx/Rx must match structured observations.');
+          for(const reading of [...(o.opticalReadings||[]),...(o.txReadings||[])])refs(reading.sourceIds,path+'.observations.opticalReadings.sourceIds');
         }else refs(o.sourceIds,path+'.observations.sourceIds');
+        if(kind==='counters')for(const snap of o.snapshots||[]){
+          check(object(snap.errorCounters)&&['FCS','Align','Symbol','Rx','Runts','Giants','Tx'].every(k=>Number.isSafeInteger(snap.errorCounters[k])&&snap.errorCounters[k]>=0)&&snap.counterKind==='fcs'&&snap.errorCounters.FCS===snap.count,path+'.observations.counters','Error table fields must be valid and FCS must match the graded CRC/FCS count.','inconsistent-evidence');
+        }
+        if(kind==='history'){
+          check(Array.isArray(o.macSnapshots)&&o.macSnapshots.length>=2,path+'.observations.history','Complete MAC snapshots are required.');
+          for(const snapshot of o.macSnapshots||[]){const output=outputMap.get(snapshot.outputId);check(output?.interfaceIds.includes(o.interfaceId)&&output.observedAt===snapshot.observedAt,path+'.observations.history','MAC snapshot endpoint/time mismatch.','invalid-reference');check(Array.isArray(snapshot.rows)&&snapshot.rows.length===4&&snapshot.rows.every((row,n)=>row.name===['PHY State','Interface State','MAC Rx Local Fault','MAC Rx Remote Fault'][n]&&(n<2?['linkUp','linkDown']:['True','False']).includes(row.state)&&Number.isSafeInteger(row.changes)&&row.changes>=0&&Number.isSafeInteger(row.lastChangeSeconds)&&row.lastChangeSeconds>=0),path+'.observations.history','Four complete MAC state/fault rows are required.');}
+        }
         for(const observed of observations||[]){
           check(list(observed.outputIds)&&observed.outputIds.every(id=>outputMap.get(id)?.interfaceIds.includes(o.interfaceId)),path+'.observations.outputIds','Observation must reference outputs for the same endpoint.','invalid-reference');
           if(kind!=='history')check(observed.outputIds?.every(id=>outputMap.get(id)?.observedAt===observed.observedAt),path+'.observations.observedAt','Observation and output timestamps disagree.','inconsistent-evidence');
@@ -123,7 +144,9 @@ function validateDocument(document){
       check(list(round.choices)&&round.choices.every(c=>text(c.label)&&object(c.feedback)&&text(c.feedback.text)&&text(c.feedback.method)),path+'.choices','Every choice needs corrective or supporting explanation.');
       check(Array.isArray(round.hints)&&round.hints.length===3&&unique(round.hints.map(h=>h.id))&&round.hints.every((h,n)=>text(h.id)&&h.kind===['method','worked-step','solution'][n]&&text(h.text)),path+'.hints','Provide three uniquely identified, ordered help items.');
       for(const h of round.hints||[])refs(h.sourceIds,path+'.hints.sourceIds');
+      for(const message of linkTimelineErrors(round))check(false,path+'.linkTimeline',message,'inconsistent-evidence');
       const result=evaluate(round,{choiceId:round.choices?.[0]?.id});
+      if(result.expected)check(technicianDispatch(round,result.expected.condition).status==='ready',path+'.dispatch','The training runbook needs one evidence-supported technician destination.');
       check(result.status!=='content-error',path+'.observations',`Domain evidence error: ${result.reasonCode}`,result.reasonCode==='ambiguous-diagnosis'?'ambiguous-answer':'inconsistent-evidence');
     }
   }

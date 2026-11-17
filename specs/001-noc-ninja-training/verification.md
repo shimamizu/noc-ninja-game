@@ -1,12 +1,12 @@
 # Mixed Incident Implementation Verification
 
-**Date:** 2026-11-17 · **Content:** noc-v2.1-2026-11-17 · **Schema:** 2
+**Date:** 2026-11-17 · **Content:** noc-v2.6-2026-11-17 · **Schema:** 2
 **Code:** working tree based on 361c963; no commit/deployment performed by this implementation.
 **Environment:** macOS 27.3, Node v26.13.0. Browser control unavailable for this revision.
 
 ## Executed checks
 
-- `node tests/run.mjs`: **103 discovered, 103 passed, 0 failed**. Independent expectations cover
+- `node tests/run.mjs`: **133 discovered, 133 passed, 0 failed**. Independent expectations cover
   all three categories at both endpoints, all six actual incidents and every alternative category,
   optical absence/degradation, CRC arithmetic, history boundaries, contradictory evidence, complete
   tool sets, output-number agreement, source gates, safe retries, help, direct progression and reset.
@@ -52,6 +52,8 @@ separate and is not inferred from tests, markup, successful browser launch, or s
 | AC20 | Pass (modeling review) | Current source-to-simulation review; no vendor/independent qualification claim |
 | AC21 | Pass (automated/code) | Deterministic actual curriculum; static assets; full browser/network observation pending |
 | AC22 | Not complete | Results recorded, but manual acceptance remains open |
+| AC23 | Pass (data checks) | Complete fields on all 24 interface snapshots, per-platform formatting, ages/changes/traffic versus history; browser display pending |
+| AC24 | Pass (data/logic checks) | Paired error tables, FCS mapping, complete MAC rows/times and port-status formats; rendered interaction pending |
 
 ## Success criteria
 
@@ -68,7 +70,7 @@ separate and is not inferred from tests, markup, successful browser launch, or s
 
 ## Cross-artifact review
 
-Constitution 1.1.0, spec, plan, schema-2 data model/contracts, README and current tasks agree on:
+Constitution 1.2.2, spec, plan, schema-2 data model/contracts, README and current tasks agree on:
 three competing categories; six interleaved incidents; both endpoints and all tools every time;
 one opening briefing; explicit aim then throw; direct Next; immediate feedback and reduced-motion
 alternative; preserved hardware, thresholds, source gate and honest assistance. Historical research
@@ -91,3 +93,64 @@ The schema enforces /126 for this deployment while the general IPv6 parser still
 valid prefixes. The existing 103 tests pass; an additional one-time content check confirmed the
 renamed /126 curriculum validates and an incorrect deployment prefix is rejected. Whitespace
 checks pass. Browser checks remain pending as above.
+
+## Full interface output — 2026-11-17
+
+Revision `noc-v2.2-2026-11-17` replaces abbreviated interface output with the complete U6 field
+inventory on both endpoints, for both timestamps in all six incidents. The six added checks cover
+all 24 snapshots, platform format differences, state ages, cumulative transition totals, traffic
+counters and counter-clear ages. Total: 109 passed, zero failed via `node tests/run.mjs`.
+Reviewed representative down-ending and up-ending flap snapshots: the final durations are
+Down 5 seconds and Up 0 seconds respectively, with four added link changes. Stable intervals
+advance state ages by 60 seconds; continuously down intervals do not accumulate traffic.
+
+CUA was retried for this update and again reported native-pipe startup failure and an unavailable
+browser host. No new rendered output or full-output scrolling behavior was observed. The content
+and regression checks pass; manual browser acceptance remains pending. No commit or deployment.
+
+## Counters-errors and MAC formatting — 2026-11-17
+
+Revision noc-v2.3-2026-11-17: Error snapshots uses paired counters-errors tables. MAC / history
+shows complete current/earlier MAC output with separate authored history aids. Port status is
+available and full interface details remain accessible. Six new checks cover columns/pairing,
+MAC fields, temporal consistency, port status, invalid references/FCS mappings, and the distinction
+between unchanged FCS and rising Rx/runts. Total: 115 passed, zero failed. Source U7 resolves the
+command/row port mismatch explicitly and records receive-path semantics without claiming a failed
+remote component solely from CRC or fault flags. Browser checks remain unverified.
+
+## Stable-up MAC ages — 2026-11-17
+
+Revision noc-v2.3.1-2026-11-17 aligns all four Last Change ages in 16 current/earlier
+stable-up MAC snapshots. Independently checked equal structured ages and ran the existing
+display-agreement suite. Compared all 15 down/flapping snapshots against their pre-edit values:
+history records and rendered CLI text are unchanged. All 126 automated checks pass. This
+content correction has not received a new browser visual check.
+
+## Paired endpoint timeline correction
+
+Revision noc-v2.4-2026-11-17 uses one link timeline per incident. Both endpoint MAC
+and full interface histories share event times; port status and counter observation states
+agree. Stable-up final ages are 21 days, 5:58:29 on both sides. Optical cases end down
+for 11 minutes at both ends. Shared four-transition cases finish down for 5 seconds or
+up for 0 seconds and count as one diagnosis. Source captures and counter-clear ages are
+not link event clocks. Eleven new regression checks cover paired histories, independent
+expected durations, feedback, clock/age/state corruption, missing timeline, mismatched flaps
+and competing diagnoses. All 126 checks pass. Existing manual browser checks remain pending;
+this change does not claim a new browser observation.
+
+## Directional MAC and counter history correction
+
+Revision noc-v2.5-2026-11-17, U8: retain shared Interface State events but independent
+PHY/local/remote event histories. Full-interface counts since clear no longer have to equal
+MAC totals. All 133 automated checks pass, including both optical directions, peer PHY up
+with Interface down, distinct row ages, zero post-clear counts with nonzero MAC history,
+and rejection of drifting row clocks or unexplained counter increments. The earlier v2.4
+all-row equality statement is superseded. Browser/manual checks remain pending.
+
+## Flap ages and distinct transceiver profiles
+
+Revision noc-v2.6-2026-11-17: all 133 tests pass. New coverage checks aligned Remote Fault
+False ages throughout both flap histories, rejection of stale fault timestamps, and distinct
+endpoint telemetry within supplied normal limits. Existing tests verify fault-change histories,
+displayed/structured Rx agreement and the six unchanged diagnoses. No new browser observation
+is claimed; outstanding manual checks remain open.

@@ -1,4 +1,6 @@
+import {bindAim} from './aim.js';
 export function bindControls(dispatch,reload){
+  bindAim(document.querySelector('#app'),dispatch);
   document.querySelector('#app').addEventListener('click',e=>{
     const b=e.target.closest('button[data-action]');if(!b||b.disabled)return;
     const type=b.dataset.action;if(type==='submit')return;

@@ -1,7 +1,7 @@
 # NOC Ninja Training · Project constitution
 
 **Updated:** 2026-11-17. This StarterKit document reflects the owner's current requirements and
-[governing constitution 1.1.0](../.specify/memory/constitution.md). The detailed learning and
+[governing constitution 1.2.2](../.specify/memory/constitution.md). The detailed learning and
 acceptance requirements are in [SPEC.md](SPEC.md); implementation follows [PLAN.md](PLAN.md).
 
 ## First-Release Scope and Technical Boundaries
@@ -27,7 +27,7 @@ snapshots, and complete state history at both endpoints. The three answer target
 3. **Link flapping**: identify at least four actual operational changes in an inclusive
    60-second window, even when the final state is up. This is an authored teaching threshold.
 
-All three methods run for every incident. Exactly one endpoint/category must be supported;
+All three methods run for every incident. Exactly one diagnosis must be supported; matching flaps at both endpoints count as one link condition;
 missing, contradictory, or ambiguous evidence prevents grading. Learners choose the category;
 feedback derives the affected endpoint. No diagnosis establishes a specific failed component.
 
@@ -189,3 +189,21 @@ longer leaves those decisions open or requires another hardware/threshold confir
 Automated results and remaining browser/learner checks are tracked in the
 [verification record](../specs/001-noc-ninja-training/verification.md). Documentation alignment
 does not imply that outstanding manual acceptance checks have passed.
+
+## Shared link timeline clarification — 2026-11-17
+
+For these authored incidents, both endpoints MUST use one synchronized link-state timeline.
+Uptime/downtime and MAC Interface State event ages MUST agree across endpoints
+at the same snapshot time. PHY and local/remote fault rows have independent event histories;
+a PHY-up endpoint may have Interface State down with Remote Fault True. Stable-up examples align all four MAC row ages; down/flapping
+examples retain consistent endpoint-specific PHY and fault histories. Full-interface link-change
+counts since clear MUST be modeled separately from MAC row change totals. Device-local counter-clear ages
+and accumulated counts may differ. Matching flap observations describe one link condition.
+This is the simulation convention requested by the owner, not a claim about all hardware behavior.
+
+## Flap and telemetry clarification — 2026-11-17
+
+In the authored flapping cases, Remote Fault False MUST share the link event’s Last Change
+age, with a consistent fault-change history. Endpoint transceiver profiles MUST be distinct,
+with source-derived normal ranges and explicitly authored fault values. This does not override
+the directional PHY/fault histories in the owner’s static down-link examples.

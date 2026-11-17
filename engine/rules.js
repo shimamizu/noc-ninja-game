@@ -9,9 +9,12 @@ function light(o){
   const rows=o.opticalReadings;
   requireThat(Array.isArray(rows)&&rows.length===4&&new Set(rows.map(r=>r.channel)).size===4&&rows.every(r=>typeof r.channel==='string'&&r.channel&&r.metric==='rx_power'&&r.unit==='dBm'&&Number.isFinite(r.value)),'incomplete-evidence');
   // Selected ColorChip reference: -30 is absent; strictly below -15.70 is very bad light.
+  const tx=o.txReadings||[];
+  requireThat(Array.isArray(tx)&&(!tx.length||(tx.length===4&&new Set(tx.map(r=>r.channel)).size===4&&tx.every(r=>r.metric==='tx_power'&&r.unit==='dBm'&&Number.isFinite(r.value)))),'incomplete-evidence');
+  const badTx=tx.filter(r=>r.value < -9 || r.value > 3.3);
   const absent=rows.every(r=>r.value===-30),low=rows.filter(r=>r.value < -15.7);
   requireThat(!absent||o.operationalState==='down','contradictory-evidence');
-  return {condition:'opticalIssue',supported:o.administrativeState==='up'&&low.length>0,administrativeState:o.administrativeState,operationalState:o.operationalState,observedAt:o.observedAt,receiveSignal:absent?'absent':low.length?'degraded':'present',rxValues:rows.map(r=>r.value),lowChannels:low.length};
+  return {condition:'opticalIssue',supported:o.administrativeState==='up'&&(low.length>0||badTx.length>0),administrativeState:o.administrativeState,operationalState:o.operationalState,observedAt:o.observedAt,receiveSignal:absent?'absent':low.length?'degraded':'present',rxValues:rows.map(r=>r.value),lowChannels:low.length,txValues:tx.map(r=>r.value),badTxChannels:badTx.length};
 }
 function counters(o){
   requireThat(o.noReset===true&&Array.isArray(o.snapshots)&&o.snapshots.length===2);
@@ -54,12 +57,18 @@ export function findings(challenge){
     const l=groups.light.find(o=>o.interfaceId===id),c=groups.counters.find(o=>o.interfaceId===id),h=groups.history.find(o=>o.interfaceId===id),hf=evidence.find(e=>e.interfaceId===id&&e.condition==='linkFlapping');
     requireThat(l.observedAt===c.snapshots[1].observedAt&&c.snapshots[0].observedAt===h.windowStart&&c.snapshots[1].observedAt===h.windowEnd&&l.operationalState===hf.finalState&&c.snapshots[0].operationalState===hf.initialState&&c.snapshots[1].operationalState===hf.finalState,'contradictory-evidence');
   }
-  const supported=evidence.filter(e=>e.supported);
-  requireThat(supported.length===1,supported.length?'ambiguous-diagnosis':'incomplete-evidence');
+  let supported=evidence.filter(e=>e.supported);
+  // The same flap observed at both ends is one link event, not two competing faults.
+  const historySignature=h=>JSON.stringify({windowStart:h.windowStart,windowEnd:h.windowEnd,historyStart:h.historyStart,stateBeforeHistory:h.stateBeforeHistory,reports:h.reports.map(r=>({observedAt:r.observedAt,operationalState:r.operationalState}))});
+  const flaps=supported.filter(e=>e.condition==='linkFlapping');
+  const sharedFlap=flaps.length===2&&supported.every(e=>['linkFlapping','crcIncreasing'].includes(e.condition))&&historySignature(groups.history[0])===historySignature(groups.history[1]);
+  if(sharedFlap)supported=flaps;
+  const sharedOptical=supported.length===2&&supported.every(e=>e.condition==='opticalIssue')&&supported.filter(e=>e.badTxChannels>0).length===1&&supported.some(e=>e.badTxChannels===0&&e.lowChannels>0)&&supported.some(e=>e.badTxChannels>0&&e.lowChannels===0);
+  requireThat(supported.length===1||sharedFlap||sharedOptical,supported.length?'ambiguous-diagnosis':'incomplete-evidence');
   const {condition,interfaceId,deviceId}=supported[0];
   requireThat(Array.isArray(challenge.choices)&&challenge.choices.length===3&&new Set(challenge.choices.map(c=>c.id)).size===3&&new Set(challenge.choices.map(c=>c.diagnosis?.condition)).size===3,'ambiguous-diagnosis');
   for(const c of challenge.choices)requireThat(typeof c.id==='string'&&c.id&&c.diagnosis&&Object.keys(c.diagnosis).length===1&&conditions.includes(c.diagnosis.condition));
-  return {expected:{condition,interfaceId,deviceId},evidence};
+  return {expected:(sharedFlap||sharedOptical)?{condition,interfaceId:null,deviceId:null,interfaceIds:scope.slice(),deviceIds:scope.map(id=>byId.get(id).deviceId)}:{condition,interfaceId,deviceId},evidence};
 }
 export function evaluate(challenge,answer){
   let facts;

@@ -12,7 +12,7 @@ count and zero failures; loader/import errors are failures. Record exact browser
 ## Full mixed patrol
 
 1. Start fresh. Verify the opening guide teaches all three methods, then Enter the dojo.
-2. Incident 1: verify all four tools at both switches. Switch endpoints while retaining the chosen
+2. Incident 1: verify all five tools at both switches. Switch endpoints while retaining the chosen
    tool. Throw with no aim: guidance, zero throws. Aim at Light levels: no submission/animation yet.
    Throw: one wrong attempt, retry remains available. Inspect CRC pairs: leaf-gw1 900→900,
    spine-gw1 5→17. Aim CRC / errors and throw. Verify +12 at spine-gw1, one completion and Next.
@@ -55,3 +55,27 @@ module/data/style URLs must work. Observe network requests: only project files s
 A representative new NOC engineer should complete the patrol and explain all three diagnostic
 methods and causal limits. Record time and assistance, never penalize duration. Have another
 attendee follow README from a fresh session. Record every pass/fail/not-run in verification.md.
+
+## Complete-interface realism check
+
+For each switch, scroll Interface now to PAUSE output and inspect both full Error snapshots. Verify
+MAC/BIA, peer description, platform-specific MTU/MRU and uni-link, state age, link-change total,
+counter-clear history, rates, packet/byte totals and all error/discard/PAUSE fields. In incidents
+3 and 6, the current Down/Up duration must reflect the last flap, not the original long uptime.
+A high cumulative link-change count is background evidence; use timed history to classify flapping.
+
+## Error snapshots and MAC detail
+
+Verify Error snapshots shows the counters-errors command twice, with both timestamps and all
+seven columns. Verify the FCS values match the earlier/later full interface CRC counts, which
+remain available in Interface now and its expandable earlier detail. Port status must show the
+selected endpoint/peer, routed mode, full duplex, 100G and CWDM4. MAC / history must show the full
+current MAC table; expand the earlier MAC snapshots and compare every state, cumulative count
+and Last Change age to the separate authored timeline. Do not interpret a high old total or a
+single last-change age as the four-transition history required to grade flapping.
+
+For each incident, compare both switches at the same snapshot time: link state and Up/Down
+age must agree, as must MAC Interface State Last Change ages. PHY and fault rows may differ
+by endpoint; in optical incidents the normal-light peer has PHY up but Interface State down. Stable-up histories align all
+four rows. Both endpoints of a flapping case show the same four transitions, counted once
+in feedback. Device-local counter-clear times and accumulated counts may differ.

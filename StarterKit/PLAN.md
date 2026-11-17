@@ -1,7 +1,7 @@
 # NOC Ninja Training · Mixed incident implementation plan
 
 **Updated:** 2026-11-17 · **Branch:** main
-**Governance:** [Constitution 1.1.0](../.specify/memory/constitution.md) · **Content revision:** noc-v2.1-2026-11-17
+**Governance:** [Constitution 1.2.2](../.specify/memory/constitution.md) · **Content revision:** noc-v2.6-2026-11-17
 **Specification:** [SPEC.md](SPEC.md) · **Aligned working plan:** [plan.md](../specs/001-noc-ninja-training/plan.md)
 **Status:** Implementation and automated checks complete; manual browser acceptance pending.
 
@@ -59,7 +59,7 @@ view or use group identity to select a rule. Choice identities name categories, 
 
 1. Load and validate the whole document before starting. Review metadata must match its revision.
 2. Every incident contains `observations.light`, `observations.counters`, and `observations.history`
-   for both interfaces, plus the same four display tools at both switches.
+   for both interfaces, plus the same five display tools at both switches.
 3. Compute all six findings. Check endpoint identities, window alignment and current states across
    tools. Zero or multiple supported findings are content errors.
 4. Match only the selected category to the computed condition. Feedback identifies the receiver.
@@ -74,8 +74,8 @@ console. Clicking/tapping a target or using native radio arrows aims; the separa
 commits the answer. A projectile moves toward the selected target; a static impact mark and text
 carry the result. No lives, countdowns, points or aim precision.
 
-Endpoint buttons preserve the selected diagnostic tool. Tool buttons offer Interface now, Optics,
-CRC snapshots and State history in a fixed order on every incident. Optical gauges supplement
+Endpoint buttons preserve the selected diagnostic tool. Tool buttons offer Interface now, Port status, Optics,
+Error snapshots and MAC / history in a fixed order on every incident. Optical gauges supplement
 numeric dBm rows; counter pairs remain side by side; static history lists the initial state and
 reports. Terminal text uses textContent, labeled scrolling, and no HTML interpretation.
 
@@ -105,7 +105,7 @@ reports. Terminal text uses textContent, labeled scrolling, and no HTML interpre
 ## Traceability
 
 FR-001–008 → rules/content/data; FR-009–015 → feedback/state; FR-016–019 → render/controls/styles;
-FR-020–023 → review gate, evidence package, README and verification. AC1–AC22 and SC-001–SC-008
+FR-020–023 → review gate, evidence package, README and verification. AC1–AC24 and SC-001–SC-008
 remain explicit in the [working specification](../specs/001-noc-ninja-training/spec.md) and
 [verification record](../specs/001-noc-ninja-training/verification.md). Historical T001–T042 describe the original build;
 new tasks T043 onward cover this replacement behavior and current validation.
@@ -119,7 +119,7 @@ problem category. Every incident contains light, counters and history arrays for
 Choices are exactly `opticalIssue`, `crcIncreasing` and `linkFlapping`, each represented by a
 stable ID, label and category diagnosis. The submitted answer is `{choiceId}`. No conditionType,
 targetInterfaceId, correct-answer flag or choice position selects the expected diagnosis.
-Compute all methods, require one supported endpoint/category, then compare the chosen category.
+Compute all methods, require one supported endpoint/category or identical paired flap histories, then compare the chosen category.
 
 Enforce the selected platform/name/port mapping, distinct same-subnet /126 addresses, all supplied
 optical limits, timestamp/state agreement and complete evidence. The general IPv6 parser can
@@ -161,4 +161,43 @@ Follow the [manual quickstart](../specs/001-noc-ninja-training/quickstart.md) fo
 wrong retries, hints, explicit throws, restart, keyboard operation, 1366×768 and 375×812 layouts,
 reduced motion, announcements and fresh-session loading. Record pass/fail/not-run with environment
 and evidence in [verification.md](../specs/001-noc-ninja-training/verification.md). The existing
-103 automated checks pass; outstanding manual checks remain open. No deployment is implied.
+133 automated checks pass; outstanding manual checks remain open. No deployment is implied.
+
+## Full interface realism update
+
+Both current and earlier interface views use complete platform-specific samples rather than
+reduced excerpts. Preserve the supplied prompt, peer description, MTU/MRU, uni-link and
+counter-clear differences. Populate all background fields and reconcile uptime/downtime,
+link-change totals and traffic/error counters with the complete incident timeline. Keep generated
+traffic averages distinct from the counter interval. No extra fault category or scoring path is
+introduced. Review U6 and run `tests/interface-output.test.js` through the existing test runner.
+FR-024 / AC23 cover completeness and consistency; source and browser limitations remain explicit.
+
+## Error-table and MAC-detail update
+
+Use explicit earlier/later counters-errors tables with FCS, Align, Symbol, Rx, Runts, Giants and
+Tx; validate the pair reference and FCS mapping. Current MAC detail and every archived snapshot
+retain system time and four complete state/fault rows. Render the authored timeline outside the
+CLI text. Add the supplied Port status command consistently on both switches, and preserve current
+and expandable earlier full interface detail. U7 records the supplied port mismatch and the
+unchanged FCS versus rising Rx/runts example; no new causal conclusion or grading rule is inferred.
+
+## Shared event timeline implementation
+
+Store each round’s `linkTimeline` once and reconcile both endpoints against it in
+`engine/timeline.js`, called by the content gate. Validate command timestamps, link state,
+Up/Down durations, MAC row ages and cumulative transition increments. The evaluator accepts
+identical paired flap histories as one diagnosis and feedback names both endpoints without
+doubling the event count. `tests/link-timeline.test.js` covers synchronized histories and
+rejects contradictory ages, clocks, states and independent faults. Raw source captures remain
+evidence; their unrelated historical uptimes are not copied into a simulated shared link.
+
+U8 refines the shared timeline: reconcile Interface State across endpoints, retain independent
+PHY/local-fault/remote-fault clocks, and validate each row over time. Keep full-interface
+`linkStatusChanges` separate from MAC change totals. Optical cases model the directional
+fault observations in `evidence/paired-down-link.md`; hardware and routed-port scope are unchanged.
+
+For the owner’s flap display convention, align cleared Remote Fault ages with each shared
+interface event and keep supporting fault changes consistent. Use separate authored transceiver
+profiles for each endpoint, derived from the supplied working examples. Validate normal values
+against the supplied warning ranges and preserve intended optical faults and diagnoses.

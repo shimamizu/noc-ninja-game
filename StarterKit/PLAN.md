@@ -67,7 +67,7 @@ Define one document containing `schemaVersion`, `sources`, and `levels`. Each le
 - `deviceId` and `peerDeviceId`: nonempty strings referencing devices
   in the challenge topology.
 - `interfaceName` and `peerInterfaceName`: nonempty strings identifying
-  the connected physical Ethernet interfaces.
+  the connected physical Ethernet (fiber) interfaces.
 - `eosVersion`: string, exactly `4.36.3M`.
 - `hardwarePlatform`: nonempty string identifying the modeled platform.
 - `ipv6Address` and `peerIpv6Address`: valid IPv6 interface addresses
@@ -177,7 +177,7 @@ The state module owns attempts, assistance, completed round IDs, current round, 
 
 ## Interaction and visual direction
 
-Translate a ninja-themed NOC workstation into a compact challenge area showing two labeled Arista devices and their connecting Ethernet link, labeled show-command controls, a simulated terminal displaying command output, and a persistent explanation area. Keep the ninja theme in decorative elements and progress indicators; preserve technical clarity in all evidence and controls.
+Translate a ninja-themed NOC workstation into a compact challenge area showing two labeled Arista devices and their connecting singl mode fiber link, labeled show-command controls, a simulated terminal displaying command output, and a persistent explanation area. Keep the ninja theme in decorative elements and progress indicators; preserve technical clarity in all evidence and controls.
 
 Use a clear type hierarchy and one consistent visual language. Motion should reveal a consequence: a link indicator changes state alongside timestamped up/down events, or a CRC counter highlights the increase between two snapshots. Every effect must correspond to the displayed evidence and include an equivalent text description.
 

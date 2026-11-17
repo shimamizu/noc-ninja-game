@@ -2,7 +2,7 @@
 
 ## The pitch
 
-A new NOC engineer investigates Ethernet link incidents by inspecting
+A new NOC engineer investigates single mode fiber link incidents by inspecting
 Arista EOS evidence, identifying the supported diagnosis, and completing
 three ninja training missions.
 
@@ -22,7 +22,7 @@ The session ends when the player has correctly completed all six rounds.
 
 - **Learner:** A new NOC engineer with basic networking knowledge and
   limited experience troubleshooting Arista EOS interfaces.
-- **Assumed knowledge:** Ethernet links connect interfaces on two devices;
+- **Assumed knowledge:** Single mode fiber links connect interfaces on two devices;
   interfaces have names; show commands display operational information.
   Basic familiarity with a command-line interface is helpful.
 - **What the briefing teaches:** Administrative versus operational state,

@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-17
 
-**Status**: Draft — specification quality reviewed; technical evidence dependencies remain open
+**Status**: Clarified — hardware selections recorded; technical evidence research remains pending
 
 **Input**: User description: "Please reference the StarterKit/SPEC.md file for your specifications"
 
@@ -22,6 +22,8 @@ Diagnosing an incident enables advancement; it does not repair the simulated lin
 ### Session 2026-11-17
 
 - Q: Should the game model specific Arista hardware you use, or should planning select a switch and optical transceiver with verifiable EOS 4.36.3M evidence? → A: Use DCS-7050SX3-48YC8 with EOS 4.36.3M (32-bit) on one side and DCS-7808-CH with EOS 4.36.3M (64-bit) on the other. Both use `service routing protocols model multi-agent`, not ribd. Both optics are vendor COLORCHIP, model C100Q020CWDM403B, described by the user as 100G LR4, over single-mode fiber. Exact compatibility and optical classification remain subject to source verification.
+- Q: Which line card in the DCS-7808-CH and which physical interface on each switch should the game model? → A: Use 7800R3-48CQ-LC in slot 3, with Et3/15/1 connected to Et51/1 on the DCS-7050SX3-48YC8, over single-mode fiber.
+- Q: Should we preserve the 100G link by changing the selected 7808 line-card model? → A: Yes; the intended model is 7800R3-48CQ-LC in slot 3. Remove the mistaken line-card reference and retain the 100G link and selected interfaces.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -40,9 +42,9 @@ retry to a correct answer. Confirm that the feedback teaches the evidence-to-dia
 1. **AC1 — Given** a fresh session, **When** the learner starts, **Then** the first briefing
    introduces its concept, terms, method, and a worked example distinct from the challenge
    before the learner can answer. Each subsequent level also starts with its own briefing.
-2. **AC2 — Given** leaf-a selected 100G interface is administratively enabled, operationally down, and verified
+2. **AC2 — Given** leaf-a Et51/1 is administratively enabled, operationally down, and verified
    optical evidence establishes absent receive signal, **When** the learner submits that
-   diagnosis for leaf-a selected 100G interface, **Then** the round completes, Next becomes available, and
+   diagnosis for leaf-a Et51/1, **Then** the round completes, Next becomes available, and
    feedback identifies both observations without asserting a particular failed component.
 3. **AC3 — Given** that evidence, **When** the learner submits "The cable has definitely failed,"
    **Then** feedback explains why the cause is unproven, one valid attempt is counted,
@@ -180,15 +182,17 @@ specified defect; confirm that defects produce a content error without grading o
 
 These are authored acceptance fixtures, not claimed EOS captures.
 Displayed command output must be independently verified and must
-agree with these structured observations.
+agree with these structured observations. Endpoint names reflect the selected
+Et51/1 ↔ Et3/15/1 link, using 7800R3-48CQ-LC in slot 3 on the 7808.
+Release-specific output and compatibility verification remain required under D-002.
 
 | Case | Input state | Player action | Expected result | Why / source |
 | --- | --- | --- | --- | --- |
-| L1-R1 correct | leaf-a selected 100G interface administratively up, operationally down, receive signal absent | Select down link with absent receive signal at leaf-a selected 100G interface | Complete round; explain both observations | Verified EOS interface and transceiver evidence required |
-| L1-R2 correct | leaf-b selected 100G interface administratively up, operationally down, receive signal absent | Select down link with absent receive signal at leaf-b selected 100G interface | Complete round; identify receiving endpoint | Verified EOS interface and transceiver evidence required |
+| L1-R1 correct | leaf-a Et51/1 administratively up, operationally down, receive signal absent | Select down link with absent receive signal at leaf-a Et51/1 | Complete round; explain both observations | Verified EOS interface and transceiver evidence required |
+| L1-R2 correct | leaf-b Et3/15/1 administratively up, operationally down, receive signal absent | Select down link with absent receive signal at leaf-b Et3/15/1 | Complete round; identify receiving endpoint | Verified EOS interface and transceiver evidence required |
 | Plausible physical diagnosis mistake | Same evidence as L1-R1 | Select definitely failed cable | Reject; explain that the specific failed component is not established | Evidence does not isolate the cable |
 | L2-R1 correct | Same interface up at both snapshots; CRC 120 then 145, 60 seconds apart | Select increasing receive CRC errors | Complete round; show increase of 25 | Counter interpretation requires verified source; 145 minus 120 equals 25 |
-| L2-R2 correct | leaf-a CRC 900 then 900; leaf-b CRC 5 then 17; both up | Select increasing errors at leaf-b selected 100G interface | Complete round; show leaf-a delta 0 and leaf-b delta 12 | Timestamped counter comparison |
+| L2-R2 correct | leaf-a CRC 900 then 900; leaf-b CRC 5 then 17; both up | Select increasing errors at leaf-b Et3/15/1 | Complete round; show leaf-a delta 0 and leaf-b delta 12 | Timestamped counter comparison |
 | CRC boundary | CRC 900 then 900 with no reset | Select increasing errors | Reject; explain that no additional CRC errors are shown during the interval | Counter delta is zero |
 | L3-R1 correct | Initially up; down at 10s, up at 20s, down at 40s, up at 60s | Select flapping | Complete round despite current up state | Four transitions in the inclusive 0–60s teaching window |
 | L3-R2 correct | Initially down; up at 5s, down at 15s, up at 35s, down at 55s | Select flapping | Complete round; distinguish repeated transitions from continuously down | Four transitions in the 0–60s teaching window |
@@ -207,8 +211,9 @@ agree with these structured observations.
 - **FR-003**: Each round MUST present a two-device optical Ethernet topology with labeled routed
   physical interfaces, correctly configured IPv6 addresses as context, and predefined selectable
   show-command evidence. The link MUST operate at 100 Gb/s over single-mode fiber using the
-  endpoint and optic selections in D-001. The learner MUST choose one diagnosis and explicitly
-  submit it. (AC11, AC20)
+  endpoint and optic selections in D-001.
+  The requested connection is leaf-a Et51/1 to leaf-b Et3/15/1 in line-card slot 3.
+  The learner MUST choose one diagnosis and explicitly submit it. (AC11, AC20)
 - **FR-004**: The learner MUST have all evidence needed for the decision, including device and
   interface identity, timestamps, units, and any applicable window and threshold. Previously
   inspected evidence MUST remain available and counter comparisons MUST be side by side. (AC11)
@@ -256,7 +261,7 @@ agree with these structured observations.
   DCS-7050SX3-48YC8 with EOS 4.36.3M (32-bit) and DCS-7808-CH with EOS 4.36.3M (64-bit).
   Both switches MUST have `service routing protocols model multi-agent` configured, not ribd.
   Both endpoints MUST identify COLORCHIP C100Q020CWDM403B optics and their verified optical
-  classification. Content MUST identify the actual line card where applicable and physical
+  classification. Content MUST identify 7800R3-48CQ-LC in slot 3 on the 7808 and the physical
   interface at each endpoint. Exact source sections and, where necessary, sanitized reviewed
   captures MUST support those claims before grading is enabled. Arithmetic and the game's
   flapping threshold MUST be distinguished from vendor behavior. (AC20)
@@ -279,7 +284,8 @@ agree with these structured observations.
 - **Topology**: Two connected devices, their platform, EOS version and image architecture,
   routing-agent mode, applicable line card, optical transceiver vendor/model and verified type,
   named physical interfaces, IPv6 context, and the 100 Gb/s single-mode fiber link.
-  For fixture identity, leaf-a denotes the DCS-7050SX3-48YC8 and leaf-b the DCS-7808-CH.
+  For fixture identity, leaf-a denotes DCS-7050SX3-48YC8 Et51/1 and leaf-b denotes
+  DCS-7808-CH Et3/15/1 on 7800R3-48CQ-LC in slot 3.
 - **Evidence**: Selectable command observations and timestamped counter or state history,
   tied to an interface and source support, with units and observation window where applicable.
 - **Diagnostic choice**: A single-select answer identifying an interface and observed condition,
@@ -355,9 +361,9 @@ MLAG, or spanning tree. Optional visual motion must fit the existing diagnostic 
   use vendor COLORCHIP, model C100Q020CWDM403B, over a 100 Gb/s single-mode fiber link.
   The user describes these optics as 100G LR4; the exact optical classification and applicable
   limits require verification rather than inference from that description or the model name.
-  The 7808 line-card model and both physical interface names remain to be specified. The
-  starter's Ethernet1 labels are replaced by descriptive endpoint references until those
-  identities are established; no fabricated EOS port names may appear in shipped content.
+  The selected line card is 7800R3-48CQ-LC in slot 3, with Et3/15/1 on leaf-b
+  connected to Et51/1 on leaf-a. Hardware and endpoint selection is complete;
+  release-specific compatibility, port naming, and evidence validation remain in D-002.
 - **D-002 — Technical evidence**: Exact documentation sections and sanitized release-specific
   captures remain pending. Content review must establish support for the selected platforms,
   32-bit/64-bit EOS images, line card, ports, multi-agent mode, and exact COLORCHIP optics,
@@ -368,7 +374,7 @@ MLAG, or spanning tree. Optional visual motion must fit the existing diagnostic 
   cannot be accepted until all six rounds meet the evidence requirement.
 
 The device, software-mode, optic-model, and medium selections in D-001 are user requirements,
-not claims of verified compatibility. Remaining endpoint details and D-002 evidence must be
-resolved before dependent content is implemented or released. Routing-agent mode is fixed
+not claims of verified compatibility. D-002 evidence must be verified before dependent
+content is implemented or released. Routing-agent mode is fixed
 configuration context, not an additional diagnostic topic. The learner flow, round count,
 and physical-link diagnostic rules remain unchanged.

@@ -1,130 +1,98 @@
-> **For the attendee — remove this block before publishing.**
-> Copy this file to **`README.md` in the root of your own game repository**.
-> Replace every `[BRACKETED PLACEHOLDER]`. Keep the status honest: a plan is not
-> an implementation, and an unrun check is not a pass. Delete sections you don't
-> use. Add a screenshot or live link only after the file/site exists.
+# NOC Ninja — Network Dojo
 
-# [GAME NAME]
+Investigate a network incident, aim at a diagnosis, and throw a shuriken.
 
-**[A SHORT, MEMORABLE LINE ABOUT THE PLAYER'S ACTION AND THE SKILL IT TEACHES].**
+Six mixed incidents challenge you to distinguish **light levels**, **CRC / errors**, and **link
+flapping**. Every incident offers the same diagnostic tools at both switches. A night dojo, ninja,
+answer targets, optical gauges and animated throws make the investigation a game. Your diagnosis
+comes from the evidence; the throw has no timing or precision requirement.
 
-[GAME NAME] is a browser game for [TARGET LEARNER]. You play as [ROLE], making [CORE DECISION] to [VISIBLE GOAL]. Each round explains the result so you can use what you learned on the next challenge.
+## Run
 
-A project from **NAF AC6 — Loop Engineering, Spec-Driven Development & the Future of VibeOps**.
-
-| Project | Details |
-| --- | --- |
-| Status | Planning — update to prototype/playable/verified only when accurate |
-| Networking topic | [TOPIC AND TECHNICAL CONTEXT] |
-| Typical session | [EXPECTED PLAY TIME] |
-| Live demo | Not published yet |
-| Built by | [NAME(S) / GITHUB HANDLE(S)] |
-
-<!-- Optional after implementation: add ![Describe the game screen](docs/gameplay.png)
-     only after committing a real screenshot at that path. Replace the demo text
-     above with a working Markdown link after testing the deployed game. -->
-
-## The challenge
-
-[DESCRIBE ONE ROUND IN TWO OR THREE SENTENCES USING REAL NETWORK VALUES. SAY WHAT THE PLAYER SEES, WHAT THEY DECIDE, AND WHAT THE GAME SHOWS AFTER THE DECISION].
-
-For example, a routing game might ask you to inspect a destination and several routes, choose an exit, then explain the matching prefix. Replace this example with your game's actual experience.
-
-## What you'll learn
-
-| By the end, you can… | You'll practice by… |
-| --- | --- |
-| [OBSERVABLE SKILL 1] | [PLAYER ACTION 1] |
-| [OBSERVABLE SKILL 2] | [PLAYER ACTION 2] |
-| [OBSERVABLE SKILL 3] | [PLAYER ACTION 3] |
-
-**Before playing:** [PRIOR KNOWLEDGE, OR “NO PRIOR KNOWLEDGE; THE FIRST BRIEFING TEACHES THE BASICS”].
-
-## Play locally
-
-These instructions apply after the game has been implemented and `index.html` exists. Download this repository or clone it using the URL from GitHub's **Code** button, then open a terminal in the project root.
-
-For the starter plan's static HTML/CSS/JavaScript build:
+No install or build step is needed:
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-On Windows with the Python launcher:
+Open [the game](http://127.0.0.1:8000/index.html). Native modules and JSON loading require HTTP;
+serve index.html rather than opening a file URL. Use port 8001 if 8000 is occupied. On Windows,
+`py -m http.server` is an alternative launcher. Stop with Ctrl+C.
 
-```powershell
-py -m http.server 8000 --bind 127.0.0.1
+Only local static files are used: no account, external fonts/images, live switches, backend,
+analytics, API key, runtime AI or online grading service.
+
+## Play
+
+1. Read the opening guide to all three diagnoses and select **Enter the dojo**.
+2. Inspect **leaf-gw1** and **spine-gw1**. Each has **Interface now**, **Optics**, **CRC snapshots**,
+   and **State history**. Compare measurements, timestamps and actual changes.
+3. Click/tap a target to aim, or use native radio-button arrow keys. Activate **Throw shuriken**
+   when ready. Aiming alone does not submit.
+4. Read the explanation. Wrong diagnoses stay retryable; correct diagnoses enable **Next incident**.
+   Six successes lead to the final patrol summary, without category-specific lesson breaks.
+
+Method hints, worked steps and solutions are available in order. Help records assistance, never
+completion. Throws, completed incidents, and assisted/unassisted completion are separate. There
+are no lives, points, countdowns, speed rewards or retry penalties. Completion is practice, not
+proof of independent mastery.
+
+Tab/Shift+Tab navigate controls; native Enter/Space activate buttons. Restart asks for confirmation;
+Escape/Cancel preserve the session. Reload starts fresh, with no local storage. Dense evidence
+scrolls in labeled regions. Reduced motion disables the projectile; static impact marks and text
+retain the result. Feedback and controls never wait for animation.
+
+## Fixed training environment
+
+| Endpoint | Platform / EOS | Port | IPv6 address |
+| --- | --- | --- | --- |
+| leaf-gw1 | DCS-7050SX3-48YC8 / 4.36.3M, 32-bit | Et51/1 | `2001:db8:51::1/126` |
+| spine-gw1 | DCS-7808-CH / 4.36.3M, 64-bit; 7800R3-48CQ-LC in slot 3 | Et3/15/1 | `2001:db8:51::2/126` |
+
+Both use `service routing protocols model multi-agent` and COLORCHIP C100Q020CWDM403B
+QSFP28 100G CWDM4 optics over single-mode fiber. All 20 supplied reference limits and confirmed
+units are preserved. IPv6 is correctly configured context; there are no repair/configuration actions.
+
+For this supplied optic reference, −30 dBm means no light and Rx below −15.70 dBm means very bad
+light. The optical incidents include both absence and degraded light; these meanings are distinct.
+This game does not implement a universal alarm classifier or diagnose a failed component.
+
+CRC comparison uses the same receiver and counter, with no reset/rollover. Four actual state changes
+inside an inclusive 60-second window is the game's teaching threshold for flapping, not a universal
+EOS definition. An up interface does not prove stability, healthy traffic or IPv6 connectivity.
+
+Read the [mixed incident source review](specs/001-noc-ninja-training/evidence/mixed-incident-review.md).
+The user confirmed the working spine-gw1 samples' exact setup. Fault values and UTC timelines are
+simulated; leaf-gw1 formatting is an explicit same-release adaptation. Independent hardware
+qualification, vendor compatibility certification and external technical review are not claimed.
+Only fictional device labels appear.
+
+## Verify
+
+```sh
+node tests/run.mjs
 ```
 
-Open **http://127.0.0.1:8000** in your browser. Keep the terminal running; **Ctrl+C** stops the server. If port 8000 is busy, use 8001 in both the command and URL.
+**103 checks pass** in Node 26.13.0: all six independent diagnoses and alternatives, equal tool
+availability, displayed numbers, absent/degraded light, CRC/history boundaries, conflicting evidence,
+source/revision failures, safe retry, assistance, duplicate submission, direct progression and reset.
+The command fails on test failures. No runtime dependency is added.
 
-The starter build loads JavaScript modules and JSON over HTTP. Use the server URL to preview it. If you chose a different stack, replace these instructions with the commands you actually tested. [Why modules need serving](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
+The same suite has a [browser runner](http://127.0.0.1:8000/tests/). A missing import or zero tests is
+failure. See the [manual procedure](specs/001-noc-ninja-training/quickstart.md) and
+[verification record](specs/001-noc-ninja-training/verification.md). Browser automation is currently
+unavailable, so the redesigned screen, complete pointer/keyboard playthrough, exact viewport sizes,
+reduced motion and screen-reader announcements remain unverified. Automated checks do not replace
+them. This is an implemented revision, not a claim of completed release acceptance.
 
-## How to play
+## Repository
 
-1. Read the briefing and inspect [THE CHALLENGE DATA].
-2. [MAKE THE CORE CHOICE] and submit it.
-3. Read the explanation. A wrong answer lets you retry; a correct answer enables Next.
-4. Use a hint or worked solution when you need help. Assistance is recorded separately from completion.
-5. Finish [NUMBER OF LEVELS/ROUNDS] to reach the session summary.
+- `data/levels.json`: schema 2; six mixed incidents in three neutral authoring groups.
+- `engine/`: content validation, all-method diagnosis, session state and computed feedback.
+- `ui/`, `style.css`: native controls, console, dojo and decorative animation.
+- `tests/`: dependency-free Node/browser assertions.
+- `specs/001-noc-ninja-training/`: current specification, contracts, tasks and evidence.
 
-| Control | Action |
-| --- | --- |
-| [ACTUAL POINTER CONTROL] | [ACTION] |
-| [ACTUAL KEYBOARD CONTROL] | [ACTION] |
-| Hint / solution | [ACTUAL HELP BEHAVIOR] |
-| Restart | [ACTUAL RESET AND CONFIRMATION BEHAVIOR] |
-
-**Progress:** [WHAT IS COUNTED, WHEN A ROUND COMPLETES, AND WHAT HAPPENS ON RELOAD].
-
-## What this game models
-
-[STATE THE PRECISE TECHNICAL MODEL AND TWO OR THREE IMPORTANT ASSUMPTIONS].
-
-**Outside the model:** [ADJACENT BEHAVIOR THE GAME DOES NOT SIMULATE].
-
-| Reference | What it supports |
-| --- | --- |
-| [AUTHORITATIVE TITLE, URL, AND SECTION] | [SPECIFIC RULE OR CLAIM] |
-
-## How it was built
-
-The project follows the workshop's Spec Kit workflow: **constitution → specify → clarify → plan → tasks → analyze → implement**. The verification section below records which behaviors have actually been checked.
-
-- **Stack:** [ACTUAL LANGUAGES/LIBRARIES].
-- **Build tools:** [CODING AGENT / SPEC KIT VERSION / OPTIONAL TOOLS ACTUALLY USED].
-- **Runtime:** [WHAT A PLAYER'S BROWSER NEEDS; DEFAULT IS STATIC FILES WITH NO MODEL OR API KEY].
-- **Planning inputs:** `StarterKit/CONSTITUTION.md`, `StarterKit/SPEC.md`, `StarterKit/PLAN.md`.
-- **Working artifacts:** [ACTUAL GENERATED CONSTITUTION, SPEC, PLAN, AND TASK PATHS].
-- **One useful design decision:** [A CONCRETE QUESTION OR ANALYSIS FINDING THAT CHANGED THE BUILD].
-
-## Verification
-
-**Last checked:** [DATE, BROWSER/OS, AND COMMIT OR BUILD IDENTIFIER].
-
-For the starter plan, run the local server and open **http://127.0.0.1:8000/tests/** after the agent has implemented the test runner. Replace this instruction if your project uses a different test command. Record test totals and failures; an empty test suite is not success.
-
-| Check | Result | Evidence / notes |
-| --- | --- | --- |
-| Correct, incorrect, and boundary cases | Not run | [CASE IDS AND RESULT OR FAILURE] |
-| Briefings and explanations checked against sources | Not run | [REVIEWER / REFERENCE NOTES] |
-| Retry, hint, duplicate Submit, completion, restart | Not run | [OBSERVED BEHAVIOR] |
-| Keyboard-only core playthrough | Not run | [BROWSER / OBSERVATIONS] |
-| Narrow layout and reduced motion | Not run | [VIEWPORT / OBSERVATIONS] |
-| Fresh checkout run instructions | Not run | [COMMAND / RESULT] |
-| Published demo, if used | Not run | [URL / RESULT, OR REMOVE ROW] |
-
-## Known limitations and next steps
-
-- **Known limitation:** [SPECIFIC UNIMPLEMENTED OR IMPERFECT BEHAVIOR].
-- **Next improvement:** [ONE SMALL CHANGE AND WHY IT HELPS LEARNING].
-
-Found an incorrect answer or unclear explanation? Open an issue with the level/round, input values, your choice, expected result, actual result, and a reference if available.
-
-## Credits
-
-Created by [AUTHORS]. Workshop by John Capobianco, Joksan Flores, and Elliot Conner. Adapted from the [NAF AC6 workshop materials](https://github.com/automateyournetwork/NAF_AC6) and [Networking Video Game Starter Kit](https://github.com/automateyournetwork/NetworkingVideoGameStarterKit), using [GitHub Spec Kit](https://github.com/github/spec-kit).
-
-**Assets and dependencies:** [CREDIT THE ACTUAL SOURCES, OR STATE THAT THE GAME USES ONLY ORIGINAL ASSETS].
-
-**License:** [NAME THE LICENSE INCLUDED IN THIS REPOSITORY; ADD A LINK TO THE ACTUAL FILE].
+The entire curriculum validates before play starts. No authored category or target key chooses the
+answer. Content changes require a new revision and actual source/display reassessment; copying a
+review flag is not review. Same-mechanic content reuses the existing rules and screens.

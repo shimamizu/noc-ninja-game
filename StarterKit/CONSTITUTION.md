@@ -1,109 +1,191 @@
-> **Editor note — personalize, then remove this note.**
-> This is the input to the **constitution** step. Replace the bracketed fields,
-> keep the principles you intend to enforce, and agree on any changes with your
-> group. Each principle includes evidence: your agent should know how to check it.
-> Read the lab guide before running commands. A completed example is available
-> in `WORKSHOP/LAB/Examples/PrefixQuest/` in the workshop repository.
-
 # NOC Ninja Training · Project constitution
 
-**Purpose:** Help a new network operations center (NOC) engineer practice troubleshooting physical Ethernet links between Arista EOS switches and routers using show commands, with IPv6 addressing shown as network context.
+**Updated:** 2026-11-17. This StarterKit document reflects the owner's current requirements and
+[governing constitution 1.1.0](../.specify/memory/constitution.md). The detailed learning and
+acceptance requirements are in [SPEC.md](SPEC.md); implementation follows [PLAN.md](PLAN.md).
 
-**First release:** one core mechanic, three short levels, a browser, and a 60-minute workshop build. Change this budget only by updating the agreed scope.
+## First-Release Scope and Technical Boundaries
 
-## First-release levels
+**Purpose:** Help a new network operations center (NOC) engineer practice troubleshooting physical
+Ethernet links between Arista EOS switches and routers using show commands, with IPv6 addressing
+shown as network context.
 
-All three levels use the same core mechanic: select show commands,
-inspect evidence, and submit a diagnosis.
+**First release:** one core mechanic, six mixed incidents, and a browser. The initial
+60-minute workshop build is followed by the owner's requested graphical redesign on 2026-11-17.
+Three neutral content groups organize two incidents each; they do not disclose diagnostic categories
+or interrupt play with category-specific lessons. One opening briefing teaches all methods.
 
-1. **Link down with absent optical receive signal**
-   Inspect interface status and transceiver diagnostics to identify
-   absent receive light at a specified interface. The accepted diagnosis
-   describes the observed condition without claiming that a particular
-   cable, optic, or remote device has failed.
+Every incident offers interface status, transceiver diagnostics, two timestamped receive-counter
+snapshots, and complete state history at both endpoints. The three answer targets are:
 
-2. **Link up with increasing CRC errors**
-   Compare two timestamped interface-counter snapshots to identify
-   increasing receive CRC errors while the link remains operational.
-   The accepted diagnosis identifies the affected receiving interface
-   and ongoing frame corruption, without claiming that a specific
-   component has failed.
+1. **Light levels**: identify absent or very poor receive light using the supplied ColorChip
+   interpretation. All four Rx rows at −30 dBm mean absent receive light; readings strictly below
+   the supplied −15.70 dBm low alarm indicate very bad light, not necessarily absence. Current
+   interface state is also shown. These are setup-specific interpretations, not universal cutoffs.
+2. **CRC / errors**: identify new receive CRC errors by a positive same-interface counter delta
+   while up at both observations, with no reset or rollover.
+3. **Link flapping**: identify at least four actual operational changes in an inclusive
+   60-second window, even when the final state is up. This is an authored teaching threshold.
 
-3. **Link flapping**
-   Inspect timestamped interface-state history or log messages to
-   identify repeated transitions between operationally up and down.
-   Each challenge defines the observation window and the number of
-   transitions that qualifies as flapping. The accepted diagnosis
-   identifies the affected link and repeated state changes, without
-   claiming a specific underlying cause unless the evidence proves it.
+All three methods run for every incident. Exactly one endpoint/category must be supported;
+missing, contradictory, or ambiguous evidence prevents grading. Learners choose the category;
+feedback derives the affected endpoint. No diagnosis establishes a specific failed component.
 
-## C1 · Technical truth is a release requirement
+## Selected deployment
 
-The game must never reward a technically incorrect answer. Grading must be reproducible from a documented rule and the challenge inputs. Unsupported or ambiguous content is an authoring error: show an explanation that the challenge is unavailable and prevent grading it.
+| Switch name | Platform | EOS | Interface | IPv6 address |
+| --- | --- | --- | --- | --- |
+| leaf-gw1 | DCS-7050SX3-48YC8 | 4.36.3M, 32-bit | Et51/1 | `2001:db8:51::1/126` |
+| spine-gw1 | DCS-7808-CH; 7800R3-48CQ-LC in slot 3 | 4.36.3M, 64-bit | Et3/15/1 | `2001:db8:51::2/126` |
 
-Document the model being taught:  
-Protocol/vendor context: All command syntax, simulated show-command output, and troubleshooting behavior must model Arista EOS 4.36.3M. Devices connect through point-to-point single mode fiber links using routed physical interfaces with explicitly configured IPv6 addresses. Each challenge provides the relevant topology, intended configuration, and operational evidence. Any platform-specific behavior must identify the modeled hardware platform. Command availability and output must be verified against documentation or captured output for this release; unsupported behavior must not be invented.
+The 100G link uses single-mode fiber and the shared `2001:db8:51::/126` subnet. Both switches
+use `service routing protocols model multi-agent`. Both optics are COLORCHIP C100Q020CWDM403B,
+manufacturer “ColorChip ltd”, QSFP28 100G CWDM4, four lanes. Preserve all 20 supplied optical
+thresholds and confirmed units. IPv6 addressing is context, not a fault to diagnose.
 
-Assumptions: Each challenge presents one intentional physical-link condition affecting link availability, frame integrity, or stability. IPv6 addressing is correctly configured and provided as context, not as a fault to diagnose. Players identify the condition using predefined show-command output and, where needed, timestamped logs or snapshots. Counter comparisons use the same interface with no counter resets between observations. Historical evidence includes enough timing information to distinguish ongoing errors or repeated state changes from isolated past events. All evidence needed to distinguish the correct diagnosis is available.
+Use these fictional switch names consistently in diagrams, CLI prompts, hints and feedback.
+No production hostname is retained. The confirmed working spine-gw1 captures and supplied optic
+reference establish the documented modeling basis; authored faults and timestamps are simulations.
+See the [source-to-simulation review](../specs/001-noc-ninja-training/evidence/mixed-incident-review.md).
 
-Important exclusions: The first release does not cover IPv6 addressing faults, Neighbor Discovery, routing protocols, VLAN trunks, port channels, MLAG, or spanning tree. Players inspect evidence and select a diagnosis; they do not change configuration. A physical link being up does not establish that IPv6 connectivity works. A link-down indication alone does not prove a failed cable, optic, or remote device. Challenges require additional evidence before accepting a specific component as the cause.
+## Core Principles
 
-Simplifications must appear in the briefing and README wherever they affect what the player can conclude. Fictional worlds and animations may illustrate a rule; they must not change it.
+### C1 · Technical truth is a release requirement
 
-**Evidence:** hand-checked correct, incorrect, and boundary cases; a source link and section for each networking rule; review of all shipped briefings and explanations. Expected results are recorded independently of the implementation under test.
+The game MUST never reward a technically incorrect answer. Grading MUST be reproducible from a
+documented rule and the challenge inputs. Unsupported or ambiguous content is an authoring error:
+show an explanation that the challenge is unavailable and prevent grading it.
 
-## C2 · Every round teaches through a decision
+Document the model being taught:
+Protocol/vendor context: All command syntax, simulated show-command output, and troubleshooting
+behavior MUST model Arista EOS 4.36.3M. Devices connect through point-to-point Ethernet links using
+routed physical interfaces with explicitly configured IPv6 addresses. Each challenge provides the
+relevant topology, intended configuration, and operational evidence. Any platform-specific behavior
+MUST identify the modeled hardware platform. Command availability and output MUST be verified
+against documentation or captured output for this release; unsupported behavior MUST not be
+invented.
 
-The player's main action must exercise the target skill. Introduce a concept before testing it, and show the values needed to reason about the answer. A wrong answer explains the specific mistake and gives the player a useful next step. A correct answer explains why it works.
+Assumptions: Each challenge presents one intentional physical-link condition affecting link
+availability, frame integrity, or stability. IPv6 addressing is correctly configured and provided
+as context, not as a fault to diagnose. Players identify the condition using predefined
+show-command output and, where needed, timestamped logs or snapshots. Counter comparisons use the
+same interface with no counter resets between observations. Historical evidence includes enough
+timing information to distinguish ongoing errors or repeated state changes from isolated past
+events. All evidence needed to distinguish the correct diagnosis is available.
 
-Use this learning sequence: Recognize a down link and use optical diagnostics to identify absent receive light → Compare timestamped counters to identify increasing CRC errors on an operational link → Analyze timestamped state changes to recognize a flapping link, even when its current status is up.
+Important exclusions: The first release does not cover IPv6 addressing faults, Neighbor Discovery,
+routing protocols, VLAN trunks, port channels, MLAG, or spanning tree. Players inspect evidence and
+select a diagnosis; they do not change configuration. A physical link being up does not establish
+that IPv6 connectivity works. A link-down indication alone does not prove a failed cable, optic, or
+remote device. Challenges require additional evidence before accepting a specific component as the
+cause.
 
-Across all three levels, players must distinguish what the evidence demonstrates from possible underlying causes. Each level introduces its diagnostic method before asking the player to apply it.
+Simplifications MUST appear in the briefing and README wherever they affect what the player can
+conclude. Fictional worlds and animations may illustrate a rule; they MUST not change it.
 
-Hints reveal a method first, then a worked step. Worked solutions are available when a learner is stuck; viewing one is recorded as assistance, never as independent mastery.
+**Evidence:** hand-checked correct, incorrect, and boundary cases; a source link and section for
+each networking rule; review of all shipped briefings and explanations. Expected results are
+recorded independently of the implementation under test.
 
-**Evidence:** a teammate can connect each player action to a learning outcome and describe what they learned from a deliberately wrong choice.
+### C2 · Every round teaches through a decision
 
-## C3 · Progress is honest and retry is safe
+The player's main action MUST exercise the target skill. Introduce a concept before testing it, and
+show the values needed to reason about the answer. A wrong answer explains the specific mistake and
+gives the player a useful next step. A correct answer explains why it works.
 
-A round completes only on a valid, correct submission. Incorrect answers keep the challenge available. Empty or malformed submissions give input guidance without counting as a wrong attempt. Repeated Submit actions cannot award progress twice.
+Introduce all three diagnostic methods before the first incident: interpret receive-light
+levels, compare timestamped CRC counters, and count timed up/down transitions. Then interleave
+incidents so the learner must identify which category the evidence supports. A level title,
+briefing, available tool, or authored answer key MUST NOT preselect the diagnosis.
 
-No lives, countdown, or speed bonus in this first version. Hints and retries have no penalty. Show completed rounds, attempts, and assistance separately; completion is not proof of independent mastery. The specification must say exactly what advances a round, finishes a level, and resets a session.
+Each incident exposes the same tools for both endpoints. Players aim at one of three diagnosis
+targets and explicitly throw a shuriken to submit. The throw illustrates the decision; it is not a
+timing or aiming-skill test. Feedback identifies the affected interface and distinguishes observed
+conditions from possible underlying causes.
 
-**Evidence:** wrong-answer, repeated-submit, hint, completion, and reset checks match the specification.
+Hints reveal a method first, then a worked step. Worked solutions are available when a learner is
+stuck; viewing one is recorded as assistance, never as independent mastery.
 
-## C4 · Access is part of the core game
+**Evidence:** a teammate can connect each player action to a learning outcome and describe what
+they learned from a deliberately wrong choice.
 
-All core actions must be usable by keyboard with visible focus, readable labels, and an understandable order. Explain success and failure with text as well as color. Provide a text equivalent for essential diagrams. Respect reduced-motion preferences; animation must never delay the availability of feedback or controls.
+### C3 · Progress is honest and retry is safe
 
-Keep the challenge usable on a typical laptop and a narrow browser window. Dense technical data may scroll within its own labeled container, without hiding the action buttons.
+A round completes only on a valid, correct submission. Incorrect answers keep the challenge
+available. Empty or malformed submissions give input guidance without counting as a wrong attempt.
+Repeated Submit actions cannot award progress twice.
 
-**Evidence:** a keyboard-only playthrough, a narrow-window check, and a reduced-motion check. Record what was actually checked; do not claim full accessibility certification.
+No lives, countdown, or speed bonus in this first version. Hints and retries have no penalty. Show
+completed rounds, attempts, and assistance separately; completion is not proof of independent
+mastery. The specification MUST say exactly what advances an incident, finishes the patrol, and resets a
+session.
 
-## C5 · The first version is deterministic and self-contained
+**Evidence:** wrong-answer, repeated-submit, hint, completion, and reset checks match the
+specification.
 
-Ship authored content and deterministic domain logic. The game requires no account, backend, live device connection, model, or API key. AI may help write code and assets during development; its output receives the same review as any other contribution.
+### C4 · Access is part of the core game
 
-Runtime AI tutoring, generated questions, and free-text AI grading are stretch work. Adding them requires an explicit change to the constitution, specification, and verification approach before implementation.
+All core actions MUST be usable by keyboard with visible focus, readable labels, and an
+understandable order. Explain success and failure with text as well as color. Provide a text
+equivalent for essential diagrams. Respect reduced-motion preferences; animation MUST never delay
+the availability of feedback or controls.
 
-**Evidence:** a clean browser session can play using only the project's static files; no external content service decides an answer.
+Keep the challenge usable on a typical laptop and a narrow browser window. Dense technical data may
+scroll within its own labeled container, without hiding the action buttons.
 
-## C6 · Content and logic can be reviewed separately
+**Evidence:** a keyboard-only playthrough, a narrow-window check, and a reduced-motion check.
+Record what was actually checked; do not claim full accessibility certification.
 
-Store level content, hints, sources, and difficulty in editable data. Keep domain rules separate from rendering and progress tracking. Validate data before presenting a challenge. Feedback must agree with the evaluator's reasoning; a hand-authored answer key cannot silently override the rule engine.
+### C5 · The first version is deterministic and self-contained
 
-Adding another challenge that uses the existing mechanic should require a data change and its checks, not a new scoring path or a new screen implementation.
+Ship authored content and deterministic domain logic. The game requires no account, backend, live
+device connection, model, or API key. AI may help write code and assets during development; its
+output receives the same review as any other contribution.
 
-**Evidence:** inspect one level's data, trace one answer through the evaluator, and add a trial challenge without modifying the rule engine.
+Runtime AI tutoring, generated questions, and free-text AI grading are stretch work. Adding them
+requires an explicit change to the constitution, specification, and verification approach before
+implementation.
 
-## C7 · Done is demonstrated
+**Evidence:** a clean browser session can play using only the project's static files; no external
+content service decides an answer.
 
-Ship only the agreed scope. Requirements, plan, tasks, and README must describe the same game. A feature is complete when its acceptance criteria pass and its actual status is recorded. A screenshot, a checked task box, or the agent saying “done” is insufficient by itself.
+### C6 · Content and logic can be reviewed separately
 
-When time is short, reduce scope explicitly. Fix incorrect teaching and broken core interactions before adding visual effects. Keep failed and untested checks visible.
+Store level content, hints, sources, and difficulty in editable data. Keep domain rules separate
+from rendering and progress tracking. Validate data before presenting a challenge. Feedback MUST
+agree with the evaluator's reasoning; a hand-authored answer key cannot silently override the rule
+engine.
 
-**Evidence:** reproducible run/test commands, recorded verification results, a fresh-start playthrough, and a README another attendee can follow.
+Adding another challenge that uses the existing mechanic MUST require a data change and its checks,
+not a new scoring path or a new screen implementation.
+
+**Evidence:** inspect one level's data, trace one answer through the evaluator, and add a trial
+challenge without modifying the rule engine.
+
+### C7 · Done is demonstrated
+
+Ship only the agreed scope. Requirements, plan, tasks, and README MUST describe the same game. A
+feature is complete when its acceptance criteria pass and its actual status is recorded. A
+screenshot, a checked task box, or the agent saying “done” is insufficient by itself.
+
+When time is short, reduce scope explicitly. Fix incorrect teaching and broken core interactions
+before adding visual effects. Keep failed and untested checks visible.
+
+**Evidence:** reproducible run/test commands, recorded verification results, a fresh-start
+playthrough, and a README another attendee can follow.
 
 ## How we change these rules
 
-For any material change, record the reason, update the affected spec and plan, and rerun analysis. A conflict with this constitution is resolved openly; the build agent must not weaken a principle merely to make its implementation pass.
+Record the reason for a material change, update the governing constitution and affected spec,
+plan, tasks and README, and rerun consistency analysis and affected checks. Follow the amendment
+and versioning procedure in the governing constitution. An implementation must not silently
+weaken correctness, source review, accessibility or evidence requirements.
+
+The owner-authorized changes replace diagnosis-specific lessons with mixed investigations and
+explicit graphical shuriken submission, and select the switch names and /126 addressing above.
+The initial workshop build has been extended by these subsequent requests. This document no
+longer leaves those decisions open or requires another hardware/threshold confirmation.
+
+Automated results and remaining browser/learner checks are tracked in the
+[verification record](../specs/001-noc-ninja-training/verification.md). Documentation alignment
+does not imply that outstanding manual acceptance checks have passed.

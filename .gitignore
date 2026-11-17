@@ -1,1 +1,14 @@
 .DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*.log
+.env*
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+.idea/

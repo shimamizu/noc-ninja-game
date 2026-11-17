@@ -1,216 +1,164 @@
-> **Editor note — personalize, then remove this note.**
-> This is the input to **plan**, after **clarify** has resolved the specification.
-> Keep the simple defaults unless your mechanic needs a different choice.
-> Replace every bracketed field. This is a design contract for code the agent
-> will write; files and test commands described below do not exist yet.
+# NOC Ninja Training · Mixed incident implementation plan
 
-# NOC Ninja Training · Implementation plan
+**Updated:** 2026-11-17 · **Branch:** main
+**Governance:** [Constitution 1.1.0](../.specify/memory/constitution.md) · **Content revision:** noc-v2.1-2026-11-17
+**Specification:** [SPEC.md](SPEC.md) · **Aligned working plan:** [plan.md](../specs/001-noc-ninja-training/plan.md)
+**Status:** Implementation and automated checks complete; manual browser acceptance pending.
 
-## Build target
+## Result and owner-authorized change
 
-Implement the clarified specification for NOC Ninja Training within the workshop build block. First deliver one complete round with correct grading, explanatory feedback, retry, and advance. Then add content and polish through the same implementation.
+Replace sequential diagnosis-specific lessons with six interleaved investigations. All three
+methods are taught once, and every incident has identical tools at both endpoints. The engineer
+selects a diagnosis category by aiming at a target, then explicitly throws a shuriken. The game
+derives the affected endpoint from evidence. The graphical dojo adds no reflex or timing test.
 
-**Hardest behavior to get right:** Deterministically grade diagnoses from the available evidence across all three conditions: a down link with absent optical receive signal, an operational link with increasing CRC errors, and a flapping link. Distinguish current status from timestamped historical evidence, and never accept a specific failed component as the cause unless the evidence establishes it.
+This revises the initial workshop build at the owner's explicit request. Hardware, source review,
+static architecture, honest progress, safe retry and accessibility obligations remain unchanged.
+The subsequent owner-selected topology names are leaf-gw1 (7050SX3) and spine-gw1 (7808),
+using 2001:db8:51::1/126 and 2001:db8:51::2/126 respectively.
 
-**First evidence we'll check:** A hand-verified Level 1 case from the specification in which interface status shows the link is down and supported transceiver diagnostics establish absent optical receive signal. Accept the diagnosis that the specified interface is down with absent receive light. Reject an unsupported claim that the cable or optic has definitely failed. Verify that feedback explains the evidence, an incorrect answer permits retry, and a correct answer permits advancement.
+## Selected deployment
 
-## Stack and serving
+| Switch name | Platform | EOS | Interface | IPv6 address |
+| --- | --- | --- | --- | --- |
+| leaf-gw1 | DCS-7050SX3-48YC8 | 4.36.3M, 32-bit | Et51/1 | `2001:db8:51::1/126` |
+| spine-gw1 | DCS-7808-CH; 7800R3-48CQ-LC in slot 3 | 4.36.3M, 64-bit | Et3/15/1 | `2001:db8:51::2/126` |
 
-- Semantic HTML, CSS, and native JavaScript modules. No framework, bundler, backend, or runtime model.
-- DOM controls plus SVG only where a diagram helps teach the concept. No rendering dependency by default. If choosing Three.js or another library, record its version, loading strategy, reason, and accessible alternative here before implementation.
-- `data/levels.json` for authored content; load it over HTTP using a relative URL.
-- In-memory session state. Reload starts a fresh session, as specified. No persistence in v1.
-- Static hosting, including a repository subpath such as GitHub Pages. Use relative asset paths and case-correct filenames.
+The 100G link uses single-mode fiber and the shared `2001:db8:51::/126` subnet. Both switches
+use `service routing protocols model multi-agent`. Both optics are COLORCHIP C100Q020CWDM403B,
+manufacturer “ColorChip ltd”, QSFP28 100G CWDM4, four lanes. Preserve all 20 supplied optical
+thresholds and confirmed units. IPv6 addressing is context, not a fault to diagnose.
 
-Preview from the repository root after implementation creates `index.html`:
+Use these fictional switch names consistently in diagrams, CLI prompts, hints and feedback.
+No production hostname is retained. The confirmed working spine-gw1 captures and supplied optic
+reference establish the documented modeling basis; authored faults and timestamps are simulations.
+See the [source-to-simulation review](../specs/001-noc-ninja-training/evidence/mixed-incident-review.md).
+
+## Architecture
+
+Use native HTML/CSS/ES modules and editable JSON. No framework, install/build step, backend,
+external assets, persistence, live device connection or runtime AI. Serve through localhost HTTP.
+
+| Module | Responsibility |
+| --- | --- |
+| index.html / main.js | Shell, load boundary, dispatch, live announcements, dialog and focus |
+| engine/content.js | Schema 2, source/revision, topology, units/limits, uniform-tool and domain validation |
+| engine/rules.js | Pure optical, counter and history findings at both endpoints; exactly one diagnosis |
+| engine/state.js | Aim/inspect, explicit submit, attempts, assistance, safe retry and six-incident progression |
+| engine/feedback.js | Explanations from computed evidence, specific to the selected category |
+| ui/render.js / ui/controls.js | Semantic native inputs, graphical arena, console and responsive display |
+| style.css | Night dojo, targets, shuriken animation, gauges and reduced-motion alternative |
+| data/levels.json | Three neutral groups, six mixed incidents, source-backed authored observations |
+| tests/ | Independent rule, content and state assertions; Node and browser runners |
+
+The retained `levels` container is an authoring grouping, not a diagnosis progression. One briefing
+leads directly through six challenges to a final summary. Do not introduce an intermediate lesson
+view or use group identity to select a rule. Choice identities name categories, never correctness.
+
+## Evaluation and data flow
+
+1. Load and validate the whole document before starting. Review metadata must match its revision.
+2. Every incident contains `observations.light`, `observations.counters`, and `observations.history`
+   for both interfaces, plus the same four display tools at both switches.
+3. Compute all six findings. Check endpoint identities, window alignment and current states across
+   tools. Zero or multiple supported findings are content errors.
+4. Match only the selected category to the computed condition. Feedback identifies the receiver.
+5. Only explicit Throw submits. Evaluate and expose feedback/Next immediately; decorative motion
+   has no callback or timer that can affect state. Reduced motion hides the projectile.
+6. A wrong throw retains the incident. A correct throw completes once. Explicit Next moves onward.
+
+## Visual and interaction design
+
+A night dojo with inline vector ninja, moon, gate and three targets sits beside the investigation
+console. Clicking/tapping a target or using native radio arrows aims; the separate Throw button
+commits the answer. A projectile moves toward the selected target; a static impact mark and text
+carry the result. No lives, countdowns, points or aim precision.
+
+Endpoint buttons preserve the selected diagnostic tool. Tool buttons offer Interface now, Optics,
+CRC snapshots and State history in a fixed order on every incident. Optical gauges supplement
+numeric dBm rows; counter pairs remain side by side; static history lists the initial state and
+reports. Terminal text uses textContent, labeled scrolling, and no HTML interpretation.
+
+## Constitution check
+
+| Principle | Design / evidence |
+| --- | --- |
+| C1 Technical truth | Independent expectations, source-to-simulation review, all-method evaluation and content rejection |
+| C2 Decision learning | Unknown category per incident, equal evidence access, category targets, reasoned feedback |
+| C3 Honest progress | Explicit submit/Next, no penalties, unique completion, separate assistance |
+| C4 Access | Native radios/buttons, visible focus, live text, no motion dependency; manual checks pending |
+| C5 Determinism | Fixed interleaved cases and pure rules; static local assets |
+| C6 Separation | JSON content, independent domain engine, renderer and session state |
+| C7 Demonstrated done | Automated report and explicit manual gaps in verification.md |
+
+## Implementation and validation sequence
+
+1. Amend scope/specification and independent expected case table for the owner's correction.
+2. Replace single-method observations with complete mixed evidence and review all displayed values.
+3. Compute all diagnoses and reject contradictions/ambiguity; update content schema and tests.
+4. Replace lesson transitions with direct incident progression; preserve help/reset/attempt semantics.
+5. Build native target controls, deliberate throws, graphical dojo and console; retain motion fallback.
+6. Run rule/content/state checks, inspect source/display agreement, check syntax and whitespace.
+7. Open index.html through the local server; conduct full pointer/keyboard playthrough, laptop/narrow
+   layouts, reduced motion and announcements. Record unavailable checks as Not run.
+
+## Traceability
+
+FR-001–008 → rules/content/data; FR-009–015 → feedback/state; FR-016–019 → render/controls/styles;
+FR-020–023 → review gate, evidence package, README and verification. AC1–AC22 and SC-001–SC-008
+remain explicit in the [working specification](../specs/001-noc-ninja-training/spec.md) and
+[verification record](../specs/001-noc-ninja-training/verification.md). Historical T001–T042 describe the original build;
+new tasks T043 onward cover this replacement behavior and current validation.
+
+## Content and evaluator contracts
+
+Use schema 2 with a document revision and matching source/output/round review records. The
+`levels` array contains three neutral authoring groups of two incidents; it never chooses a
+problem category. Every incident contains light, counters and history arrays for both endpoints.
+
+Choices are exactly `opticalIssue`, `crcIncreasing` and `linkFlapping`, each represented by a
+stable ID, label and category diagnosis. The submitted answer is `{choiceId}`. No conditionType,
+targetInterfaceId, correct-answer flag or choice position selects the expected diagnosis.
+Compute all methods, require one supported endpoint/category, then compare the chosen category.
+
+Enforce the selected platform/name/port mapping, distinct same-subnet /126 addresses, all supplied
+optical limits, timestamp/state agreement and complete evidence. The general IPv6 parser can
+accept other valid prefixes; playable deployment data must use /126. Missing or stale source
+review and zero/multiple supported findings disable the whole curriculum, without learner penalty.
+
+The pure evaluator returns status (`correct`, `incorrect`, `invalid-input` or `content-error`),
+expected endpoint/category, reasonCode and evidence. Light interpretation distinguishes absent
+from degraded Rx; CRC uses a positive delta with up snapshots and no reset; history counts actual
+changes in the inclusive 60-second window. No timer or animation callback affects this result.
+
+Field definitions and edge cases are maintained in the [data model](../specs/001-noc-ninja-training/data-model.md),
+[content contract](../specs/001-noc-ninja-training/contracts/content.md),
+[evaluator contract](../specs/001-noc-ninja-training/contracts/evaluator.md), and
+[interaction contract](../specs/001-noc-ninja-training/contracts/interaction.md).
+
+## Run and verify
+
+From the repository root:
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open **http://127.0.0.1:8000**. On Windows use `py` in place of `python3`. Native modules and JSON fetching need a web server; opening the HTML with `file://` is not the supported run path. [MDN reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
+Open [index.html](http://127.0.0.1:8000/index.html). Use HTTP for native modules and JSON;
+opening a file URL is not supported. No install/build step is needed. Stop the server with Ctrl+C.
 
-## Proposed files and responsibilities
+Run the dependency-free automated suite:
 
-```text
-index.html                   Semantic page shell and module entry point
-style.css                    Layout, focus, feedback states, reduced motion
-main.js                      Load → validate → start; render loading/errors
-engine/
-  rules.js                   Pure domain evaluation; no DOM or progress changes
-  content.js                 Validate authored level data and source references
-  state.js                   Session transitions, attempts, completion, restart
-  feedback.js                Explain structured evaluation results
-ui/
-  render.js                  Briefing, challenge, feedback, and summary views
-  controls.js                Input events and keyboard/focus behavior
-data/
-  levels.json                Briefings, challenges, hints, source records
-tests/
-  index.html                 Browser test runner with visible pass/fail summary
-  rules.test.js              Independent expected results from the specification
-  state.test.js              Attempts, assistance, duplicate submit, progression
-  content.test.js            Invalid/missing/ambiguous authored data
-README.md                    Actual run instructions, behavior, and evidence
+```sh
+node tests/run.mjs
 ```
 
-Use `data/` and `tests/` at the root alongside `engine/` and `ui/`. Keep modules small enough to understand; combine view files if separate files add no value.
+The [browser runner](http://127.0.0.1:8000/tests/) must discover tests and report zero failures;
+zero tests, failed imports and uncaught errors are failures. Expected diagnoses come from the
+independent case table, never from the evaluator under test.
 
-## Data contract
-
-Define one document containing `schemaVersion`, `sources`, and `levels`. Each level has a unique ID, title, learning outcome, briefing, source IDs, and ordered rounds. Each round has a unique ID, domain-specific challenge, stable choice IDs where applicable, and ordered hints.
-
-**Domain fields:**
-
-- `conditionType`: enum: `linkDownNoRx`, `crcIncreasing`, or
-  `linkFlapping`.
-- `deviceId` and `peerDeviceId`: nonempty strings referencing devices
-  in the challenge topology.
-- `interfaceName` and `peerInterfaceName`: nonempty strings identifying
-  the connected physical Ethernet (fiber) interfaces.
-- `eosVersion`: string, exactly `4.36.3M`.
-- `hardwarePlatform`: nonempty string identifying the modeled platform.
-- `ipv6Address` and `peerIpv6Address`: valid IPv6 interface addresses
-  with prefix lengths from 0 through 128, consistent with the documented
-  point-to-point design.
-- `commandOutputs`: ordered array of records containing a unique ID,
-  device ID, command string, UTC capture timestamp, and verified
-  simulated output text.
-- `observations`: structured evidence associated with command-output
-  IDs, using the fields appropriate to the condition:
-  - Link down: administrative state (`up` or `down`), operational state
-    (`up` or `down`), and receive-signal state (`present`, `absent`,
-    or `unknown`). Optical power, when included, is a finite number
-    in dBm; an unavailable reading is null, never an invented value.
-    Interpret readings using documented transceiver-specific limits.
-  - CRC errors: at least two ordered snapshots containing a UTC
-    timestamp, operational state, and cumulative receive CRC count.
-    Counts are nonnegative safe integers in frames. Counter resets
-    and rollover are excluded from first-release challenges.
-  - Flapping: initial operational state and an ordered array of
-    timestamped transitions to `up` or `down`, plus observation-window
-    start and end timestamps. `minimumTransitions` is an integer
-    of at least 2 and defines the challenge's teaching threshold,
-    not a universal EOS definition of flapping.
-- `targetInterface`: device ID and interface name identifying where
-  the learner must diagnose the condition.
-
-**Choice representation:** Each round provides an array of choices
-with unique, stable `id` values, learner-facing `label` text, and a
-structured diagnosis containing `deviceId`, `interfaceName`, and
-`condition` (`linkDownNoRx`, `crcIncreasing`, `linkFlapping`, or
-`insufficientEvidence`). A choice may additionally assert a
-`claimedCause`, such as a failed cable or optic. The learner submits
-`{ "choiceId": "<stable-choice-id>" }`. Each choice has authored
-explanatory feedback. The evaluator checks its diagnosis against
-the structured evidence; answer positions and label wording never
-determine correctness.
-
-**Validation rules:**
-
-Reject the content file for any of the following:
-
-- Missing required fields, incorrect types, unknown condition types,
-  or an EOS version other than `4.36.3M`.
-- Duplicate level IDs, globally duplicated round IDs, or duplicate
-  choice, hint, or command-output IDs within a round.
-- Broken device, interface, source, or command-output references.
-- Invalid IPv6 addresses, timestamps, numeric values, or units.
-- Missing source support for command behavior, diagnostic
-  interpretations, or platform-specific limits.
-- Structured observations that contradict displayed command output,
-  topology, briefings, hints, or explanations.
-- Missing condition-specific evidence or an undefined target interface.
-- CRC snapshots with non-increasing timestamps, decreasing counters,
-  or a counter delta inconsistent with the accepted diagnosis.
-- Flapping evidence with unordered or out-of-window transitions,
-  repeated states that do not represent actual transitions, or an
-  invalid observation window or transition threshold.
-- A link-down/no-receive-signal diagnosis without evidence establishing
-  both conditions, or optical measurements interpreted without their
-  applicable documented limits.
-- Choices that claim an underlying component failure unsupported
-  by the evidence.
-- Zero or multiple defensibly correct choices, including choices
-  that express equivalent correct diagnoses.
-- Missing explanatory feedback, unordered hints, or hints and
-  worked solutions that contradict the accepted diagnosis.
-
-Validate that each round's expected answer agrees with the documented
-evaluation rule and its independently hand-verified acceptance case.
-
-The loader must validate the whole content file before starting. Show a useful content error with the level/round ID; do not count it as a learner attempt. Briefings and hints reference source records with a title, URL, section, and supported claim. Fixed wording and per-level content live in data; numeric reasoning may be assembled from evaluator results.
-
-Do not invent a universal quiz schema that discards the domain's real structure. Adapt the [worked example's plan](https://github.com/automateyournetwork/NAF_AC6/blob/main/WORKSHOP/LAB/Examples/PrefixQuest/PLAN.md) only if it fits your game.
-
-## Domain evaluation contract
-
-```text
-evaluate(challenge, answer) → {
-  status: "correct" | "incorrect" | "invalid-input" | "content-error",
-  expected: domain-specific canonical result, or null,
-  reasonCode: stable identifier for the rule/misconception,
-  evidence: structured values used to explain the decision
-}
-```
-
-- This is a pure function: same inputs, same result; no DOM, timer, network, random choice, or score changes.
-- Compute the result from [EXPLICIT DOMAIN ALGORITHM]. The UI must not choose the correct answer by position, label, or animation destination.
-- Distinguish a learner's incorrect decision from invalid input and broken authored content.
-- Define accepted equivalent answers and reject unsupported ambiguity explicitly.
-- Expected answers in tests come from independently reviewed cases. Don't calculate them by calling the same evaluator being tested.
-
-**Feedback example:** [A WRONG CHOICE, THE REASON CODE, AND THE EXACT EXPLANATION WITH RELEVANT VALUES].
-
-## Session transitions
-
-```text
-loading → briefing → awaiting-answer
-                     ├─ invalid input → guidance → awaiting-answer
-                     ├─ incorrect → feedback → retry same round
-                     └─ correct → feedback → Next → next round/briefing/summary
-loading/content failure → error screen → retry loading
-confirmed Restart → fresh first briefing
-```
-
-The state module owns attempts, assistance, completed round IDs, current round, and current view. Selection and hints do not submit an answer. Count valid submissions only while a round is unsolved. Disable Submit after success; guard in state logic as well. Advance only through explicit Next. Restart requires confirmation; cancellation changes nothing.
-
-## Interaction and visual direction
-
-Translate a ninja-themed NOC workstation into a compact challenge area showing two labeled Arista devices and their connecting singl mode fiber link, labeled show-command controls, a simulated terminal displaying command output, and a persistent explanation area. Keep the ninja theme in decorative elements and progress indicators; preserve technical clarity in all evidence and controls.
-
-Use a clear type hierarchy and one consistent visual language. Motion should reveal a consequence: a link indicator changes state alongside timestamped up/down events, or a CRC counter highlights the increase between two snapshots. Every effect must correspond to the displayed evidence and include an equivalent text description.
-
-Use native controls where possible, move focus deliberately after screen changes, and announce feedback through a live region. Respect `prefers-reduced-motion`. Display textual values alongside diagrams. A learner must not need animation, color vision, pointer precision, or hover to reason about the answer.
-
-## Implementation order
-
-| Slice | Deliverable | Evidence before the next slice |
-| --- | --- | --- |
-| 1 · Prove the rule | Pure evaluator plus the spec's correct/wrong/boundary cases | Expected results pass independently of the UI |
-| 2 · Complete one round | Briefing, challenge, feedback, retry, Next | One correct and one wrong path work in the browser |
-| 3 · Add the curriculum | All scoped levels, validation, hints, session summary | Each shipped round agrees with its reviewed cases |
-| 4 · Make it usable | Keyboard/focus, reduced motion, narrow layout, clear error states | Manual checks are recorded |
-| 5 · Package the result | README, screenshot if available, optional hosting | Another attendee can run and explain the game |
-
-Generate `tasks.md` from these slices and the actual acceptance criteria. Do not create a large task tree for hypothetical stretch features.
-
-## Verification and reporting
-
-Implement a dependency-free browser test runner at `tests/index.html` that imports the pure modules, runs all assertions, and shows totals plus failed case IDs. It must report zero discovered tests as failure. Open **http://127.0.0.1:8000/tests/** after starting the same server.
-
-| Check | What must be established |
-| --- | --- |
-| Domain cases | Correct, plausible wrong, and boundary outcomes for the supported model |
-| Input/content failures | Invalid submissions do not consume attempts; malformed content cannot be graded |
-| State transitions | Retry, hints, duplicate submission, level completion, final summary, restart/cancel |
-| Source review | Each briefing and explanation agrees with the cited technical rule |
-| Browser playthrough | Fresh start to summary, keyboard-only core actions, readable feedback |
-| Layout/motion | Typical laptop, narrow viewport, reduced motion |
-| Hosting, if used | Assets and data load under the published repository path |
-
-For each required acceptance criterion, record **pass / fail / not run**, the date, environment, and evidence in the README or a linked verification note. The test runner checks code behavior; a human still reviews the teaching content and actual interaction.
-
-## Scope controls
-
-No persistence, multiplayer, runtime AI, procedural scenario generator, editor, or audio in v1. If time runs short, propose the smallest coherent reduction to the specification and update the tasks. Do not hide skipped checks or silently weaken correctness.
+Follow the [manual quickstart](../specs/001-noc-ninja-training/quickstart.md) for all six incidents,
+wrong retries, hints, explicit throws, restart, keyboard operation, 1366×768 and 375×812 layouts,
+reduced motion, announcements and fresh-session loading. Record pass/fail/not-run with environment
+and evidence in [verification.md](../specs/001-noc-ninja-training/verification.md). The existing
+103 automated checks pass; outstanding manual checks remain open. No deployment is implied.

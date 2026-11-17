@@ -1,0 +1,4410 @@
+{
+  "schemaVersion": 2,
+  "contentRevision": "noc-v2.1-2026-11-17",
+  "sources": [
+    {
+      "id": "U-deployment",
+      "kind": "user-reference",
+      "title": "Selected deployment and source confirmation",
+      "locator": "specs/001-noc-ninja-training/evidence/release-platform-review.md",
+      "section": "User-selected topology; user confirms U4 source setup",
+      "supportedClaims": [
+        "deployment"
+      ],
+      "applicability": {
+        "eosVersion": "4.36.3M",
+        "platforms": [
+          "DCS-7050SX3-48YC8",
+          "DCS-7808-CH"
+        ],
+        "imageArchitectures": [
+          32,
+          64
+        ],
+        "lineCard": "7800R3-48CQ-LC",
+        "slot": 3,
+        "opticModel": "C100Q020CWDM403B"
+      },
+      "review": {
+        "status": "verified",
+        "reviewer": "Codex \u2014 source-to-simulation review",
+        "reviewedOn": "2026-11-17",
+        "contentRevision": "noc-v2.1-2026-11-17",
+        "notes": "User-confirmed setup and supplied measurements retained. Mixed-incident simulation review: evidence/mixed-incident-review.md."
+      }
+    },
+    {
+      "id": "U4",
+      "kind": "user-example",
+      "title": "Working EOS troubleshooting commands",
+      "locator": "specs/001-noc-ninja-training/evidence/user-samples.md",
+      "section": "U4a transceiver; U4b MAC detail; U4c interface detail",
+      "supportedClaims": [
+        "interface-state",
+        "crc-counter",
+        "transceiver"
+      ],
+      "applicability": {
+        "eosVersion": "4.36.3M",
+        "platforms": [
+          "DCS-7050SX3-48YC8",
+          "DCS-7808-CH"
+        ],
+        "imageArchitectures": [
+          32,
+          64
+        ],
+        "lineCard": "7800R3-48CQ-LC",
+        "slot": 3,
+        "opticModel": "C100Q020CWDM403B"
+      },
+      "review": {
+        "status": "verified",
+        "reviewer": "Codex \u2014 source-to-simulation review",
+        "reviewedOn": "2026-11-17",
+        "contentRevision": "noc-v2.1-2026-11-17",
+        "notes": "User-confirmed setup and supplied measurements retained. Mixed-incident simulation review: evidence/mixed-incident-review.md."
+      }
+    },
+    {
+      "id": "U3-U5",
+      "kind": "user-reference",
+      "title": "ColorChip reference and no-light interpretation",
+      "locator": "specs/001-noc-ninja-training/evidence/colorchip-reference.md",
+      "section": "U3 supplied limits; U5 confirmed units and -30 dBm meaning",
+      "supportedClaims": [
+        "optical-reference",
+        "no-light",
+        "low-light"
+      ],
+      "applicability": {
+        "eosVersion": "4.36.3M",
+        "platforms": [
+          "DCS-7050SX3-48YC8",
+          "DCS-7808-CH"
+        ],
+        "imageArchitectures": [
+          32,
+          64
+        ],
+        "lineCard": "7800R3-48CQ-LC",
+        "slot": 3,
+        "opticModel": "C100Q020CWDM403B"
+      },
+      "review": {
+        "status": "verified",
+        "reviewer": "Codex \u2014 source-to-simulation review",
+        "reviewedOn": "2026-11-17",
+        "contentRevision": "noc-v2.1-2026-11-17",
+        "notes": "User-confirmed setup and supplied measurements retained. Mixed-incident simulation review: evidence/mixed-incident-review.md."
+      }
+    },
+    {
+      "id": "RULES",
+      "kind": "authored-rule",
+      "title": "Independent arithmetic and timed-history cases",
+      "locator": "specs/001-noc-ninja-training/evidence/mixed-incident-review.md",
+      "section": "Independently derived results; inclusive four-transition teaching rule",
+      "supportedClaims": [
+        "timed-history",
+        "crc-arithmetic"
+      ],
+      "applicability": {
+        "eosVersion": "4.36.3M",
+        "platforms": [
+          "DCS-7050SX3-48YC8",
+          "DCS-7808-CH"
+        ],
+        "imageArchitectures": [
+          32,
+          64
+        ],
+        "lineCard": "7800R3-48CQ-LC",
+        "slot": 3,
+        "opticModel": "C100Q020CWDM403B"
+      },
+      "review": {
+        "status": "verified",
+        "reviewer": "Codex \u2014 source-to-simulation review",
+        "reviewedOn": "2026-11-17",
+        "contentRevision": "noc-v2.1-2026-11-17",
+        "notes": "User-confirmed setup and supplied measurements retained. Mixed-incident simulation review: evidence/mixed-incident-review.md."
+      }
+    }
+  ],
+  "levels": [
+    {
+      "id": "L1",
+      "title": "First watch",
+      "tagline": "Read the network. Trust the evidence. Make your throw.",
+      "learningOutcomes": [
+        "LO1",
+        "LO2",
+        "LO3"
+      ],
+      "difficulty": 1,
+      "briefing": {
+        "text": "Six incidents. Three possible diagnoses. Inspect both switches, compare the evidence, then aim at a diagnosis and throw your shuriken. Each incident has one supported problem category. No timer, lives, or penalty for retrying.",
+        "definitions": [
+          {
+            "term": "Light levels",
+            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent."
+          },
+          {
+            "term": "CRC / errors",
+            "meaning": "Compare the same receiving interface at two times. A positive CRC delta with up states is evidence of new errors. Old totals alone are not."
+          },
+          {
+            "term": "Link flapping",
+            "meaning": "Count actual up/down changes. Four or more inside the inclusive 60-second window qualifies in this game; it is a teaching threshold, not a universal EOS definition."
+          }
+        ],
+        "workedExample": "A receiver has 30 CRC errors, then 38 a minute later. Normal light and a stable up history rule out the other two categories. The evidence supports 8 new CRC errors. It does not identify a failed component.",
+        "sourceIds": [
+          "U-deployment",
+          "U4",
+          "U3-U5",
+          "RULES"
+        ]
+      },
+      "sourceIds": [
+        "U-deployment",
+        "U4",
+        "U3-U5",
+        "RULES"
+      ],
+      "rounds": [
+        {
+          "id": "L1-R1",
+          "title": "Midnight dispatch",
+          "contentRevision": "noc-v2.1-2026-11-17",
+          "prompt": "What problem does this incident show?",
+          "topology": {
+            "devices": [
+              {
+                "id": "leaf-gw1",
+                "label": "leaf-gw1",
+                "platform": "DCS-7050SX3-48YC8",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 32,
+                "routingModel": "multi-agent",
+                "lineCard": null,
+                "interfaces": [
+                  {
+                    "id": "a",
+                    "deviceId": "leaf-gw1",
+                    "name": "Ethernet51/1",
+                    "displayAlias": "Et51/1",
+                    "ipv6Address": "2001:db8:51::1/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "spine-gw1",
+                "label": "spine-gw1",
+                "platform": "DCS-7808-CH",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 64,
+                "routingModel": "multi-agent",
+                "lineCard": {
+                  "model": "7800R3-48CQ-LC",
+                  "slot": 3
+                },
+                "interfaces": [
+                  {
+                    "id": "b",
+                    "deviceId": "spine-gw1",
+                    "name": "Ethernet3/15/1",
+                    "displayAlias": "Et3/15/1",
+                    "ipv6Address": "2001:db8:51::2/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "link": {
+              "id": "fiber-01",
+              "endpointInterfaceIds": [
+                "a",
+                "b"
+              ],
+              "speedGbps": 100,
+              "medium": "single-mode-fiber"
+            }
+          },
+          "scopeInterfaceIds": [
+            "a",
+            "b"
+          ],
+          "commandOutputs": [
+            {
+              "id": "a-status",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     900 input errors, 900 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-optics",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 51/1 transceiver",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt51/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt51/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt51/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt51/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-counters",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     900 input errors, 900 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-history",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 51/1 mac detail",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-status",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     17 input errors, 17 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-optics",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 3/15/1 transceiver",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt3/15/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt3/15/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt3/15/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt3/15/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-counters",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     5 input errors, 5 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-history",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 3/15/1 mac detail",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            }
+          ],
+          "observations": {
+            "light": [
+              {
+                "interfaceId": "a",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "a-status",
+                  "a-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "b-status",
+                  "b-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "counters": [
+              {
+                "interfaceId": "a",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 900,
+                    "outputIds": [
+                      "a-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 900,
+                    "outputIds": [
+                      "a-status"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 5,
+                    "outputIds": [
+                      "b-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 17,
+                    "outputIds": [
+                      "b-status"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "interfaceId": "a",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              }
+            ]
+          },
+          "choices": [
+            {
+              "id": "opticalIssue",
+              "label": "Light levels",
+              "diagnosis": {
+                "condition": "opticalIssue"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "crcIncreasing",
+              "label": "CRC / errors",
+              "diagnosis": {
+                "condition": "crcIncreasing"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "linkFlapping",
+              "label": "Link flapping",
+              "diagnosis": {
+                "condition": "linkFlapping"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            }
+          ],
+          "hints": [
+            {
+              "id": "L1-R1-method",
+              "kind": "method",
+              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L1-R1-worked-step",
+              "kind": "worked-step",
+              "text": "spine-gw1 has 17 \u2212 5 = 12 new CRC errors. Its states are up; the other receiver\u2019s count is unchanged.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L1-R1-solution",
+              "kind": "solution",
+              "text": "spine-gw1 has 17 \u2212 5 = 12 new CRC errors. Its states are up; the other receiver\u2019s count is unchanged. Aim at CRC / errors. These observations do not isolate a failed cable, optic, or remote device.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            }
+          ],
+          "sourceIds": [
+            "U-deployment",
+            "U4",
+            "U3-U5",
+            "RULES"
+          ],
+          "review": {
+            "status": "verified",
+            "reviewer": "Codex \u2014 source-to-simulation review",
+            "reviewedOn": "2026-11-17",
+            "contentRevision": "noc-v2.1-2026-11-17",
+            "notes": "All three evidence families at both endpoints reviewed together. Independent expectations recorded in evidence/mixed-incident-review.md."
+          }
+        },
+        {
+          "id": "L1-R2",
+          "title": "East rack dispatch",
+          "contentRevision": "noc-v2.1-2026-11-17",
+          "prompt": "What problem does this incident show?",
+          "topology": {
+            "devices": [
+              {
+                "id": "leaf-gw1",
+                "label": "leaf-gw1",
+                "platform": "DCS-7050SX3-48YC8",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 32,
+                "routingModel": "multi-agent",
+                "lineCard": null,
+                "interfaces": [
+                  {
+                    "id": "a",
+                    "deviceId": "leaf-gw1",
+                    "name": "Ethernet51/1",
+                    "displayAlias": "Et51/1",
+                    "ipv6Address": "2001:db8:51::1/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "spine-gw1",
+                "label": "spine-gw1",
+                "platform": "DCS-7808-CH",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 64,
+                "routingModel": "multi-agent",
+                "lineCard": {
+                  "model": "7800R3-48CQ-LC",
+                  "slot": 3
+                },
+                "interfaces": [
+                  {
+                    "id": "b",
+                    "deviceId": "spine-gw1",
+                    "name": "Ethernet3/15/1",
+                    "displayAlias": "Et3/15/1",
+                    "ipv6Address": "2001:db8:51::2/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "link": {
+              "id": "fiber-01",
+              "endpointInterfaceIds": [
+                "a",
+                "b"
+              ],
+              "speedGbps": 100,
+              "medium": "single-mode-fiber"
+            }
+          },
+          "scopeInterfaceIds": [
+            "a",
+            "b"
+          ],
+          "commandOutputs": [
+            {
+              "id": "a-status",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is down, line protocol is down (notconnect)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-optics",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 51/1 transceiver",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt51/1    36.85      3.26      43.76     1.55      -30.00     0:00:01 ago\nEt51/2    36.85      3.26      56.42     1.30      -30.00     0:00:01 ago\nEt51/3    36.85      3.26      47.28     1.34      -30.00     0:00:01 ago\nEt51/4    36.85      3.26      56.42     1.31      -30.00     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-counters",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is down, line protocol is down (notconnect)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-history",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 51/1 mac detail",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: down\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: down",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-status",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-optics",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 3/15/1 transceiver",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt3/15/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt3/15/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt3/15/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt3/15/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-counters",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-history",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 3/15/1 mac detail",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            }
+          ],
+          "observations": {
+            "light": [
+              {
+                "interfaceId": "a",
+                "administrativeState": "up",
+                "operationalState": "down",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "a-status",
+                  "a-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": -30,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -30,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": -30,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": -30,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "b-status",
+                  "b-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "counters": [
+              {
+                "interfaceId": "a",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "down",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "a-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "down",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "a-status"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "b-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "b-status"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "interfaceId": "a",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "down",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              }
+            ]
+          },
+          "choices": [
+            {
+              "id": "opticalIssue",
+              "label": "Light levels",
+              "diagnosis": {
+                "condition": "opticalIssue"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "crcIncreasing",
+              "label": "CRC / errors",
+              "diagnosis": {
+                "condition": "crcIncreasing"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "linkFlapping",
+              "label": "Link flapping",
+              "diagnosis": {
+                "condition": "linkFlapping"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            }
+          ],
+          "hints": [
+            {
+              "id": "L1-R2-method",
+              "kind": "method",
+              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L1-R2-worked-step",
+              "kind": "worked-step",
+              "text": "leaf-gw1 is down and its four Rx readings are \u221230 dBm: no receive light in this setup.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L1-R2-solution",
+              "kind": "solution",
+              "text": "leaf-gw1 is down and its four Rx readings are \u221230 dBm: no receive light in this setup. Aim at Light levels. These observations do not isolate a failed cable, optic, or remote device.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            }
+          ],
+          "sourceIds": [
+            "U-deployment",
+            "U4",
+            "U3-U5",
+            "RULES"
+          ],
+          "review": {
+            "status": "verified",
+            "reviewer": "Codex \u2014 source-to-simulation review",
+            "reviewedOn": "2026-11-17",
+            "contentRevision": "noc-v2.1-2026-11-17",
+            "notes": "All three evidence families at both endpoints reviewed together. Independent expectations recorded in evidence/mixed-incident-review.md."
+          }
+        }
+      ]
+    },
+    {
+      "id": "L2",
+      "title": "Night shift",
+      "tagline": "Read the network. Trust the evidence. Make your throw.",
+      "learningOutcomes": [
+        "LO1",
+        "LO2",
+        "LO3"
+      ],
+      "difficulty": 2,
+      "briefing": {
+        "text": "Six incidents. Three possible diagnoses. Inspect both switches, compare the evidence, then aim at a diagnosis and throw your shuriken. Each incident has one supported problem category. No timer, lives, or penalty for retrying.",
+        "definitions": [
+          {
+            "term": "Light levels",
+            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent."
+          },
+          {
+            "term": "CRC / errors",
+            "meaning": "Compare the same receiving interface at two times. A positive CRC delta with up states is evidence of new errors. Old totals alone are not."
+          },
+          {
+            "term": "Link flapping",
+            "meaning": "Count actual up/down changes. Four or more inside the inclusive 60-second window qualifies in this game; it is a teaching threshold, not a universal EOS definition."
+          }
+        ],
+        "workedExample": "A receiver has 30 CRC errors, then 38 a minute later. Normal light and a stable up history rule out the other two categories. The evidence supports 8 new CRC errors. It does not identify a failed component.",
+        "sourceIds": [
+          "U-deployment",
+          "U4",
+          "U3-U5",
+          "RULES"
+        ]
+      },
+      "sourceIds": [
+        "U-deployment",
+        "U4",
+        "U3-U5",
+        "RULES"
+      ],
+      "rounds": [
+        {
+          "id": "L2-R1",
+          "title": "Watchtower relay",
+          "contentRevision": "noc-v2.1-2026-11-17",
+          "prompt": "What problem does this incident show?",
+          "topology": {
+            "devices": [
+              {
+                "id": "leaf-gw1",
+                "label": "leaf-gw1",
+                "platform": "DCS-7050SX3-48YC8",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 32,
+                "routingModel": "multi-agent",
+                "lineCard": null,
+                "interfaces": [
+                  {
+                    "id": "a",
+                    "deviceId": "leaf-gw1",
+                    "name": "Ethernet51/1",
+                    "displayAlias": "Et51/1",
+                    "ipv6Address": "2001:db8:51::1/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "spine-gw1",
+                "label": "spine-gw1",
+                "platform": "DCS-7808-CH",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 64,
+                "routingModel": "multi-agent",
+                "lineCard": {
+                  "model": "7800R3-48CQ-LC",
+                  "slot": 3
+                },
+                "interfaces": [
+                  {
+                    "id": "b",
+                    "deviceId": "spine-gw1",
+                    "name": "Ethernet3/15/1",
+                    "displayAlias": "Et3/15/1",
+                    "ipv6Address": "2001:db8:51::2/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "link": {
+              "id": "fiber-01",
+              "endpointInterfaceIds": [
+                "a",
+                "b"
+              ],
+              "speedGbps": 100,
+              "medium": "single-mode-fiber"
+            }
+          },
+          "scopeInterfaceIds": [
+            "a",
+            "b"
+          ],
+          "commandOutputs": [
+            {
+              "id": "a-status",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-optics",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 51/1 transceiver",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt51/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt51/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt51/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt51/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-counters",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-history",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 51/1 mac detail",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-status",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is down, line protocol is down (notconnect)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-optics",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 3/15/1 transceiver",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt3/15/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt3/15/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt3/15/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt3/15/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-counters",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is down, line protocol is down (notconnect)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-history",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 3/15/1 mac detail",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: down\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nAuthored observation 2026-11-17T12:00:05.000Z\nEthernet3/15/1\n                              Current State\n Interface State             linkUp\n\nAuthored observation 2026-11-17T12:00:15.000Z\nEthernet3/15/1\n                              Current State\n Interface State             linkDown\n\nAuthored observation 2026-11-17T12:00:35.000Z\nEthernet3/15/1\n                              Current State\n Interface State             linkUp\n\nAuthored observation 2026-11-17T12:00:55.000Z\nEthernet3/15/1\n                              Current State\n Interface State             linkDown\n\nFinal observation 2026-11-17T12:01:00.000Z: down",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            }
+          ],
+          "observations": {
+            "light": [
+              {
+                "interfaceId": "a",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "a-status",
+                  "a-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "administrativeState": "up",
+                "operationalState": "down",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "b-status",
+                  "b-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "counters": [
+              {
+                "interfaceId": "a",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "a-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "a-status"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "down",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "b-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "down",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "b-status"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "interfaceId": "a",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "down",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [
+                  {
+                    "observedAt": "2026-11-17T12:00:05.000Z",
+                    "operationalState": "up",
+                    "outputIds": [
+                      "b-history"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:00:15.000Z",
+                    "operationalState": "down",
+                    "outputIds": [
+                      "b-history"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:00:35.000Z",
+                    "operationalState": "up",
+                    "outputIds": [
+                      "b-history"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:00:55.000Z",
+                    "operationalState": "down",
+                    "outputIds": [
+                      "b-history"
+                    ]
+                  }
+                ],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              }
+            ]
+          },
+          "choices": [
+            {
+              "id": "opticalIssue",
+              "label": "Light levels",
+              "diagnosis": {
+                "condition": "opticalIssue"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "crcIncreasing",
+              "label": "CRC / errors",
+              "diagnosis": {
+                "condition": "crcIncreasing"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "linkFlapping",
+              "label": "Link flapping",
+              "diagnosis": {
+                "condition": "linkFlapping"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            }
+          ],
+          "hints": [
+            {
+              "id": "L2-R1-method",
+              "kind": "method",
+              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L2-R1-worked-step",
+              "kind": "worked-step",
+              "text": "spine-gw1 changes state four times in 60 seconds, ending down. Light is present and CRC totals do not increase.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L2-R1-solution",
+              "kind": "solution",
+              "text": "spine-gw1 changes state four times in 60 seconds, ending down. Light is present and CRC totals do not increase. Aim at Link flapping. These observations do not isolate a failed cable, optic, or remote device.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            }
+          ],
+          "sourceIds": [
+            "U-deployment",
+            "U4",
+            "U3-U5",
+            "RULES"
+          ],
+          "review": {
+            "status": "verified",
+            "reviewer": "Codex \u2014 source-to-simulation review",
+            "reviewedOn": "2026-11-17",
+            "contentRevision": "noc-v2.1-2026-11-17",
+            "notes": "All three evidence families at both endpoints reviewed together. Independent expectations recorded in evidence/mixed-incident-review.md."
+          }
+        },
+        {
+          "id": "L2-R2",
+          "title": "After the handover",
+          "contentRevision": "noc-v2.1-2026-11-17",
+          "prompt": "What problem does this incident show?",
+          "topology": {
+            "devices": [
+              {
+                "id": "leaf-gw1",
+                "label": "leaf-gw1",
+                "platform": "DCS-7050SX3-48YC8",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 32,
+                "routingModel": "multi-agent",
+                "lineCard": null,
+                "interfaces": [
+                  {
+                    "id": "a",
+                    "deviceId": "leaf-gw1",
+                    "name": "Ethernet51/1",
+                    "displayAlias": "Et51/1",
+                    "ipv6Address": "2001:db8:51::1/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "spine-gw1",
+                "label": "spine-gw1",
+                "platform": "DCS-7808-CH",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 64,
+                "routingModel": "multi-agent",
+                "lineCard": {
+                  "model": "7800R3-48CQ-LC",
+                  "slot": 3
+                },
+                "interfaces": [
+                  {
+                    "id": "b",
+                    "deviceId": "spine-gw1",
+                    "name": "Ethernet3/15/1",
+                    "displayAlias": "Et3/15/1",
+                    "ipv6Address": "2001:db8:51::2/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "link": {
+              "id": "fiber-01",
+              "endpointInterfaceIds": [
+                "a",
+                "b"
+              ],
+              "speedGbps": 100,
+              "medium": "single-mode-fiber"
+            }
+          },
+          "scopeInterfaceIds": [
+            "a",
+            "b"
+          ],
+          "commandOutputs": [
+            {
+              "id": "a-status",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     145 input errors, 145 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-optics",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 51/1 transceiver",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt51/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt51/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt51/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt51/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-counters",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     120 input errors, 120 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-history",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 51/1 mac detail",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-status",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     2400 input errors, 2400 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-optics",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 3/15/1 transceiver",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt3/15/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt3/15/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt3/15/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt3/15/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-counters",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     2400 input errors, 2400 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-history",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 3/15/1 mac detail",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            }
+          ],
+          "observations": {
+            "light": [
+              {
+                "interfaceId": "a",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "a-status",
+                  "a-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "b-status",
+                  "b-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "counters": [
+              {
+                "interfaceId": "a",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 120,
+                    "outputIds": [
+                      "a-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 145,
+                    "outputIds": [
+                      "a-status"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 2400,
+                    "outputIds": [
+                      "b-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 2400,
+                    "outputIds": [
+                      "b-status"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "interfaceId": "a",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              }
+            ]
+          },
+          "choices": [
+            {
+              "id": "opticalIssue",
+              "label": "Light levels",
+              "diagnosis": {
+                "condition": "opticalIssue"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "crcIncreasing",
+              "label": "CRC / errors",
+              "diagnosis": {
+                "condition": "crcIncreasing"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "linkFlapping",
+              "label": "Link flapping",
+              "diagnosis": {
+                "condition": "linkFlapping"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            }
+          ],
+          "hints": [
+            {
+              "id": "L2-R2-method",
+              "kind": "method",
+              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L2-R2-worked-step",
+              "kind": "worked-step",
+              "text": "leaf-gw1 has 145 \u2212 120 = 25 new CRC errors. Its states are up; the other receiver\u2019s count is unchanged.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L2-R2-solution",
+              "kind": "solution",
+              "text": "leaf-gw1 has 145 \u2212 120 = 25 new CRC errors. Its states are up; the other receiver\u2019s count is unchanged. Aim at CRC / errors. These observations do not isolate a failed cable, optic, or remote device.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            }
+          ],
+          "sourceIds": [
+            "U-deployment",
+            "U4",
+            "U3-U5",
+            "RULES"
+          ],
+          "review": {
+            "status": "verified",
+            "reviewer": "Codex \u2014 source-to-simulation review",
+            "reviewedOn": "2026-11-17",
+            "contentRevision": "noc-v2.1-2026-11-17",
+            "notes": "All three evidence families at both endpoints reviewed together. Independent expectations recorded in evidence/mixed-incident-review.md."
+          }
+        }
+      ]
+    },
+    {
+      "id": "L3",
+      "title": "Final watch",
+      "tagline": "Read the network. Trust the evidence. Make your throw.",
+      "learningOutcomes": [
+        "LO1",
+        "LO2",
+        "LO3"
+      ],
+      "difficulty": 3,
+      "briefing": {
+        "text": "Six incidents. Three possible diagnoses. Inspect both switches, compare the evidence, then aim at a diagnosis and throw your shuriken. Each incident has one supported problem category. No timer, lives, or penalty for retrying.",
+        "definitions": [
+          {
+            "term": "Light levels",
+            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent."
+          },
+          {
+            "term": "CRC / errors",
+            "meaning": "Compare the same receiving interface at two times. A positive CRC delta with up states is evidence of new errors. Old totals alone are not."
+          },
+          {
+            "term": "Link flapping",
+            "meaning": "Count actual up/down changes. Four or more inside the inclusive 60-second window qualifies in this game; it is a teaching threshold, not a universal EOS definition."
+          }
+        ],
+        "workedExample": "A receiver has 30 CRC errors, then 38 a minute later. Normal light and a stable up history rule out the other two categories. The evidence supports 8 new CRC errors. It does not identify a failed component.",
+        "sourceIds": [
+          "U-deployment",
+          "U4",
+          "U3-U5",
+          "RULES"
+        ]
+      },
+      "sourceIds": [
+        "U-deployment",
+        "U4",
+        "U3-U5",
+        "RULES"
+      ],
+      "rounds": [
+        {
+          "id": "L3-R1",
+          "title": "Cross-campus call",
+          "contentRevision": "noc-v2.1-2026-11-17",
+          "prompt": "What problem does this incident show?",
+          "topology": {
+            "devices": [
+              {
+                "id": "leaf-gw1",
+                "label": "leaf-gw1",
+                "platform": "DCS-7050SX3-48YC8",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 32,
+                "routingModel": "multi-agent",
+                "lineCard": null,
+                "interfaces": [
+                  {
+                    "id": "a",
+                    "deviceId": "leaf-gw1",
+                    "name": "Ethernet51/1",
+                    "displayAlias": "Et51/1",
+                    "ipv6Address": "2001:db8:51::1/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "spine-gw1",
+                "label": "spine-gw1",
+                "platform": "DCS-7808-CH",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 64,
+                "routingModel": "multi-agent",
+                "lineCard": {
+                  "model": "7800R3-48CQ-LC",
+                  "slot": 3
+                },
+                "interfaces": [
+                  {
+                    "id": "b",
+                    "deviceId": "spine-gw1",
+                    "name": "Ethernet3/15/1",
+                    "displayAlias": "Et3/15/1",
+                    "ipv6Address": "2001:db8:51::2/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "link": {
+              "id": "fiber-01",
+              "endpointInterfaceIds": [
+                "a",
+                "b"
+              ],
+              "speedGbps": 100,
+              "medium": "single-mode-fiber"
+            }
+          },
+          "scopeInterfaceIds": [
+            "a",
+            "b"
+          ],
+          "commandOutputs": [
+            {
+              "id": "a-status",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-optics",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 51/1 transceiver",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt51/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt51/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt51/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt51/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-counters",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-history",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 51/1 mac detail",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-status",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is down, line protocol is down (notconnect)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-optics",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 3/15/1 transceiver",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt3/15/1    36.85      3.26      43.76     1.55      -17.20     0:00:01 ago\nEt3/15/2    36.85      3.26      56.42     1.30      -16.80     0:00:01 ago\nEt3/15/3    36.85      3.26      47.28     1.34      -17.00     0:00:01 ago\nEt3/15/4    36.85      3.26      56.42     1.31      -16.90     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-counters",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is down, line protocol is down (notconnect)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-history",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 3/15/1 mac detail",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: down\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: down",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            }
+          ],
+          "observations": {
+            "light": [
+              {
+                "interfaceId": "a",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "a-status",
+                  "a-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "administrativeState": "up",
+                "operationalState": "down",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "b-status",
+                  "b-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": -17.2,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -16.8,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": -17.0,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": -16.9,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "counters": [
+              {
+                "interfaceId": "a",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "a-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "a-status"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "down",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "b-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "down",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "b-status"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "interfaceId": "a",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "down",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              }
+            ]
+          },
+          "choices": [
+            {
+              "id": "opticalIssue",
+              "label": "Light levels",
+              "diagnosis": {
+                "condition": "opticalIssue"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "crcIncreasing",
+              "label": "CRC / errors",
+              "diagnosis": {
+                "condition": "crcIncreasing"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "linkFlapping",
+              "label": "Link flapping",
+              "diagnosis": {
+                "condition": "linkFlapping"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            }
+          ],
+          "hints": [
+            {
+              "id": "L3-R1-method",
+              "kind": "method",
+              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L3-R1-worked-step",
+              "kind": "worked-step",
+              "text": "spine-gw1 has Rx values from \u221217.20 to \u221216.80 dBm, all below the \u221215.70 dBm low alarm. Very bad light does not mean no light.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L3-R1-solution",
+              "kind": "solution",
+              "text": "spine-gw1 has Rx values from \u221217.20 to \u221216.80 dBm, all below the \u221215.70 dBm low alarm. Very bad light does not mean no light. Aim at Light levels. These observations do not isolate a failed cable, optic, or remote device.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            }
+          ],
+          "sourceIds": [
+            "U-deployment",
+            "U4",
+            "U3-U5",
+            "RULES"
+          ],
+          "review": {
+            "status": "verified",
+            "reviewer": "Codex \u2014 source-to-simulation review",
+            "reviewedOn": "2026-11-17",
+            "contentRevision": "noc-v2.1-2026-11-17",
+            "notes": "All three evidence families at both endpoints reviewed together. Independent expectations recorded in evidence/mixed-incident-review.md."
+          }
+        },
+        {
+          "id": "L3-R2",
+          "title": "Last call",
+          "contentRevision": "noc-v2.1-2026-11-17",
+          "prompt": "What problem does this incident show?",
+          "topology": {
+            "devices": [
+              {
+                "id": "leaf-gw1",
+                "label": "leaf-gw1",
+                "platform": "DCS-7050SX3-48YC8",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 32,
+                "routingModel": "multi-agent",
+                "lineCard": null,
+                "interfaces": [
+                  {
+                    "id": "a",
+                    "deviceId": "leaf-gw1",
+                    "name": "Ethernet51/1",
+                    "displayAlias": "Et51/1",
+                    "ipv6Address": "2001:db8:51::1/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "spine-gw1",
+                "label": "spine-gw1",
+                "platform": "DCS-7808-CH",
+                "eosVersion": "4.36.3M",
+                "imageArchitecture": 64,
+                "routingModel": "multi-agent",
+                "lineCard": {
+                  "model": "7800R3-48CQ-LC",
+                  "slot": 3
+                },
+                "interfaces": [
+                  {
+                    "id": "b",
+                    "deviceId": "spine-gw1",
+                    "name": "Ethernet3/15/1",
+                    "displayAlias": "Et3/15/1",
+                    "ipv6Address": "2001:db8:51::2/126",
+                    "optic": {
+                      "vendor": "COLORCHIP",
+                      "manufacturer": "ColorChip ltd",
+                      "model": "C100Q020CWDM403B",
+                      "formFactor": "QSFP28",
+                      "speedGbps": 100,
+                      "lanes": 4,
+                      "classification": "CWDM4",
+                      "referenceLimits": {
+                        "temperature": {
+                          "low_alarm": -5,
+                          "low_warn": 0,
+                          "high_warn": 55,
+                          "high_alarm": 60,
+                          "unit": "Celsius",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "voltage": {
+                          "low_alarm": 3,
+                          "low_warn": 3.1,
+                          "high_warn": 3.5,
+                          "high_alarm": 3.6,
+                          "unit": "V",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "bias_current": {
+                          "low_alarm": 20,
+                          "low_warn": 25,
+                          "high_warn": 75,
+                          "high_alarm": 78,
+                          "unit": "mA",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "tx_power": {
+                          "low_alarm": -9,
+                          "low_warn": -7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        },
+                        "rx_power": {
+                          "low_alarm": -15.7,
+                          "low_warn": -13.7,
+                          "high_warn": 2.3,
+                          "high_alarm": 3.3,
+                          "unit": "dBm",
+                          "scope": null,
+                          "comparisonRule": null,
+                          "sourceIds": [
+                            "U3-U5"
+                          ]
+                        }
+                      },
+                      "sourceIds": [
+                        "U3-U5"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "link": {
+              "id": "fiber-01",
+              "endpointInterfaceIds": [
+                "a",
+                "b"
+              ],
+              "speedGbps": 100,
+              "medium": "single-mode-fiber"
+            }
+          },
+          "scopeInterfaceIds": [
+            "a",
+            "b"
+          ],
+          "commandOutputs": [
+            {
+              "id": "a-status",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-optics",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 51/1 transceiver",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt51/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt51/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt51/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt51/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-counters",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 51/1",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1\nEthernet51/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "a-history",
+              "deviceId": "leaf-gw1",
+              "interfaceIds": [
+                "a"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 51/1 mac detail",
+              "text": "leaf-gw1(s1)#show interfaces ethernet 51/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nAuthored observation 2026-11-17T12:00:10.000Z\nEthernet51/1\n                              Current State\n Interface State             linkDown\n\nAuthored observation 2026-11-17T12:00:20.000Z\nEthernet51/1\n                              Current State\n Interface State             linkUp\n\nAuthored observation 2026-11-17T12:00:40.000Z\nEthernet51/1\n                              Current State\n Interface State             linkDown\n\nAuthored observation 2026-11-17T12:01:00.000Z\nEthernet51/1\n                              Current State\n Interface State             linkUp\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-status",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "status",
+              "label": "Interface now",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-optics",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "optics",
+              "label": "Optics",
+              "command": "show interfaces ethernet 3/15/1 transceiver",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 transceiver\nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                              Bias      Optical   Optical\n         Temp       Voltage   Current   Tx Power  Rx Power\nPort     (Celsius)  (Volts)    (mA)      (dBm)     (dBm)      Last Update\n-----    ---------  --------   --------  --------  --------   ------------\nEt3/15/1    36.85      3.26      43.76     1.55      0.42     0:00:01 ago\nEt3/15/2    36.85      3.26      56.42     1.30      -0.13     0:00:01 ago\nEt3/15/3    36.85      3.26      47.28     1.34      0.79     0:00:01 ago\nEt3/15/4    36.85      3.26      56.42     1.31      0.13     0:00:01 ago",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-counters",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "counters",
+              "label": "CRC snapshots",
+              "command": "show interfaces ethernet 3/15/1",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1\nEthernet3/15/1 is up, line protocol is up (connected)\n  Description: Training fiber 01 \u2014 routed IPv6 interface\n  Ethernet MTU 10218 bytes, Ethernet MRU 10240 bytes, BW 100000000 kbit\n  Full-duplex, 100Gb/s, auto negotiation: off, uni-link: disabled\n  Last clearing of \"show interface\" counters never\n     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards",
+              "observedAt": "2026-11-17T12:00:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            },
+            {
+              "id": "b-history",
+              "deviceId": "spine-gw1",
+              "interfaceIds": [
+                "b"
+              ],
+              "kind": "history",
+              "label": "State history",
+              "command": "show interfaces ethernet 3/15/1 mac detail",
+              "text": "spine-gw1(s1)#show interfaces ethernet 3/15/1 mac detail\nSIMULATED SNAPSHOT SERIES \u2014 not a captured vendor log\nInitial state: up\nWindow: 2026-11-17T12:00:00.000Z to 2026-11-17T12:01:00.000Z (inclusive)\nComplete authored state history; no unlisted transitions.\n\nNo state changes during this window.\n\nFinal observation 2026-11-17T12:01:00.000Z: up",
+              "observedAt": "2026-11-17T12:01:00.000Z",
+              "origin": "authored-simulation",
+              "sourceIds": [
+                "U4",
+                "U-deployment"
+              ],
+              "review": {
+                "status": "verified",
+                "reviewer": "Codex \u2014 source-to-simulation review",
+                "reviewedOn": "2026-11-17",
+                "contentRevision": "noc-v2.1-2026-11-17",
+                "notes": "Authored observations in supplied U4 format; timings, faults, and counters are simulations. No captured fault or exact hardware certification is implied."
+              }
+            }
+          ],
+          "observations": {
+            "light": [
+              {
+                "interfaceId": "a",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "a-status",
+                  "a-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "administrativeState": "up",
+                "operationalState": "up",
+                "observedAt": "2026-11-17T12:01:00.000Z",
+                "outputIds": [
+                  "b-status",
+                  "b-optics"
+                ],
+                "interpretationSourceIds": [
+                  "U3-U5"
+                ],
+                "opticalReadings": [
+                  {
+                    "channel": "1",
+                    "metric": "rx_power",
+                    "value": 0.42,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "2",
+                    "metric": "rx_power",
+                    "value": -0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "3",
+                    "metric": "rx_power",
+                    "value": 0.79,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  },
+                  {
+                    "channel": "4",
+                    "metric": "rx_power",
+                    "value": 0.13,
+                    "unit": "dBm",
+                    "sourceIds": [
+                      "U3-U5"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "counters": [
+              {
+                "interfaceId": "a",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "a-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "a-status"
+                    ]
+                  }
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "noReset": true,
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ],
+                "snapshots": [
+                  {
+                    "observedAt": "2026-11-17T12:00:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "b-counters"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "counterKind": "crc",
+                    "count": 0,
+                    "outputIds": [
+                      "b-status"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "interfaceId": "a",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [
+                  {
+                    "observedAt": "2026-11-17T12:00:10.000Z",
+                    "operationalState": "down",
+                    "outputIds": [
+                      "a-history"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:00:20.000Z",
+                    "operationalState": "up",
+                    "outputIds": [
+                      "a-history"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:00:40.000Z",
+                    "operationalState": "down",
+                    "outputIds": [
+                      "a-history"
+                    ]
+                  },
+                  {
+                    "observedAt": "2026-11-17T12:01:00.000Z",
+                    "operationalState": "up",
+                    "outputIds": [
+                      "a-history"
+                    ]
+                  }
+                ],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              },
+              {
+                "interfaceId": "b",
+                "windowStart": "2026-11-17T12:00:00.000Z",
+                "windowEnd": "2026-11-17T12:01:00.000Z",
+                "minimumTransitions": 4,
+                "stateBeforeHistory": "up",
+                "historyStart": "2026-11-17T12:00:00.000Z",
+                "historyComplete": true,
+                "reports": [],
+                "sourceIds": [
+                  "U4",
+                  "RULES"
+                ]
+              }
+            ]
+          },
+          "choices": [
+            {
+              "id": "opticalIssue",
+              "label": "Light levels",
+              "diagnosis": {
+                "condition": "opticalIssue"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "crcIncreasing",
+              "label": "CRC / errors",
+              "diagnosis": {
+                "condition": "crcIncreasing"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            },
+            {
+              "id": "linkFlapping",
+              "label": "Link flapping",
+              "diagnosis": {
+                "condition": "linkFlapping"
+              },
+              "feedback": {
+                "text": "Identify the observed condition before proposing a failed component.",
+                "method": "Compare light, counter changes, and the complete state history."
+              }
+            }
+          ],
+          "hints": [
+            {
+              "id": "L3-R2-method",
+              "kind": "method",
+              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L3-R2-worked-step",
+              "kind": "worked-step",
+              "text": "leaf-gw1 changes state four times in 60 seconds, ending up. Current up status does not erase those changes.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            },
+            {
+              "id": "L3-R2-solution",
+              "kind": "solution",
+              "text": "leaf-gw1 changes state four times in 60 seconds, ending up. Current up status does not erase those changes. Aim at Link flapping. These observations do not isolate a failed cable, optic, or remote device.",
+              "sourceIds": [
+                "U-deployment",
+                "U4",
+                "U3-U5",
+                "RULES"
+              ]
+            }
+          ],
+          "sourceIds": [
+            "U-deployment",
+            "U4",
+            "U3-U5",
+            "RULES"
+          ],
+          "review": {
+            "status": "verified",
+            "reviewer": "Codex \u2014 source-to-simulation review",
+            "reviewedOn": "2026-11-17",
+            "contentRevision": "noc-v2.1-2026-11-17",
+            "notes": "All three evidence families at both endpoints reviewed together. Independent expectations recorded in evidence/mixed-incident-review.md."
+          }
+        }
+      ]
+    }
+  ]
+}

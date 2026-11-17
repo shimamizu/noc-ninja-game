@@ -1,25 +1,3 @@
-<!--
-Sync Impact Report — temporary review material; remove before committing.
-Version change: unratified template → 1.0.0 (initial adoption).
-Modified principles: generic template slots replaced with StarterKit/CONSTITUTION.md principles:
-- Slot 1 → C1 · Technical truth is a release requirement
-- Slot 2 → C2 · Every round teaches through a decision
-- Slot 3 → C3 · Progress is honest and retry is safe
-- Slot 4 → C4 · Access is part of the core game
-- Slot 5 → C5 · The first version is deterministic and self-contained
-Added principles:
-- C6 · Content and logic can be reviewed separately
-- C7 · Done is demonstrated
-Added sections: First-Release Scope and Technical Boundaries; Development Workflow and Quality
-Gates.
-Governance: defined amendment procedure, semantic versioning, and compliance review.
-Removed sections: none; instructional template comments removed.
-Deferred placeholders: none.
-Follow-up: verify EOS 4.36.3M command/output sources and hardware/transceiver support
-before enabling any challenge for grading; starter specification records this as pending.
-Dependent templates and StarterKit inputs were not modified.
--->
-
 # NOC Ninja Training Constitution
 
 ## Core Principles
@@ -67,14 +45,15 @@ The player's main action MUST exercise the target skill. Introduce a concept bef
 show the values needed to reason about the answer. A wrong answer explains the specific mistake and
 gives the player a useful next step. A correct answer explains why it works.
 
-Use this learning sequence: Recognize a down link and use optical diagnostics to identify absent
-receive light → Compare timestamped counters to identify increasing CRC errors on an operational
-link → Analyze timestamped state changes to recognize a flapping link, even when its current status
-is up.
+Introduce all three diagnostic methods before the first incident: interpret receive-light
+levels, compare timestamped CRC counters, and count timed up/down transitions. Then interleave
+incidents so the learner must identify which category the evidence supports. A level title,
+briefing, available tool, or authored answer key MUST NOT preselect the diagnosis.
 
-Across all three levels, players MUST distinguish what the evidence demonstrates from possible
-underlying causes. Each level introduces its diagnostic method before asking the player to apply
-it.
+Each incident exposes the same tools for both endpoints. Players aim at one of three diagnosis
+targets and explicitly throw a shuriken to submit. The throw illustrates the decision; it is not a
+timing or aiming-skill test. Feedback identifies the affected interface and distinguishes observed
+conditions from possible underlying causes.
 
 Hints reveal a method first, then a worked step. Worked solutions are available when a learner is
 stuck; viewing one is recorded as assistance, never as independent mastery.
@@ -153,32 +132,26 @@ playthrough, and a README another attendee can follow.
 Ethernet links between Arista EOS switches and routers using show commands, with IPv6 addressing
 shown as network context.
 
-**First release:** one core mechanic, three short levels, a browser, and a 60-minute workshop
-build. Change this budget only by updating the agreed scope.
+**First release:** one core mechanic, six mixed incidents, and a browser. The initial
+60-minute workshop build is followed by the owner's requested graphical redesign on 2026-11-17.
+Three neutral content groups organize two incidents each; they do not disclose diagnostic categories
+or interrupt play with category-specific lessons. One opening briefing teaches all methods.
 
-All three levels use the same core mechanic: select show commands,
-inspect evidence, and submit a diagnosis.
+Every incident offers interface status, transceiver diagnostics, two timestamped receive-counter
+snapshots, and complete state history at both endpoints. The three answer targets are:
 
-1. **Link down with absent optical receive signal**
-   Inspect interface status and transceiver diagnostics to identify
-   absent receive light at a specified interface. The accepted diagnosis
-   describes the observed condition without claiming that a particular
-   cable, optic, or remote device has failed.
+1. **Light levels**: identify absent or very poor receive light using the supplied ColorChip
+   interpretation. All four Rx rows at −30 dBm mean absent receive light; readings strictly below
+   the supplied −15.70 dBm low alarm indicate very bad light, not necessarily absence. Current
+   interface state is also shown. These are setup-specific interpretations, not universal cutoffs.
+2. **CRC / errors**: identify new receive CRC errors by a positive same-interface counter delta
+   while up at both observations, with no reset or rollover.
+3. **Link flapping**: identify at least four actual operational changes in an inclusive
+   60-second window, even when the final state is up. This is an authored teaching threshold.
 
-2. **Link up with increasing CRC errors**
-   Compare two timestamped interface-counter snapshots to identify
-   increasing receive CRC errors while the link remains operational.
-   The accepted diagnosis identifies the affected receiving interface
-   and ongoing frame corruption, without claiming that a specific
-   component has failed.
-
-3. **Link flapping**
-   Inspect timestamped interface-state history or log messages to
-   identify repeated transitions between operationally up and down.
-   Each challenge defines the observation window and the number of
-   transitions that qualifies as flapping. The accepted diagnosis
-   identifies the affected link and repeated state changes, without
-   claiming a specific underlying cause unless the evidence proves it.
+All three methods run for every incident. Exactly one endpoint/category must be supported;
+missing, contradictory, or ambiguous evidence prevents grading. Learners choose the category;
+feedback derives the affected endpoint. No diagnosis establishes a specific failed component.
 
 ## Development Workflow and Quality Gates
 
@@ -231,4 +204,12 @@ generated questions, and free-text AI grading require an explicit constitution, 
 and verification change before implementation. A scope exception MUST NOT silently bypass a
 principle.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-17
+**Version**: 1.1.0 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-17
+
+## Amendment record — 2026-11-17
+
+Version 1.1.0 implements the owner's explicit correction: the three “levels” mean competing
+problem categories, not lessons that disclose and repeat the answer. C2 and release scope now
+require mixed investigations and graphical shuriken submission. C1 and C3–C7 remain binding.
+The spec, plan, data and interaction contracts, authored evidence, tests, tasks, and README are
+updated together. Automated checks are rerun; unavailable browser checks stay visibly pending.

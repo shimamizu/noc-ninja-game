@@ -1,0 +1,16 @@
+import {test,assert,equal} from './harness.js';
+import {curriculum} from './fixtures.js';
+import {initialState,transition,summary} from '../engine/state.js';
+const doc=curriculum();const go=(s,type,extra={})=>transition(s,{type,...extra},doc);
+const ready=()=>go(initialState(doc),'begin');
+const solve=s=>go(go(s,'select',{choiceId:'crcIncreasing'}),'submit');
+test('Fresh session and empty input',()=>{const s=go(ready(),'submit');equal(s.progress['L1-R1'].attempts,0);equal(s.feedback.result.status,'invalid-input');});
+test('Wrong answer retry and repeated success',()=>{let s=go(go(ready(),'select',{choiceId:'opticalIssue'}),'submit');equal(s.progress['L1-R1'].attempts,1);assert(!s.progress['L1-R1'].completed);s=solve(s);equal(s.progress['L1-R1'].attempts,2);equal(go(s,'submit'),s);});
+test('Help has no attempts; reopening does not duplicate',()=>{let s=go(ready(),'help');s=go(s,'help',{helpId:'method'});equal(s.progress['L1-R1'].assistanceIds,['method']);equal(s.progress['L1-R1'].attempts,0);s=go(go(s,'help'),'help');equal(s.progress['L1-R1'].assistanceIds.length,3);assert(!s.progress['L1-R1'].completed);s=solve(s);assert(s.progress['L1-R1'].assistedAtCompletion);equal(go(s,'help'),s);});
+test('Help cannot skip straight to solution',()=>equal(go(ready(),'help',{helpId:'solution'}),ready()));
+test('Unsolved Next ignored',()=>equal(go(ready(),'next'),ready()));
+test('Selection/inspection keep prior feedback',()=>{let s=go(go(ready(),'select',{choiceId:'opticalIssue'}),'submit');const f=s.feedback;s=go(go(s,'select',{choiceId:'crcIncreasing'}),'inspect',{outputId:'out'});equal(s.feedback,f);equal(s.selection,'crcIncreasing');});
+test('Six mixed incidents advance directly to final summary',()=>{let s=ready();for(let n=1;n<=6;n++){s=go(solve(s),'next');equal(s.view,n===6?'session-summary':'challenge');}equal(summary(s,doc).completed,6);equal(summary(s,doc).attempts,6);});
+test('Restart cancel preserves all underlying data',()=>{const s=solve(go(ready(),'help'));equal(go(go(s,'restart'),'cancel-restart'),s);});
+test('Restart confirm and fresh initialization reset everything',()=>{const s=go(go(solve(go(ready(),'help')),'restart'),'confirm-restart');equal(s,initialState(doc));equal(summary(s,doc).attempts,0);});
+test('Invalid events ignored and assistance frozen after success',()=>{let s=solve(ready());equal(go(s,'help'),s);equal(go(s,'begin'),s);assert(!s.progress['L1-R1'].assistedAtCompletion);});

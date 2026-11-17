@@ -1,380 +1,166 @@
-# Feature Specification: NOC Ninja Training — First Playable
+# Feature Specification: NOC Ninja — Mixed Incident Dojo
 
-**Feature Branch**: `main` (existing branch; no branch-creation hook configured)
+**Branch:** main · **Created / amended:** 2026-11-17
+**Status:** Revised to the owner's gameplay correction; implemented, browser acceptance pending.
+**Governance:** [Constitution 1.1.0](../../.specify/memory/constitution.md).
+**Original input:** [StarterKit/SPEC.md](../../StarterKit/SPEC.md).
 
-**Created**: 2026-11-17
+The engineer investigates six mixed incidents and identifies whether each is a light-level,
+CRC/error, or link-flapping problem. These are competing diagnoses, not sequential lesson levels.
+Every incident offers the same tools at both switches. After inspecting evidence, the player aims
+at a labeled target and explicitly throws a shuriken. There is no reflex or precision requirement.
 
-**Status**: Clarified — hardware selections recorded; technical evidence research remains pending
+## Owner clarifications
 
-**Input**: User description: "Please reference the StarterKit/SPEC.md file for your specifications"
+- Replace category-specific lessons and repeated same-category questions with mixed investigations.
+- Add graphical, traditional-game presentation and shuriken answer targets.
+- Preserve the selected 100G single-mode fiber deployment in D-001 below.
+- Owner naming/address update: DCS-7050SX3-48YC8 is leaf-gw1; DCS-7808-CH is spine-gw1.
+  Use the shared 2001:db8:51::/126 link, with ::1 on leaf-gw1 and ::2 on spine-gw1.
+- The owner confirmed the latest working Et3/15/1 samples came from that exact spine-gw1 setup.
+- Preserve all supplied ColorChip thresholds and units. −30 dBm is no light; below low alarm is
+  very bad light, without necessarily being absent. CWDM4 from the supplied model reference is
+  authoritative over the earlier informal LR4 description.
+- Only fictional device names may appear. Source samples remain sanitized.
 
-**Source**: [StarterKit specification](../../StarterKit/SPEC.md)
+## User stories and acceptance criteria
 
-**Governance**: [Project constitution v1.0.0](../../.specify/memory/constitution.md)
+### US1 — Investigate and diagnose (P1)
 
-A new network operations center (NOC) engineer investigates Ethernet link incidents at a
-ninja-themed workstation. The learner inspects predefined Arista EOS evidence and identifies
-an interface and its observed condition. Three sequential levels contain two rounds each.
-Diagnosing an incident enables advancement; it does not repair the simulated link.
+As a new NOC engineer, I inspect all relevant evidence and decide which of three problem
+categories it supports. I learn from an explanation tied to the measurements.
 
-## Clarifications
+- **AC1:** One opening briefing teaches all three methods, terminology, and a distinct worked
+  example before the first incident. No per-category briefing announces the next answer.
+- **AC2:** For operational-down with four −30 dBm Rx rows, selecting Light levels and throwing
+  completes the incident; feedback identifies the receiving interface and absent light.
+- **AC3:** A wrong category records one throw, explains the unsupported reasoning using its
+  measurements, and keeps the same incident retryable. It never awards progress.
+- **AC4:** Empty, malformed, or unknown selections give guidance without counting a throw.
+- **AC11:** Both endpoints always expose Interface now, Optics, CRC snapshots, and State history.
+  Topology, IPv6 context, units, timestamps, counter pairs, and history window are available.
+  Inspecting a tool or aiming at a target never submits or advances.
+- **AC12:** All six independent cases below and boundary cases match their expected diagnoses.
+  Choice labels/order and incident titles cannot determine correctness.
+- **AC13:** Wrong feedback gives a useful next step; correct feedback names the condition and
+  affected endpoint. Neither claims repair, IPv6 connectivity, or a proven failed component.
 
-### Session 2026-11-17
+### US2 — Practice safely and finish (P1)
 
-- Q: Should the game model specific Arista hardware you use, or should planning select a switch and optical transceiver with verifiable EOS 4.36.3M evidence? → A: Use DCS-7050SX3-48YC8 with EOS 4.36.3M (32-bit) on one side and DCS-7808-CH with EOS 4.36.3M (64-bit) on the other. Both use `service routing protocols model multi-agent`, not ribd. Both optics are vendor COLORCHIP, model C100Q020CWDM403B, described by the user as 100G LR4, over single-mode fiber. Exact compatibility and optical classification remain subject to source verification.
-- Q: Which line card in the DCS-7808-CH and which physical interface on each switch should the game model? → A: Use 7800R3-48CQ-LC in slot 3, with Et3/15/1 connected to Et51/1 on the DCS-7050SX3-48YC8, over single-mode fiber.
-- Q: Should we preserve the 100G link by changing the selected 7808 line-card model? → A: Yes; the intended model is 7800R3-48CQ-LC in slot 3. Remove the mistaken line-card reference and retain the 100G link and selected interfaces.
+- **AC5:** Help reveals method, worked step, then solution; each records assistance without a throw
+  or completion. Reopening a hint does not duplicate assistance.
+- **AC6:** Each valid throw while unsolved counts once. Success completes once. Repeated submission
+  after success changes neither attempts, completion, nor assistance.
+- **AC7:** Explicit Next advances a solved incident directly to the next mixed incident. No
+  intermediate category summary or briefing occurs. After incident six, Finish opens the summary.
+- **AC8:** Restart opens confirmation. Confirm clears all state and returns to the opening briefing;
+  Cancel and Escape preserve the session.
+- **AC14:** Reload starts a fresh session; no progress survives page reload.
+- **AC15:** Completion, throws, assisted completion and unassisted completion are separate measures.
+  Assisted completion is not independent mastery; neither completion measure certifies mastery.
+- **AC16:** No timer, lives, points, streak, leaderboard, speed rewards, or retry/help penalties.
 
-## User Scenarios & Testing *(mandatory)*
+### US3 — Aim and throw accessibly (P1)
 
-### User Story 1 - Make and understand a diagnosis (Priority: P1)
+- **AC9:** Endpoint/tool inspection, target aiming, Throw, hints, Next and Restart are keyboard
+  operable, visibly focused, and named. Native radio arrows choose a target; Throw submits.
+- **AC10:** Feedback is persistent text and announced. Motion never delays controls or evaluation.
+- **AC17:** At 1366 × 768 and 375 × 812, evidence and actions remain available. Dense output scrolls
+  in a labeled region. Diagrams/gauges have text equivalents; no essential value requires hover.
+- **AC18:** A decorative shuriken travels toward the selected target on a valid throw. A static
+  impact mark and feedback retain meaning with reduced motion, which disables the projectile.
+  Selection alone never launches; correctness is not determined by animation position or timing.
 
-As a new NOC engineer, I want to inspect link evidence, choose a supported diagnosis, and
-understand why it is correct or incorrect so I can improve my troubleshooting decisions.
+### US4 — Trust the evidence (P1)
 
-**Why this priority**: Evidence-based diagnosis is the core learning activity in every round.
+- **AC19:** Missing/unreviewed evidence, contradictory tool states, or zero/multiple supported
+  endpoint/category findings disable grading with a content error, never a learner penalty.
+- **AC20:** Sources identify exact supported claims and deployment applicability. Simulations are
+  labeled; displayed values, observations, hints and explanations agree. Source review does not
+  claim independent hardware qualification. See the [mixed review](evidence/mixed-incident-review.md).
+- **AC21:** Six incidents play using static files only, with no account, live device, external
+  content service, or AI grading. Same observations and answer always yield the same result.
+- **AC22:** Record pass/fail/not-run with date and environment. README describes the actual game
+  and how to run it. Release completion requires all acceptance checks, including manual ones.
 
-**Independent Test**: Play one reviewed round from briefing through an incorrect answer and
-retry to a correct answer. Confirm that the feedback teaches the evidence-to-diagnosis rule.
+## Independent authored cases
 
-**Acceptance Scenarios**:
+Each case includes all tools for both endpoints. Other evidence does not support another category.
+The sequence is fixed and interleaved; neutral incident titles do not name the fault.
 
-1. **AC1 — Given** a fresh session, **When** the learner starts, **Then** the first briefing
-   introduces its concept, terms, method, and a worked example distinct from the challenge
-   before the learner can answer. Each subsequent level also starts with its own briefing.
-2. **AC2 — Given** leaf-a Et51/1 is administratively enabled, operationally down, and verified
-   optical evidence establishes absent receive signal, **When** the learner submits that
-   diagnosis for leaf-a Et51/1, **Then** the round completes, Next becomes available, and
-   feedback identifies both observations without asserting a particular failed component.
-3. **AC3 — Given** that evidence, **When** the learner submits "The cable has definitely failed,"
-   **Then** feedback explains why the cause is unproven, one valid attempt is counted,
-   completion stays unchanged, and the learner can retry the same round.
-4. **AC4 — Given** no selection or a malformed or unavailable choice, **When** submitted,
-   **Then** input guidance appears and attempts and completion remain unchanged.
-5. **AC11 — Given** an available round, **When** the learner inspects command evidence,
-   **Then** the labeled topology, endpoints, IPv6 context, timestamps, units, and applicable
-   observation window and threshold are available; counter comparisons appear side by side,
-   and previously inspected evidence remains accessible without submitting an answer.
-6. **AC12 — Given** the six authored rounds and boundary cases below, **When** the learner
-   submits the listed choices, **Then** each outcome and explanation matches its independently
-   recorded expectation. Changing a choice's wording or display order does not change its meaning
-   or the diagnosis accepted as correct.
-7. **AC13 — Given** a wrong answer, **When** feedback appears, **Then** it names the specific
-   reasoning mistake, relevant evidence, and useful next step. Correct feedback explains the
-   supported diagnosis. Neither result claims the link was repaired or IPv6 connectivity proved.
+| Incident | Decisive evidence | Target | Expected feedback |
+| --- | --- | --- | --- |
+| L1-R1 | leaf-gw1 CRC 900→900; spine-gw1 5→17, both up; normal Rx, stable history | CRC / errors | spine-gw1 gained 12 errors in 60s |
+| L1-R2 | leaf-gw1 down; four Rx rows −30 dBm; unchanged CRC and stable down history | Light levels | leaf-gw1 absent receive light |
+| L2-R1 | spine-gw1 initially down; up at 5s, down 15s, up 35s, down 55s; normal Rx, no CRC increase | Link flapping | Four changes, ending down |
+| L2-R2 | leaf-gw1 CRC 120→145, up; spine-gw1 2400→2400; normal Rx, stable history | CRC / errors | leaf-gw1 gained 25; old peer total is irrelevant |
+| L3-R1 | spine-gw1 down; Rx −17.20, −16.80, −17.00, −16.90 dBm; no CRC increase or transitions | Light levels | Very bad light below −15.70, not absent |
+| L3-R2 | leaf-gw1 initially up; down 10s, up 20s, down 40s, up 60s; normal Rx, no CRC increase | Link flapping | Four changes, ending up |
 
----
+Boundary checks include same-state reports, inclusive history boundaries, out-of-window events,
+unchanged high counters, invalid/decreasing counters, resets, incomplete evidence, mismatched
+endpoint references, conflicting current states, absent vs degraded light, invalid input, and
+ambiguous diagnoses. Exact low-alarm equality is not “below”; this is not a general alarm classifier.
 
-### User Story 2 - Learn with help and finish the session (Priority: P1)
+## Functional requirements
 
-As a learner, I want penalty-free help and retries, clear progress, and a reliable end to the
-session so I can practice without confusing assisted completion with independent mastery.
+- **FR-001:** Six authored mixed incidents, two per neutral content group, all requiring success.
+- **FR-002:** Teach all three diagnostic methods before the first incident.
+- **FR-003:** Show the specified two-switch topology; aim at one category, explicitly throw.
+- **FR-004:** Offer identical tool sets at both endpoints in every incident; retain all evidence.
+- **FR-005:** Derive light issues from the selected optic's supplied Rx interpretation. Four −30
+  readings support absent receive light; values below −15.70 support very bad light. Show state.
+- **FR-006:** Derive CRC issues from a positive same-interface delta with up states and no reset.
+- **FR-007:** Derive flapping from ≥4 actual changes inside an inclusive 60-second window; disclose
+  that this is a teaching threshold, not a universal EOS definition.
+- **FR-008:** Evaluate all three methods at both endpoints, requiring exactly one supported
+  finding. No conditionType, targetInterfaceId, title, choice index, or correct-answer flag selects it.
+- **FR-009:** Explain the chosen diagnosis using computed values, with no unsupported causal claim.
+- **FR-010:** Safe retry, invalid-input guidance, one completion, and no duplicate scoring.
+- **FR-011:** Ordered assistance remains separate from submission and completion.
+- **FR-012:** Final summary distinguishes completion, throws, and assistance.
+- **FR-013:** Direct explicit Next between mixed incidents; final summary after six successes.
+- **FR-014:** Confirmed restart resets; Cancel preserves; reload starts fresh.
+- **FR-015:** No penalties or speed/score mechanics.
+- **FR-016:** Keyboard controls, meaningful names, and visible focus.
+- **FR-017:** Text/announcement equivalents; reduced motion; immediate feedback and controls.
+- **FR-018:** Usable laptop and narrow layouts, internally scrolling dense evidence.
+- **FR-019:** Graphical night dojo, ninja, three labeled targets, deliberate shuriken throw,
+  switch topology and investigation console. Graphics illustrate, never alter, the diagnosis.
+- **FR-020:** Preserve D-001 hardware/software and source applicability; authored faults are not captures.
+- **FR-021:** Whole-document validation prevents grading unsupported or inconsistent content.
+- **FR-022:** Native static frontend; no backend, external grading, account, or runtime AI.
+- **FR-023:** Document simplifications, source limits and actual acceptance results.
 
-**Why this priority**: Safe practice and honest progress are required to complete the curriculum.
+## Success criteria
 
-**Independent Test**: Use reviewed rounds to exercise hints, wrong answers, duplicate submission,
-Next, completion, restart cancellation, confirmed restart, and reload; inspect progress after each.
+- **SC-001:** Representative learner completes in a target 5–10 minutes; timing is observed,
+  never enforced. Record duration and assistance.
+- **SC-002:** Every independent correct/wrong/boundary case agrees with the documented rules.
+- **SC-003:** Retries, invalid input, repeated success, assistance and reset preserve honest progress.
+- **SC-004:** Keyboard-only playthrough of all incidents and controls, including reduced motion.
+- **SC-005:** Required values and actions remain usable at both specified viewport sizes.
+- **SC-006:** A representative learner can explain the three methods and limits on inferred causes.
+- **SC-007:** All six cases have reviewed support and invalid content blocks grading.
+- **SC-008:** Every acceptance result is recorded; another attendee can run and complete the game.
 
-**Acceptance Scenarios**:
+## D-001 — Fixed deployment and boundaries
 
-1. **AC5 — Given** an unsolved round, **When** the learner asks for help, **Then** the first hint
-   explains the method, further help offers a worked step and solution, and all help is recorded
-   as assistance for that round. Help neither submits an answer nor completes the round.
-2. **AC6 — Given** an unsolved round, **When** a valid answer is submitted, **Then** attempts
-   increase once for that submission. A correct answer completes the round once. Further
-   submissions after success have no effect on attempts, completion, or assistance history.
-3. **AC7 — Given** both rounds of a level have been solved, **When** the learner advances,
-   **Then** a level summary shows completed rounds, valid attempts, and assistance; explicit Next
-   continues to the next level's briefing. Within a level, Next moves to the next round only
-   after success. Advancing after the sixth solved round opens the final session summary.
-4. **AC8 — Given** a session in progress or its final summary, **When** Restart is selected,
-   **Then** confirmation is required. Confirming clears selections, feedback, attempts,
-   assistance, and completion and returns to the first briefing. Cancel preserves the session.
-5. **AC14 — Given** any page-session progress, **When** the page is reloaded, **Then** the
-   learner starts a fresh session at the first briefing with no retained progress.
-6. **AC15 — Given** a solved round where any hint or solution was viewed before success,
-   **When** progress is shown, **Then** it is identified as assisted completion. A solved round
-   with no assistance is identified as unassisted completion; neither is labeled proof of mastery.
-7. **AC16 — Given** any round, **When** the learner takes time, retries, or requests help,
-   **Then** there is no timeout or penalty and no points, lives, speed bonus, streak, or leaderboard.
+| Endpoint | Platform | EOS | Port |
+| --- | --- | --- | --- |
+| leaf-gw1 | DCS-7050SX3-48YC8 | 4.36.3M, 32-bit | Et51/1 |
+| spine-gw1 | DCS-7808-CH, 7800R3-48CQ-LC in slot 3 | 4.36.3M, 64-bit | Et3/15/1 |
 
----
+Both use `service routing protocols model multi-agent` and COLORCHIP C100Q020CWDM403B,
+manufacturer “ColorChip ltd”, QSFP28 100G CWDM4, four lanes, over single-mode fiber. Preserve all
+20 supplied optical limits and confirmed units. IPv6 is correctly configured context: leaf-gw1 uses `2001:db8:51::1/126` and spine-gw1
+uses `2001:db8:51::2/126`. Counters
+have no reset/rollover; complete history uses a shared authored UTC time basis.
 
-### User Story 3 - Play with accessible controls and evidence (Priority: P1)
+The user confirmed the working spine-gw1 capture's source setup. leaf-gw1 formatting is an explicit
+same-release adaptation. The evidence package distinguishes captures, user reference, authored
+arithmetic and simulations; it does not claim independent hardware or vendor qualification.
 
-As a learner using a keyboard or assistive technology, I want to inspect evidence, choose,
-submit, receive feedback, get help, and advance without depending on a mouse, color, or motion.
-
-**Why this priority**: Access to the evidence and decisions is part of the core learning experience.
-
-**Independent Test**: Complete a reviewed round and exercise all session controls using only
-keyboard input; check feedback announcements, reduced motion, and narrow-window presentation.
-
-**Acceptance Scenarios**:
-
-1. **AC9 — Given** the game, **When** navigating by keyboard, **Then** every core action is
-   reachable in an understandable order with visible focus and a readable, accessible name,
-   including command inspection, choice selection, Submit, help, Next, and restart confirmation.
-2. **AC10 — Given** correct or incorrect feedback, **When** it appears, **Then** explanatory
-   text remains available and is announced to assistive technology. Reduced motion preserves
-   all evidence, and animation never delays feedback or controls.
-3. **AC17 — Given** a laptop or narrow window, **When** inspecting evidence and answering,
-   **Then** labels and action controls remain usable, essential diagrams have text equivalents,
-   no essential value requires hover, and dense technical evidence scrolls within its own
-   labeled region without hiding the action buttons.
-4. **AC18 — Given** optional link-history playback, **When** it runs or motion is reduced,
-   **Then** its changes agree with the timestamped evidence and equivalent static history
-   remains available, including when the link ends the window up.
-
----
-
-### User Story 4 - Trust the teaching content (Priority: P1)
-
-As a learner, I want only supported, unambiguous challenges to be graded so that authored
-mistakes cannot teach me an incorrect rule or count against my progress.
-
-**Why this priority**: Technical truth is a release requirement under constitution C1.
-
-**Independent Test**: Present independently reviewed valid content and then content with each
-specified defect; confirm that defects produce a content error without grading or progress.
-
-**Acceptance Scenarios**:
-
-1. **AC19 — Given** missing evidence or sources, unverified output, conflicting observations,
-   or zero or multiple supported choices, **When** content is loaded for play, **Then** it is
-   unavailable for grading and a visible content error identifies the affected level and round.
-   No learner attempt or completion is recorded for that error.
-2. **AC20 — Given** any shipped round, **When** its teaching material is reviewed, **Then**
-   each command and interpretation has an exact source and section supporting the modeled
-   EOS release and image architecture, hardware including the selected line card, physical ports,
-   multi-agent configuration, and transceiver. Displayed output agrees with the observations,
-   choices, hints, and explanations. Missing proof fails review; a requested configuration
-   alone is not evidence of compatibility.
-3. **AC21 — Given** a clean browser session and the delivered game files, **When** the learner
-   plays all six reviewed rounds, **Then** no account, live equipment, external content service,
-   or AI decision is required, and the same evidence and answer always produce the same result.
-4. **AC22 — Given** a release candidate, **When** it is reviewed, **Then** every required
-   acceptance case has a recorded pass, fail, or not-run result with date, environment, and
-   evidence; the README describes the actual game, how to run and verify it, its modeled
-   platform, sources, teaching threshold, and limits. Release completion requires all cases pass.
-
-### Edge Cases
-
-- An empty, malformed, or unknown selection produces guidance without consuming an attempt (AC4).
-- A wrong choice remains retryable; repeated submission after success cannot add progress (AC3, AC6).
-- Help is not a submission; viewing the solution cannot itself complete a round (AC5, AC15).
-- A nonzero but unchanged CRC count does not establish additional errors during the interval.
-- A currently up interface can satisfy the game's flapping threshold; three transitions do not.
-- Both ends of the 60-second observation window are inclusive. A transition exactly at either
-  boundary counts if it is a real change from the known preceding state. A repeated report of
-  the same state is not a transition. Events outside the window do not contribute to its count.
-- Missing optical evidence cannot establish absent receive signal from link-down status alone.
-- Counter resets, rollover, mismatched interfaces, inconsistent timing, incomplete state history,
-  or contradictory output violate the challenge model and prevent grading (AC19).
-- Unsupported failure claims may appear as deliberately incorrect choices with corrective
-  feedback; they must never be accepted as true. No defensibly correct choice, or two equivalent
-  correct choices, is an authoring error (AC3, AC19).
-- Canceling Restart preserves state; confirming it or reloading starts fresh (AC8, AC14).
-- Missing or unreadable challenge content produces an availability explanation, not a learner
-  failure. A fresh load after the content is corrected can begin a new session (AC19).
-
-#### Authored acceptance cases
-
-These are authored acceptance fixtures, not claimed EOS captures.
-Displayed command output must be independently verified and must
-agree with these structured observations. Endpoint names reflect the selected
-Et51/1 ↔ Et3/15/1 link, using 7800R3-48CQ-LC in slot 3 on the 7808.
-Release-specific output and compatibility verification remain required under D-002.
-
-| Case | Input state | Player action | Expected result | Why / source |
-| --- | --- | --- | --- | --- |
-| L1-R1 correct | leaf-a Et51/1 administratively up, operationally down, receive signal absent | Select down link with absent receive signal at leaf-a Et51/1 | Complete round; explain both observations | Verified EOS interface and transceiver evidence required |
-| L1-R2 correct | leaf-b Et3/15/1 administratively up, operationally down, receive signal absent | Select down link with absent receive signal at leaf-b Et3/15/1 | Complete round; identify receiving endpoint | Verified EOS interface and transceiver evidence required |
-| Plausible physical diagnosis mistake | Same evidence as L1-R1 | Select definitely failed cable | Reject; explain that the specific failed component is not established | Evidence does not isolate the cable |
-| L2-R1 correct | Same interface up at both snapshots; CRC 120 then 145, 60 seconds apart | Select increasing receive CRC errors | Complete round; show increase of 25 | Counter interpretation requires verified source; 145 minus 120 equals 25 |
-| L2-R2 correct | leaf-a CRC 900 then 900; leaf-b CRC 5 then 17; both up | Select increasing errors at leaf-b Et3/15/1 | Complete round; show leaf-a delta 0 and leaf-b delta 12 | Timestamped counter comparison |
-| CRC boundary | CRC 900 then 900 with no reset | Select increasing errors | Reject; explain that no additional CRC errors are shown during the interval | Counter delta is zero |
-| L3-R1 correct | Initially up; down at 10s, up at 20s, down at 40s, up at 60s | Select flapping | Complete round despite current up state | Four transitions in the inclusive 0–60s teaching window |
-| L3-R2 correct | Initially down; up at 5s, down at 15s, up at 35s, down at 55s | Select flapping | Complete round; distinguish repeated transitions from continuously down | Four transitions in the 0–60s teaching window |
-| Flapping boundary | Three transitions within the 60-second window | Select meets the game's flapping threshold | Reject; explain that four transitions are required by this challenge rule | Authored teaching threshold |
-| Unsupported content | Missing optical evidence, contradictory snapshots, unverified output, or multiple defensible answers | Load content | Visible content error identifying level/round; no grading, attempts, or progress | Authoring error, not learner failure |
-
-## Requirements *(mandatory)*
-
-### Functional Requirements
-
-- **FR-001**: The game MUST provide three sequential levels with two distinct rounds each,
-  covering absent receive light, increasing receive CRC errors, and link flapping in that order.
-  All six require a correct submission for session completion. (AC7, AC12)
-- **FR-002**: Each level MUST teach its diagnostic method and terminology before testing it,
-  with a worked example different from its rounds. (AC1)
-- **FR-003**: Each round MUST present a two-device optical Ethernet topology with labeled routed
-  physical interfaces, correctly configured IPv6 addresses as context, and predefined selectable
-  show-command evidence. The link MUST operate at 100 Gb/s over single-mode fiber using the
-  endpoint and optic selections in D-001.
-  The requested connection is leaf-a Et51/1 to leaf-b Et3/15/1 in line-card slot 3.
-  The learner MUST choose one diagnosis and explicitly submit it. (AC11, AC20)
-- **FR-004**: The learner MUST have all evidence needed for the decision, including device and
-  interface identity, timestamps, units, and any applicable window and threshold. Previously
-  inspected evidence MUST remain available and counter comparisons MUST be side by side. (AC11)
-- **FR-005**: An accepted absent-receive-signal diagnosis MUST identify the receiving interface
-  and be supported by both operational-down status and optical evidence of absent receive signal.
-  Down status alone MUST NOT prove a cable, optic, or remote-device failure. (AC2, AC3, AC12)
-- **FR-006**: An accepted increasing-CRC diagnosis MUST identify the receiving interface and a
-  positive change between timestamped cumulative counts for that same interface, with the link
-  operational at both snapshots and no reset or rollover. Feedback MUST show the change;
-  an unchanged count MUST NOT be presented as additional errors. (AC12, acceptance cases)
-- **FR-007**: Flapping MUST mean at least four actual operational up/down transitions within
-  an inclusive 60-second window for this game. Feedback MUST show the count and window and
-  state that this is a teaching threshold, not a universal EOS definition. (AC12, acceptance cases)
-- **FR-008**: Diagnosis MUST be determined by evidence and the documented rule, with exactly
-  one defensibly correct choice per round, regardless of choice order or wording. The same
-  evidence and answer MUST produce the same outcome. (AC12, AC19, AC21)
-- **FR-009**: Feedback MUST explain the selected answer using relevant values and the rule;
-  incorrect answers MUST identify a specific mistake and useful next step. A correct diagnosis
-  MUST NOT imply repair, working IPv6 connectivity, or an unproven physical cause. (AC3, AC13)
-- **FR-010**: Invalid submissions MUST provide guidance without increasing attempts or progress.
-  Each valid submission while unsolved MUST count once; incorrect answers MUST permit retry;
-  correct submissions MUST complete the round once and prevent further scoring. (AC3, AC4, AC6)
-- **FR-011**: Help MUST reveal the method first, then offer a worked step and solution. All help
-  MUST be recorded separately from attempts and completion and MUST NOT complete a round. (AC5)
-- **FR-012**: Progress summaries MUST show completed rounds, valid attempts, and assistance
-  separately, including assisted versus unassisted completion without a mastery claim. (AC7, AC15)
-- **FR-013**: Advancement MUST require explicit Next after a solved round. A level MUST finish
-  only when both rounds are solved; its summary precedes the next briefing, and the final solved
-  round leads to a session summary. Unsolved rounds MUST NOT be skipped. (AC7)
-- **FR-014**: Restart MUST request confirmation; acceptance MUST clear the session and return
-  to the first briefing, while cancellation MUST preserve it. Reload MUST start fresh. (AC8, AC14)
-- **FR-015**: The game MUST impose no penalty for hints, retries, or elapsed time and MUST have
-  no points, lives, timer, speed bonus, leaderboard, or streak mechanic. (AC16)
-- **FR-016**: Every core control MUST support keyboard use, visible focus, accessible names,
-  and understandable navigation order. (AC9)
-- **FR-017**: Feedback MUST be persistent text as well as any color cue and MUST be announced
-  to assistive technology. Essential diagrams MUST have text equivalents. Reduced motion MUST
-  retain all information; animation MUST NOT delay interactions or feedback. (AC10, AC17, AC18)
-- **FR-018**: Laptop and narrow-window layouts MUST keep evidence and actions usable, with
-  labeled scrolling for dense data and no hover-only essential information. (AC17)
-- **FR-019**: The experience MUST use a ninja-themed NOC workstation with two labeled devices,
-  a link, command controls, a simulated terminal, and a persistent explanation area. Decorative
-  imagery and any optional history playback MUST preserve technical clarity. (AC11, AC17, AC18)
-- **FR-020**: Every shipped command, output, and interpretation MUST model the selected
-  DCS-7050SX3-48YC8 with EOS 4.36.3M (32-bit) and DCS-7808-CH with EOS 4.36.3M (64-bit).
-  Both switches MUST have `service routing protocols model multi-agent` configured, not ribd.
-  Both endpoints MUST identify COLORCHIP C100Q020CWDM403B optics and their verified optical
-  classification. Content MUST identify 7800R3-48CQ-LC in slot 3 on the 7808 and the physical
-  interface at each endpoint. Exact source sections and, where necessary, sanitized reviewed
-  captures MUST support those claims before grading is enabled. Arithmetic and the game's
-  flapping threshold MUST be distinguished from vendor behavior. (AC20)
-- **FR-021**: Missing, unsupported, ambiguous, or inconsistent content MUST be unavailable
-  for grading, explain the problem with level/round identity, and never count as learner failure.
-  Evidence, hints, and explanations MUST agree with the documented diagnosis rule. (AC19, AC20)
-- **FR-022**: The first release MUST be self-contained for the learner, requiring no account,
-  backend, live device connection, runtime AI, or API key. Authored content MUST determine
-  the available scenarios; external services MUST NOT decide answers. (AC21)
-- **FR-023**: Briefings and README MUST explain the model's simplifications, exclusions, and
-  limits on inferred causes. Release evidence MUST record actual results for all acceptance
-  criteria, including independent expected answers and browser/accessibility checks. (AC20, AC22)
-
-### Key Entities *(include if feature involves data)*
-
-- **Level**: Ordered learning unit with a concept, learning outcome, prerequisite, briefing,
-  worked example, two rounds, and a completion summary.
-- **Round**: One incident with a unique identity, topology, target condition, evidence, diagnostic
-  choices, hints, explanation, and source support. A round belongs to exactly one level.
-- **Topology**: Two connected devices, their platform, EOS version and image architecture,
-  routing-agent mode, applicable line card, optical transceiver vendor/model and verified type,
-  named physical interfaces, IPv6 context, and the 100 Gb/s single-mode fiber link.
-  For fixture identity, leaf-a denotes DCS-7050SX3-48YC8 Et51/1 and leaf-b denotes
-  DCS-7808-CH Et3/15/1 on 7800R3-48CQ-LC in slot 3.
-- **Evidence**: Selectable command observations and timestamped counter or state history,
-  tied to an interface and source support, with units and observation window where applicable.
-- **Diagnostic choice**: A single-select answer identifying an interface and observed condition,
-  possibly with a deliberately unsupported causal claim to expose a misconception.
-- **Assistance**: Method hint, worked step, or worked solution viewed for a round; independent
-  of whether that round is solved and of how many valid submissions were made.
-- **Session**: Current level and round, valid attempts, assistance history, completed rounds,
-  and current progress; ends in a summary and does not survive reload.
-- **Source record**: Exact reference and section, supported claim, applicable EOS release,
-  platform/transceiver, and any supporting reviewed capture; distinguishes verified evidence
-  from pending authoring work.
-
-## Success Criteria *(mandatory)*
-
-### Measurable Outcomes
-
-- **SC-001**: A representative new NOC engineer can complete all six rounds and reach the final
-  summary in a target first-play session of 5–10 minutes, with unlimited thinking time available.
-  Record observed duration and assistance; exceeding the target identifies a usability issue,
-  not a learner failure.
-- **SC-002**: Every authored correct, incorrect, and boundary case produces its independently
-  specified diagnosis and explanation; zero technically unsupported answers receive completion.
-- **SC-003**: Across all six rounds, wrong answers remain retryable, invalid input changes no
-  progress, and repeated submission after success yields zero additional attempts or completions.
-- **SC-004**: A keyboard-only reviewer completes all six rounds and exercises every core control
-  without pointer input; feedback remains understandable with reduced motion and without color.
-- **SC-005**: Every required label, evidence value, and core action remains available at the
-  agreed laptop and narrow-window review sizes, with no essential information hidden by hover
-  or animation and no action button obscured by technical-data scrolling.
-- **SC-006**: After completing the game, a representative learner can explain all three diagnostic
-  methods and why the observed symptoms do not identify a particular failed component. Record
-  the explanation separately from assistance and completion; gameplay alone is not mastery proof.
-- **SC-007**: All six shipped rounds have reviewed evidence supporting their output and teaching
-  claims, and every deliberately invalid-content case prevents grading without learner penalty.
-- **SC-008**: Every required acceptance criterion has a dated result and evidence, and another
-  attendee can follow the README to start a fresh session and complete the core flow.
-
-## Assumptions
-
-- Learners know that Ethernet links connect named interfaces and that show commands display
-  operational information; prior troubleshooting expertise is not required. Briefings teach
-  administrative versus operational state, receive direction, optical diagnostics, cumulative
-  counters, timestamp comparison, and state history.
-- Each round has one target condition. Both endpoints are administratively enabled and IPv6
-  addressing is correct. IPv6 is context, not a graded fault.
-- Evidence is authored and fixed. Counter comparisons have no reset, rollover, restart, or
-  interface replacement; timestamps share a time basis; state history covers the entire window
-  and establishes the preceding state needed to count transitions.
-- The starter's three levels, two rounds each, single-select diagnoses, session-only progress,
-  and four-transitions-in-60-seconds rule are retained without scope changes.
-- Review defaults, made explicit for repeatability: laptop viewport 1366 × 768 and narrow
-  viewport 375 × 812 in browser layout pixels; at least one representative new NOC engineer
-  participates in the first-play and explanation checks. These are initial usability evidence,
-  not a statistical claim of educational efficacy or accessibility certification.
-- Assistance history records which help was viewed for each round; reopening the same help
-  does not create an additional distinct help item. Level summaries are shown before advancing
-  into the next level. These details make the starter's progress behavior testable.
-- The first build retains the constitution's 60-minute workshop scope budget. Any reduction
-  requires an explicit scope update; missing checks or content cannot be reported as complete.
-
-### Scope boundaries
-
-No accounts, multiplayer, live infrastructure, runtime AI, leaderboard, editor, persistent saves,
-complete EOS command parser, continuous network simulation, configuration changes, or repair.
-No diagnosis of IPv6 addressing, Neighbor Discovery, routing protocols, VLAN trunks, port channels,
-MLAG, or spanning tree. Optional visual motion must fit the existing diagnostic mechanic.
-
-### Dependencies and open technical decisions
-
-- **D-001 — Modeled hardware and optics**: The user selected DCS-7050SX3-48YC8 with
-  EOS 4.36.3M (32-bit) as leaf-a and DCS-7808-CH with EOS 4.36.3M (64-bit) as leaf-b.
-  Both switches use `service routing protocols model multi-agent`, not ribd. Both endpoints
-  use vendor COLORCHIP, model C100Q020CWDM403B, over a 100 Gb/s single-mode fiber link.
-  The user describes these optics as 100G LR4; the exact optical classification and applicable
-  limits require verification rather than inference from that description or the model name.
-  The selected line card is 7800R3-48CQ-LC in slot 3, with Et3/15/1 on leaf-b
-  connected to Et51/1 on leaf-a. Hardware and endpoint selection is complete;
-  release-specific compatibility, port naming, and evidence validation remain in D-002.
-- **D-002 — Technical evidence**: Exact documentation sections and sanitized release-specific
-  captures remain pending. Content review must establish support for the selected platforms,
-  32-bit/64-bit EOS images, line card, ports, multi-agent mode, and exact COLORCHIP optics,
-  including optical classification, commands, CRC interpretation, optical indicators and any
-  power limits, and displayed output. No output,
-  citation, or release support may be invented. The authored numerical cases above are not
-  vendor captures. Unverified rounds remain unavailable for grading, and the six-round release
-  cannot be accepted until all six rounds meet the evidence requirement.
-
-The device, software-mode, optic-model, and medium selections in D-001 are user requirements,
-not claims of verified compatibility. D-002 evidence must be verified before dependent
-content is implemented or released. Routing-agent mode is fixed
-configuration context, not an additional diagnostic topic. The learner flow, round count,
-and physical-link diagnostic rules remain unchanged.
+No configuration changes, repairs, IPv6 faults, routing, VLANs, port channels, MLAG, spanning tree,
+accounts, multiplayer, persistence, live CLI, or generated questions. The initial workshop scope
+is extended by the owner's subsequent graphical/mixed-investigation request.

@@ -1,359 +1,175 @@
-# NOC Ninja Training · First playable specification
+# NOC Ninja Training · Mixed incident specification
 
-## The pitch
+**Branch:** main · **Created / amended:** 2026-11-17
+**Status:** Revised to the owner's gameplay correction; implemented, browser acceptance pending.
+**Governance:** [Constitution 1.1.0](../.specify/memory/constitution.md).
+**Aligned working specification:** [spec.md](../specs/001-noc-ninja-training/spec.md).
+**Companion documents:** [CONSTITUTION.md](CONSTITUTION.md) and [PLAN.md](PLAN.md).
 
-A new NOC engineer investigates single mode fiber link incidents by inspecting
-Arista EOS evidence, identifying the supported diagnosis, and completing
-three ninja training missions.
+The engineer investigates six mixed incidents and identifies whether each is a light-level,
+CRC/error, or link-flapping problem. These are competing diagnoses, not sequential lesson levels.
+Every incident offers the same tools at both switches. After inspecting evidence, the player aims
+at a labeled target and explicitly throws a shuriken. There is no reflex or precision requirement.
 
-The player is a trainee network operations center engineer at a
-ninja-themed NOC workstation. Each round presents a two-device topology
-and selectable show-command evidence. The player identifies the affected
-interface and its observed condition.
+## Owner clarifications
 
-A correct decision marks the incident as diagnosed and enables
-advancement. An incorrect decision explains the specific reasoning
-mistake and allows another attempt. Diagnosing an incident does not
-repair the simulated link.
+- Replace category-specific lessons and repeated same-category questions with mixed investigations.
+- Add graphical, traditional-game presentation and shuriken answer targets.
+- Preserve the selected 100G single-mode fiber deployment in D-001 below.
+- Owner naming/address update: DCS-7050SX3-48YC8 is leaf-gw1; DCS-7808-CH is spine-gw1.
+  Use the shared 2001:db8:51::/126 link, with ::1 on leaf-gw1 and ::2 on spine-gw1.
+- The owner confirmed the latest working Et3/15/1 samples came from that exact spine-gw1 setup.
+- Preserve all supplied ColorChip thresholds and units. −30 dBm is no light; below low alarm is
+  very bad light, without necessarily being absent. CWDM4 from the supplied model reference is
+  authoritative over the earlier informal LR4 description.
+- Only fictional device names may appear. Source samples remain sanitized.
 
-The session ends when the player has correctly completed all six rounds.
+## User stories and acceptance criteria
 
-## Who this is for
+### US1 — Investigate and diagnose (P1)
 
-- **Learner:** A new NOC engineer with basic networking knowledge and
-  limited experience troubleshooting Arista EOS interfaces.
-- **Assumed knowledge:** Single mode fiber links connect interfaces on two devices;
-  interfaces have names; show commands display operational information.
-  Basic familiarity with a command-line interface is helpful.
-- **What the briefing teaches:** Administrative versus operational state,
-  transmit versus receive direction, optical receive-signal evidence,
-  cumulative CRC counters, timestamp comparisons, and link-state history.
-  Each level teaches its diagnostic method before testing it.
-- **Why interaction helps:** The game exposes the misconception that
-  an interface's current up/down state tells the whole story or that
-  a symptom proves which physical component has failed.
-- **Session target:** 5–10 minutes for a first playthrough, with
-  unlimited thinking time.
+As a new NOC engineer, I inspect all relevant evidence and decide which of three problem
+categories it supports. I learn from an explanation tied to the measurements.
 
-## Learning outcomes and evidence
+- **AC1:** One opening briefing teaches all three methods, terminology, and a distinct worked
+  example before the first incident. No per-category briefing announces the next answer.
+- **AC2:** For operational-down with four −30 dBm Rx rows, selecting Light levels and throwing
+  completes the incident; feedback identifies the receiving interface and absent light.
+- **AC3:** A wrong category records one throw, explains the unsupported reasoning using its
+  measurements, and keeps the same incident retryable. It never awards progress.
+- **AC4:** Empty, malformed, or unknown selections give guidance without counting a throw.
+- **AC11:** Both endpoints always expose Interface now, Optics, CRC snapshots, and State history.
+  Topology, IPv6 context, units, timestamps, counter pairs, and history window are available.
+  Inspecting a tool or aiming at a target never submits or advances.
+- **AC12:** All six independent cases below and boundary cases match their expected diagnoses.
+  Choice labels/order and incident titles cannot determine correctness.
+- **AC13:** Wrong feedback gives a useful next step; correct feedback names the condition and
+  affected endpoint. Neither claims repair, IPv6 connectivity, or a proven failed component.
 
-| ID | After playing, the learner can… | The game asks them to… | Evidence of success |
+### US2 — Practice safely and finish (P1)
+
+- **AC5:** Help reveals method, worked step, then solution; each records assistance without a throw
+  or completion. Reopening a hint does not duplicate assistance.
+- **AC6:** Each valid throw while unsolved counts once. Success completes once. Repeated submission
+  after success changes neither attempts, completion, nor assistance.
+- **AC7:** Explicit Next advances a solved incident directly to the next mixed incident. No
+  intermediate category summary or briefing occurs. After incident six, Finish opens the summary.
+- **AC8:** Restart opens confirmation. Confirm clears all state and returns to the opening briefing;
+  Cancel and Escape preserve the session.
+- **AC14:** Reload starts a fresh session; no progress survives page reload.
+- **AC15:** Completion, throws, assisted completion and unassisted completion are separate measures.
+  Assisted completion is not independent mastery; neither completion measure certifies mastery.
+- **AC16:** No timer, lives, points, streak, leaderboard, speed rewards, or retry/help penalties.
+
+### US3 — Aim and throw accessibly (P1)
+
+- **AC9:** Endpoint/tool inspection, target aiming, Throw, hints, Next and Restart are keyboard
+  operable, visibly focused, and named. Native radio arrows choose a target; Throw submits.
+- **AC10:** Feedback is persistent text and announced. Motion never delays controls or evaluation.
+- **AC17:** At 1366 × 768 and 375 × 812, evidence and actions remain available. Dense output scrolls
+  in a labeled region. Diagrams/gauges have text equivalents; no essential value requires hover.
+- **AC18:** A decorative shuriken travels toward the selected target on a valid throw. A static
+  impact mark and feedback retain meaning with reduced motion, which disables the projectile.
+  Selection alone never launches; correctness is not determined by animation position or timing.
+
+### US4 — Trust the evidence (P1)
+
+- **AC19:** Missing/unreviewed evidence, contradictory tool states, or zero/multiple supported
+  endpoint/category findings disable grading with a content error, never a learner penalty.
+- **AC20:** Sources identify exact supported claims and deployment applicability. Simulations are
+  labeled; displayed values, observations, hints and explanations agree. Source review does not
+  claim independent hardware qualification. See the [mixed review](../specs/001-noc-ninja-training/evidence/mixed-incident-review.md).
+- **AC21:** Six incidents play using static files only, with no account, live device, external
+  content service, or AI grading. Same observations and answer always yield the same result.
+- **AC22:** Record pass/fail/not-run with date and environment. README describes the actual game
+  and how to run it. Release completion requires all acceptance checks, including manual ones.
+
+## Independent authored cases
+
+Each case includes all tools for both endpoints. Other evidence does not support another category.
+The sequence is fixed and interleaved; neutral incident titles do not name the fault.
+
+| Incident | Decisive evidence | Target | Expected feedback |
 | --- | --- | --- | --- |
-| LO1 | Identify a down interface with absent optical receive signal | Inspect interface status and optical diagnostics, then select the supported diagnosis | Correctly identify the receiving interface and condition without asserting an unsupported component failure |
-| LO2 | Identify increasing receive CRC errors on an operational interface | Compare timestamped cumulative counters and select the affected interface | Correctly distinguish increasing errors from an unchanged historical count |
-| LO3 | Identify repeated link-state changes during a defined observation window | Inspect timestamped state history and apply the stated transition threshold | Correctly identify flapping even when the interface is currently up |
+| L1-R1 | leaf-gw1 CRC 900→900; spine-gw1 5→17, both up; normal Rx, stable history | CRC / errors | spine-gw1 gained 12 errors in 60s |
+| L1-R2 | leaf-gw1 down; four Rx rows −30 dBm; unchanged CRC and stable down history | Light levels | leaf-gw1 absent receive light |
+| L2-R1 | spine-gw1 initially down; up at 5s, down 15s, up 35s, down 55s; normal Rx, no CRC increase | Link flapping | Four changes, ending down |
+| L2-R2 | leaf-gw1 CRC 120→145, up; spine-gw1 2400→2400; normal Rx, stable history | CRC / errors | leaf-gw1 gained 25; old peer total is irrelevant |
+| L3-R1 | spine-gw1 down; Rx −17.20, −16.80, −17.00, −16.90 dBm; no CRC increase or transitions | Light levels | Very bad light below −15.70, not absent |
+| L3-R2 | leaf-gw1 initially up; down 10s, up 20s, down 40s, up 60s; normal Rx, no CRC increase | Link flapping | Four changes, ending up |
 
-## The technical model
+Boundary checks include same-state reports, inclusive history boundaries, out-of-window events,
+unchanged high counters, invalid/decreasing counters, resets, incomplete evidence, mismatched
+endpoint references, conflicting current states, absent vs degraded light, invalid input, and
+ambiguous diagnoses. Exact low-alarm equality is not “below”; this is not a general alarm classifier.
 
-### Rule being taught
+## Functional requirements
 
-Diagnoses must follow from the supplied evidence:
+- **FR-001:** Six authored mixed incidents, two per neutral content group, all requiring success.
+- **FR-002:** Teach all three diagnostic methods before the first incident.
+- **FR-003:** Show the specified two-switch topology; aim at one category, explicitly throw.
+- **FR-004:** Offer identical tool sets at both endpoints in every incident; retain all evidence.
+- **FR-005:** Derive light issues from the selected optic's supplied Rx interpretation. Four −30
+  readings support absent receive light; values below −15.70 support very bad light. Show state.
+- **FR-006:** Derive CRC issues from a positive same-interface delta with up states and no reset.
+- **FR-007:** Derive flapping from ≥4 actual changes inside an inclusive 60-second window; disclose
+  that this is a teaching threshold, not a universal EOS definition.
+- **FR-008:** Evaluate all three methods at both endpoints, requiring exactly one supported
+  finding. No conditionType, targetInterfaceId, title, choice index, or correct-answer flag selects it.
+- **FR-009:** Explain the chosen diagnosis using computed values, with no unsupported causal claim.
+- **FR-010:** Safe retry, invalid-input guidance, one completion, and no duplicate scoring.
+- **FR-011:** Ordered assistance remains separate from submission and completion.
+- **FR-012:** Final summary distinguishes completion, throws, and assistance.
+- **FR-013:** Direct explicit Next between mixed incidents; final summary after six successes.
+- **FR-014:** Confirmed restart resets; Cancel preserves; reload starts fresh.
+- **FR-015:** No penalties or speed/score mechanics.
+- **FR-016:** Keyboard controls, meaningful names, and visible focus.
+- **FR-017:** Text/announcement equivalents; reduced motion; immediate feedback and controls.
+- **FR-018:** Usable laptop and narrow layouts, internally scrolling dense evidence.
+- **FR-019:** Graphical night dojo, ninja, three labeled targets, deliberate shuriken throw,
+  switch topology and investigation console. Graphics illustrate, never alter, the diagnosis.
+- **FR-020:** Preserve D-001 hardware/software and source applicability; authored faults are not captures.
+- **FR-021:** Whole-document validation prevents grading unsupported or inconsistent content.
+- **FR-022:** Native static frontend; no backend, external grading, account, or runtime AI.
+- **FR-023:** Document simplifications, source limits and actual acceptance results.
 
-1. **Link down with absent receive signal:** Accept this diagnosis only
-   when operational status establishes that the target interface is
-   down and optical diagnostics establish absent receive signal.
-   A down state alone is insufficient.
+## Success criteria
 
-2. **Increasing CRC errors:** Compare cumulative receive CRC counts
-   for the same interface at two timestamps. A positive difference,
-   with no counter reset or rollover, establishes additional CRC errors
-   during that interval. A nonzero but unchanged count does not establish
-   additional errors during the interval.
+- **SC-001:** Representative learner completes in a target 5–10 minutes; timing is observed,
+  never enforced. Record duration and assistance.
+- **SC-002:** Every independent correct/wrong/boundary case agrees with the documented rules.
+- **SC-003:** Retries, invalid input, repeated success, assistance and reset preserve honest progress.
+- **SC-004:** Keyboard-only playthrough of all incidents and controls, including reduced motion.
+- **SC-005:** Required values and actions remain usable at both specified viewport sizes.
+- **SC-006:** A representative learner can explain the three methods and limits on inferred causes.
+- **SC-007:** All six cases have reviewed support and invalid content blocks grading.
+- **SC-008:** Every acceptance result is recorded; another attendee can run and complete the game.
 
-3. **Link flapping:** Count actual operational up/down transitions
-   within the stated observation window. For this game's challenges,
-   at least four transitions within an inclusive 60-second window
-   qualifies as flapping. This is a teaching threshold, not a universal
-   EOS definition. Current up status does not erase earlier transitions.
+## D-001 — Fixed deployment and boundaries
 
-A diagnosis identifies an observed condition. It must not assert a
-failed cable, optic, or transmitter unless additional evidence proves
-that cause.
-
-### Context
-
-All command syntax, simulated output, and troubleshooting behavior
-must model Arista EOS 4.36.3M.
-
-The topology consists of two devices connected through a point-to-point
-optical Ethernet link. Both endpoints use routed physical interfaces
-with correctly configured IPv6 addresses.
-
-Each challenge identifies its modeled hardware platform and optical
-transceiver type. Platform-specific commands, counters, and diagnostic
-interpretations require verification for that combination.
-
-IPv6 addressing provides network context and is not graded.
-
-### Assumptions
-
-- Each round has one target condition.
-- Both interfaces are administratively enabled.
-- IPv6 addressing is correct.
-- Evidence consists of predefined snapshots and timestamped history.
-- Counter comparisons refer to the same interface, with no counter
-  reset, rollover, device restart, or interface replacement.
-- Timestamps use one consistent time basis.
-- State history is complete for the specified observation window.
-- Each diagnostic choice has exactly one defensibly correct answer.
-- The player can inspect all evidence needed to reach that answer.
-
-### Excluded behavior
-
-The first release does not model IPv6 addressing faults, Neighbor
-Discovery, routing protocols, VLAN trunks, port channels, MLAG,
-spanning tree, configuration changes, or automated remediation.
-
-It does not reproduce a complete EOS terminal or connect to live
-equipment. Only the authored command selections are available.
-
-Physical link availability does not establish successful IPv6
-connectivity. CRC errors and flapping do not, by themselves, identify
-a specific failed physical component.
-
-### Authoritative references
-
-Use the Arista EOS documentation portal as the starting point:
-https://www.arista.com/en/support/product-documentation
-
-Before any round becomes playable, its source records must identify:
-
-- The exact document URL and section supporting each command and
-  interpretation.
-- Support for the modeled EOS release and hardware platform.
-- Applicable transceiver documentation for optical signal indicators
-  and any power thresholds.
-- Sanitized, reviewed EOS 4.36.3M captures where documentation does
-  not establish the exact output format.
-
-The arithmetic rule for CRC comparison and the game's flapping
-threshold must be documented separately from vendor behavior.
-The flapping threshold is an authored teaching rule.
-
-Exact release-specific references and output captures are pending
-verification. Do not invent citations, command output, or platform
-support. Unverified rounds remain unavailable for grading.
-
-These boundaries appear in briefings and the README in plain language.
-
-## The repeatable game loop
-
-1. **Brief:** Introduce one concept, its terms, and a worked example
-   different from the challenge.
-2. **Inspect:** Show the labeled two-device topology, interface names,
-   IPv6 addresses, and selectable command evidence. Command output
-   includes timestamps and units where relevant.
-3. **Choose:** The player selects one diagnostic answer and explicitly
-   submits it.
-4. **Explain:** Display the result, relevant evidence, and the rule
-   connecting that evidence to the diagnosis.
-5. **Retry or advance:** A wrong answer leaves the round playable.
-   A correct answer enables Next.
-6. **Reflect:** The level summary shows completed rounds, valid
-   attempts, and assistance used.
-
-### Worked interaction
-
-The player investigates leaf-a Ethernet1 connected to leaf-b Ethernet1.
-
-Two evidence snapshots for leaf-a Ethernet1 show:
-
-- 10:00:00 UTC: operationally up; receive CRC count 120.
-- 10:01:00 UTC: operationally up; receive CRC count 145.
-- No counter reset occurred between snapshots.
-
-The player selects:
-“The interface is healthy because it is up.”
-
-Feedback:
-“The interface is up in both snapshots, but its receive CRC count
-increased from 120 to 145. That is 25 additional CRC errors in
-60 seconds. Compare counter changes as well as current link status.”
-
-The player retries and selects:
-“leaf-a Ethernet1 has increasing receive CRC errors.”
-
-Feedback:
-“Correct. The receive CRC count increased by 25 during the observation
-interval. This identifies receive frame errors at leaf-a Ethernet1;
-it does not establish which physical component caused them.”
-
-The round is marked complete and Next becomes available.
-
-## Required stories and acceptance criteria
-
-### US1 · Make and understand a decision — P1
-
-As a learner, I want to apply the rule to visible evidence and
-understand the result.
-
-- **AC1:** Given a fresh session, when I start, then I see the first
-  briefing before answering a challenge.
-- **AC2:** Given leaf-a Ethernet1 is administratively up,
-  operationally down, and verified optical diagnostics establish
-  absent receive signal, when I select “leaf-a Ethernet1 is down
-  with absent optical receive signal,” then the round completes,
-  Next becomes available, and feedback cites both observations.
-- **AC3:** Given that challenge, when I select “The cable has
-  definitely failed,” then feedback explains that the evidence
-  establishes absent receive signal but does not isolate a failed
-  cable. Completion stays unchanged and I can retry.
-- **AC4:** Given no selection or malformed input, when I submit,
-  then input guidance appears and attempts/completion remain
-  unchanged.
-
-### US2 · Learn from help and finish the game — P1
-
-As a learner, I want help when stuck and a clear view of my progress.
-
-- **AC5:** A hint first explains the method. Further help can show
-  a worked step or solution. Assistance is recorded without marking
-  the round complete.
-- **AC6:** Each valid submission counts as one attempt until the
-  round is solved. Correct submission completes it once; repeated
-  submission after success has no effect.
-- **AC7:** A level completes after both of its rounds are solved.
-  Next opens the following round or level; advancing from the final
-  solved round opens a session summary.
-- **AC8:** Restart asks for confirmation, then clears the current
-  session and returns to the first briefing. Cancel preserves
-  the session.
-
-### US3 · Play with accessible controls — P1
-
-As a keyboard user, I want to inspect the challenge, choose, submit,
-get help, and advance without a mouse.
-
-- **AC9:** All core controls have visible focus and accessible names;
-  keyboard interaction reaches every core action.
-- **AC10:** Correct/incorrect feedback includes text, remains available
-  to read, and is announced to assistive technology. Motion can be
-  reduced without losing information.
-
-## Version-one content
-
-Three levels, two rounds per level, six rounds total.
-Each round uses a new example and the same core mechanic.
-
-| Level | New concept | Prerequisite | Misconception to expose |
+| Endpoint | Platform | EOS | Port |
 | --- | --- | --- | --- |
-| 1 | Down link with absent optical receive signal / LO1 | Basic interface and link terminology | A down link or absent light proves a particular cable or optic failed |
-| 2 | Increasing receive CRC errors / LO2 | Level 1 | An up interface is necessarily healthy, or a nonzero counter proves ongoing errors |
-| 3 | Repeated link-state transitions / LO3 | Level 2 | A currently up interface cannot be flapping |
+| leaf-gw1 | DCS-7050SX3-48YC8 | 4.36.3M, 32-bit | Et51/1 |
+| spine-gw1 | DCS-7808-CH, 7800R3-48CQ-LC in slot 3 | 4.36.3M, 64-bit | Et3/15/1 |
 
-### Round coverage
+Both use `service routing protocols model multi-agent` and COLORCHIP C100Q020CWDM403B,
+manufacturer “ColorChip ltd”, QSFP28 100G CWDM4, four lanes, over single-mode fiber. Preserve all
+20 supplied optical limits and confirmed units. IPv6 is correctly configured context:
+leaf-gw1 uses `2001:db8:51::1/126` and spine-gw1 uses `2001:db8:51::2/126`. Counters have
+no reset/rollover; complete history uses a shared authored UTC time basis.
 
-- **L1-R1:** Identify absent receive signal at leaf-a Ethernet1.
-- **L1-R2:** Identify absent receive signal at leaf-b Ethernet1,
-  reinforcing receive direction at the opposite endpoint.
-- **L2-R1:** Identify an increase from 120 to 145 receive CRC errors
-  over 60 seconds on leaf-a Ethernet1.
-- **L2-R2:** Compare leaf-a Ethernet1 remaining at 900 CRC errors
-  with leaf-b Ethernet1 increasing from 5 to 17 over 60 seconds.
-  Identify leaf-b as the interface accumulating additional errors.
-- **L3-R1:** Identify four transitions within 60 seconds on an
-  interface that ends the window up.
-- **L3-R2:** Identify four transitions within 60 seconds on an
-  interface that ends the window down.
+The user confirmed the working spine-gw1 capture's source setup. leaf-gw1 formatting is an explicit
+same-release adaptation. The evidence package distinguishes captures, user reference, authored
+arithmetic and simulations; it does not claim independent hardware or vendor qualification.
 
-**Progression:** Sequential on first playthrough; retry without
-penalty. Completion requires a correct submission in every round.
-Hints remain available. No points, lives, timer, leaderboard,
-or streak mechanic in v1.
+No configuration changes, repairs, IPv6 faults, routing, VLANs, port channels, MLAG, spanning tree,
+accounts, multiplayer, persistence, live CLI, or generated questions. The initial workshop scope
+is extended by the owner's subsequent graphical/mixed-investigation request.
 
-**Session behavior:** Progress is held for the current page session;
-reload starts again. Saving across reloads is a stretch feature
-and must be specified before it is added.
+## Implementation and acceptance records
 
-## Cases the implementation must satisfy
-
-These are authored acceptance fixtures, not claimed EOS captures.
-Displayed command output must be independently verified and must
-agree with these structured observations.
-
-| Case | Input state | Player action | Expected result | Why / source |
-| --- | --- | --- | --- | --- |
-| L1-R1 correct | leaf-a Ethernet1 administratively up, operationally down, receive signal absent | Select down link with absent receive signal at leaf-a Ethernet1 | Complete round; explain both observations | Verified EOS interface and transceiver evidence required |
-| L1-R2 correct | leaf-b Ethernet1 administratively up, operationally down, receive signal absent | Select down link with absent receive signal at leaf-b Ethernet1 | Complete round; identify receiving endpoint | Verified EOS interface and transceiver evidence required |
-| Plausible physical diagnosis mistake | Same evidence as L1-R1 | Select definitely failed cable | Reject; explain that the specific failed component is not established | Evidence does not isolate the cable |
-| L2-R1 correct | Same interface up at both snapshots; CRC 120 then 145, 60 seconds apart | Select increasing receive CRC errors | Complete round; show increase of 25 | Counter interpretation requires verified source; 145 minus 120 equals 25 |
-| L2-R2 correct | leaf-a CRC 900 then 900; leaf-b CRC 5 then 17; both up | Select increasing errors at leaf-b Ethernet1 | Complete round; show leaf-a delta 0 and leaf-b delta 12 | Timestamped counter comparison |
-| CRC boundary | CRC 900 then 900 with no reset | Select increasing errors | Reject; explain that no additional CRC errors are shown during the interval | Counter delta is zero |
-| L3-R1 correct | Initially up; down at 10s, up at 20s, down at 40s, up at 60s | Select flapping | Complete round despite current up state | Four transitions in the inclusive 0–60s teaching window |
-| L3-R2 correct | Initially down; up at 5s, down at 15s, up at 35s, down at 55s | Select flapping | Complete round; distinguish repeated transitions from continuously down | Four transitions in the 0–60s teaching window |
-| Flapping boundary | Three transitions within the 60-second window | Select meets the game's flapping threshold | Reject; explain that four transitions are required by this challenge rule | Authored teaching threshold |
-| Unsupported content | Missing optical evidence, contradictory snapshots, unverified output, or multiple defensible answers | Load content | Visible content error identifying level/round; no grading, attempts, or progress | Authoring error, not learner failure |
-
-## Experience direction
-
-- **Visual metaphor:** A ninja-themed NOC workstation with two labeled
-  Arista devices, their Ethernet link, selectable show-command
-  controls, a simulated terminal, and a persistent explanation area.
-- **One memorable moment:** A timestamped link-history playback
-  reveals repeated up/down transitions before ending on an up
-  indicator, showing why current status alone is insufficient.
-  Equivalent static history remains available.
-- **Always visible:** Device and interface labels, connection endpoints,
-  IPv6 context, current evidence timestamp, measurement units, and
-  the observation window and threshold when applicable. Counter
-  comparisons appear side by side. Previously inspected evidence
-  remains available.
-- **Feedback voice:** Patient and specific; explain the observed
-  choice before offering the next step.
-- **Layout:** Challenge first, action next, explanation beside or
-  below it. Do not hide technical values behind hover-only
-  interactions.
-- **Motion:** Optional and consistent with the evidence. Respect
-  reduced-motion preferences and provide equivalent text.
-- **Theme:** Ninja imagery decorates the workstation and progress
-  indicators without obscuring technical evidence.
-
-## Non-goals
-
-No user accounts, multiplayer, backend, live infrastructure access,
-runtime AI, leaderboard, or level editor.
-
-No simulation of IPv6 Neighbor Discovery, routing protocols,
-VLAN behavior, spanning tree, MLAG, port channels, configuration
-changes, or physical repair.
-
-No complete EOS command parser, continuous network simulation,
-or requirement to identify a failed component from inconclusive
-evidence. Visual polish must fit the existing mechanic.
-
-## Open decisions for clarify
-
-- Which hardware platform and optical transceiver type will be
-  modeled? Select a combination for which EOS 4.36.3M commands
-  and diagnostic output can be verified before implementation.
-- Which exact documentation sections and sanitized captures support
-  the shipped commands, CRC counter interpretation, and absent
-  receive-signal evidence? Record them before enabling grading.
-
-Resolved scope decisions:
-
-- Three levels, two rounds per level.
-- Diagnosis uses single-select choices with exactly one supported
-  answer per round.
-- No configuration changes or simulated repairs.
-- Flapping means at least four operational state transitions
-  within an inclusive 60-second observation window for this game.
-- All hints and worked solutions are recorded as assistance.
-  Assisted completion is distinguished from unassisted completion.
-
-Unresolved source and hardware decisions must not become silent
-implementation guesses.
-
-## Release evidence
-
-All required acceptance criteria must have a recorded result.
-All six rounds, their command outputs, and their explanations must
-be checked against the verified sources and modeled platform.
-
-Expected diagnoses and numeric results must be recorded independently
-of the evaluator implementation.
-
-A teammate must complete the core flow using only the keyboard.
-The README must describe implemented behavior, exact run/test
-commands, the EOS version and hardware modeled, the game's flapping
-threshold, source references, and any remaining limits.
+The [working data model](../specs/001-noc-ninja-training/data-model.md) and
+[contracts](../specs/001-noc-ninja-training/contracts/) define the reviewed implementation boundary.
+The [verification record](../specs/001-noc-ninja-training/verification.md) records actual automated
+results and outstanding browser, accessibility and representative-learner checks. Hardware,
+interface, optic, hostname and subnet choices are resolved; do not reopen them as unspecified work.

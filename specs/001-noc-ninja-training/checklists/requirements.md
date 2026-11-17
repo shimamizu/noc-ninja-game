@@ -26,36 +26,19 @@
 
 - [x] All functional requirements have clear acceptance criteria
 - [x] User scenarios cover primary flows
-- [x] Feature meets measurable outcomes defined in Success Criteria
+- [x] Defined scope addresses measurable outcomes in Success Criteria
 - [x] No implementation details leak into specification
 
-## Notes
+## Notes — redesign review, 2026-11-17
 
-- Review date: 2026-11-17. All 16 specification-quality items pass. These checks concern
-  requirement quality and coverage; they do not assert that the game is implemented or that
-  learner, browser, or technical-source verification has passed.
-- The specification preserves the starter's six rounds, three diagnostic rules, ten original
-  acceptance criteria, authored numerical fixtures, session behavior, and exclusions. AC11–AC22
-  make evidence inspection, feedback, accessibility, source review, and release reporting explicit.
-- All 23 functional requirements reference acceptance scenarios. Eight success criteria cover
-  session length, diagnosis correctness, progress integrity, access, learning explanations,
-  evidence completeness, and fresh-start usability. Domain terminology describes what learners
-  inspect; no application language, framework, storage design, or service interface is prescribed.
-- Requirement completeness was reviewed against constitution C1–C7. Technical truth and invalid
-  content appear in FR-005–009 and FR-020–021; learning and progress in FR-002 and FR-009–015;
-  access in FR-016–019; self-contained play in FR-022; reviewable content in the entities and
-  AC20; demonstrated completion in FR-023 and AC22. Architectural separation remains a planning
-  obligation under C6 rather than an implementation design embedded in this specification.
-- D-001 and D-002 preserve unresolved hardware/transceiver selection and exact EOS sources as
-  explicit research dependencies. The rule is clear: "Unverified rounds remain unavailable for
-  grading." No particular hardware, vendor output, or supporting citation has been assumed.
-  These dependencies must be resolved before platform-dependent content is implemented; all six
-  rounds must be verified before release acceptance. Proceed to `$speckit-clarify` to address them,
-  then carry evidence collection into planning.
-- Explicit review assumptions cover viewport sizes, a representative learner, repeat help views,
-  and level-summary progression. The 5–10 minute target measures usability without a gameplay timer.
-- Structural validation passed: required section order, unique FR/SC/AC identifiers, local source
-  links, feature-directory pointer, no unresolved template placeholders, and whitespace checks.
-- No extension hooks were registered: `.specify/extensions.yml` was absent in both pre- and
-  post-execution checks. No branch was created; the feature directory is independent of `main`.
-- Items marked incomplete require spec updates before `$speckit-clarify` or `$speckit-plan`.
+Rechecked for the owner's mixed-incident and shuriken correction. Three categories are competing
+diagnoses, not sequential lessons. Six independent case expectations, AC1–AC22, FR-001–023 and
+SC-001–008 are explicit. Constitution 1.1.0 and current contracts describe the same scope.
+
+Source applicability uses the already confirmed setup and supplied thresholds; no new owner
+proof is requested. The optical examples include absent and degraded light, with distinct meanings.
+The graphical throw has no precision/timing requirement and retains keyboard/reduced-motion access.
+
+These checkboxes assess requirement quality, not whether gameplay, browser accessibility,
+representative-learner outcomes or release acceptance have passed. Actual results and pending
+checks are in verification.md. StarterKit inputs and earlier research remain historical context.

@@ -18,7 +18,7 @@ game:
   levels: 6
   card_image: "assets/arcade-card.webp"
   card_image_alt: "A cartoon ninja with a red headband stands beside the NOC Ninja title and the three topics: light levels, CRC errors and link flapping."
-  repo: "https://github.com/shimamizu/martial-arts-game"
+  repo: "https://github.com/shimamizu/noc-ninja-game"
   repo_path: ""
   license: "Apache-2.0"
 creator:

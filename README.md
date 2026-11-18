@@ -1,134 +1,116 @@
-# NOC Ninja — Network Dojo
+# NOC Ninja — Guided NOC Patrol
 
-Investigate a network incident, aim at a diagnosis, and throw a shuriken.
-
-Six mixed incidents challenge you to distinguish **light levels**, **CRC / errors**, and **link
-flapping**. Every incident offers the same diagnostic tools at both switches. A night dojo, ninja,
-answer targets, optical gauges and animated throws make the investigation a game. Your diagnosis
-comes from the evidence; the throw has no timing or precision requirement.
+One guided patrol teaches link troubleshooting through three incident captures and fifteen
+reasoning decisions. Inspect both switches, explain the evidence, prepare a handoff and compare
+your reasoning with the reported intervention. Only supplied incident readings are used.
+There is no separate incident mode, arcade mode or generated telemetry.
 
 ## Run
 
 No install or build step is needed:
 
 ```sh
-python3 -m http.server 8000 --bind 127.0.0.1
+python3 -m http.server 8001 --bind 127.0.0.1
 ```
 
-Open [the game](http://127.0.0.1:8000/index.html). Native modules and JSON loading require HTTP;
-serve index.html rather than opening a file URL. Use port 8001 if 8000 is occupied. On Windows,
-`py -m http.server` is an alternative launcher. Stop with Ctrl+C.
+Open [the game in Safari](http://127.0.0.1:8001/). Reload an existing tab to pick up the updated
+patrol; the changed entry modules and stylesheet have revisioned URLs to avoid older cached UI.
+Native modules and JSON require HTTP, not a file URL. Stop the server with Ctrl+C.
 
-Only local static files are used: no account, external fonts/images, live switches, backend,
-analytics, API key, runtime AI or online grading service.
+The app uses only local static files: no account, backend, live switches, analytics, runtime AI,
+API key, external fonts or online grading service. Reload clears in-memory progress.
 
 ## Play
 
-1. Read the opening guide to all three diagnoses and select **Enter the dojo**.
-2. Inspect **leaf-gw1** and **spine-gw1**. Each has **Interface now**, **Port status**, **Optics**, **Error snapshots**,
-   and **MAC / history**. Compare measurements, timestamps and actual changes.
-3. Drag the shuriken from the ninja’s hand onto a target and release to throw. It flies from
-   his hand and spins into the chosen target. You can also click/tap a target or use native
-   radio-button arrow keys, then activate **Throw shuriken**. Aiming alone does not submit.
-4. Read the explanation. Wrong diagnoses stay retryable; correct diagnoses enable **Next incident**.
-   Six successes lead to the final patrol summary, without category-specific lesson breaks.
+1. Read the investigation method and select **Start guided NOC patrol**.
+2. Use the **Investigation notebook** to examine optics, error counters and MAC detail at both
+   endpoints, plus the automated assessment. Each case retains its supplied inventory and EOS.
+3. Work through five decisions. Read the labeled answers, then drag the shuriken from the ninja’s hand onto
+   the matching A/B/C circle and release. The answer text and targets do not click-submit. Wrong answers explain the mistake; reasoning hints and retries
+   are available. Empty submissions do not count as attempts. Opening evidence is tracked
+   separately from answering correctly.
+4. Complete all five decisions and open all seven panels to **Reveal actual outcome**.
+5. Review the outcome, uncertainty and ticket-closure checks, then download the learning handoff
+   or continue. The final summary retains all three handoff downloads.
 
-Method hints, worked steps and solutions are available in order. Help records assistance, never
-completion. Throws, completed incidents, and assisted/unassisted completion are separate. There
-are no lives, points, countdowns, speed rewards or retry penalties. Completion is practice, not
-proof of independent mastery.
+Across all incidents, intentional transmitter disable is excluded. This is a training assumption,
+not a fabricated status reading. Questions and hints must not require ruling it out.
 
-Tab/Shift+Tab navigate controls; native Enter/Space activate buttons. Restart asks for confirmation;
-Escape/Cancel preserve the session. Reload starts fresh, with no local storage. Dense evidence
-scrolls in labeled regions. Reduced motion disables the projectile; static impact marks and text
-retain the result. Feedback and controls never wait for animation.
+The patrol teaches directionality, per-channel optics, Local/Remote Fault interpretation,
+counter provenance, historical versus current instability, confidence and post-repair verification.
+A missing second sample stays missing. No invented alarm thresholds, interface output, readings,
+flap histories or recovery measurements are used to complete a case.
 
-## Fixed training environment
+For keyboard accessibility, focus the shuriken: Space picks it up, arrow keys move between
+targets, and Space drops it. Picking up and dropping without moving to a target does not answer. Escape or an off-target release cancels a drag; reduced
+motion skips the flight animation. Throwing never delays feedback or controls. Feedback is textual, retries are
+unlimited and there is no time or precision requirement. Restart asks for confirmation; Cancel
+preserves the session. Downloads contain the captured evidence, supported answers, explanations,
+attempts, assistance and reported outcome. Completion records practice, not independent mastery.
 
-| Endpoint | Platform / EOS | Port | IPv6 address |
-| --- | --- | --- | --- |
-| leaf-gw1 | DCS-7050SX3-48YC8 / 4.36.3M, 32-bit | Et51/1 | `2001:db8:51::1/126` |
-| spine-gw1 | DCS-7808-CH / 4.36.3M, 64-bit; 7800R3-48CQ-LC in slot 3 | Et3/15/1 | `2001:db8:51::2/126` |
+## Incident library
 
-Both use `service routing protocols model multi-agent` and COLORCHIP C100Q020CWDM403B
-QSFP28 100G CWDM4 optics over single-mode fiber. All 20 supplied reference limits and confirmed
-units are preserved. IPv6 is correctly configured context; the game recommends an optic replacement location after diagnosis; it does not operate live devices or simulate a completed repair.
+| Case | Teaching focus | Reported outcome |
+| --- | --- | --- |
+| [U10: 10G down](specs/001-noc-ninja-training/evidence/10g-spine-transmitter-case.md) | Spine Tx / leaf Rx, historical counters and uncertain flap rate | Spine optic replacement restored link, transmit power and stable counters |
+| [U11: 100G down](specs/001-noc-ninja-training/evidence/100g-single-channel-receive-case.md) | Low spine receive channel, fault directionality and component uncertainty | Leaf optic replacement confirmed; recovery and accompanying fiber work unconfirmed |
+| [U12: 100G up with errors](specs/001-noc-ninja-training/evidence/100g-link-up-receive-errors-case.md) | LinkUp versus health, low receive channel and inconsistent script totals | Cleaning plus leaf optic replacement resolved the issue; individual contribution unresolved |
 
-For this supplied optic reference, −30 dBm means no light and Rx below −15.70 dBm means very bad
-light. The optical incidents include both absence and degraded light; these meanings are distinct.
-This game does not implement a universal alarm classifier or diagnose a failed component.
+The evidence-first teaching approach was informed by the
+[Interface and Link Troubleshooting skill](https://infraagentskills.ai/skills/interface-link-troubleshooting/).
+It is an authoring reference, not a runtime dependency. Reviewed questions are anchored to the
+case documents; the old universal diagnosis/dispatch classifier has been removed.
 
-CRC comparison uses the same receiver and counter, with no reset/rollover. Four actual state changes
-inside an inclusive 60-second window is the game's teaching threshold for flapping, not a universal
-EOS definition. An up interface does not prove stability, healthy traffic or IPv6 connectivity.
+## Adding future incidents
 
-Read the [mixed incident source review](specs/001-noc-ninja-training/evidence/mixed-incident-review.md).
-The user confirmed the working spine-gw1 samples' exact setup. Fault values and UTC timelines are
-simulated. Full interface layouts for both switches follow the latest supplied examples; leaf
-optics and MAC-history formatting remain an explicit same-release adaptation. Independent hardware
-qualification, vendor compatibility certification and external technical review are not claimed.
-Only fictional device labels appear. Both endpoints share one authored link timeline: paired
-Up/Down durations and MAC Interface State ages match, while PHY/fault rows keep their own
-event histories. Matching interface flaps count once per link.
+Add actual captures and documented follow-up to an evidence source, then add a reviewed case to
+`data/cases.json`. Do not generate telemetry to fill gaps. The current schema supports paired
+10G/100G optical-link cases with inventory, per-endpoint optics/counters/MAC detail, an automated
+assessment, reviewed choices and an outcome with confidence limits. Broader fault types may need
+schema additions for their actual evidence; do not fabricate an automated assessment or MAC
+output to satisfy the current schema. Counts in the UI derive from the library.
 
-## Verify
+Useful next additions, in priority order:
+
+- Intermittent flapping with timestamped up/down events and counter-clear history.
+- Increasing FCS/CRC while the link remains up, with two or more timed counter samples.
+- A fiber/connector fault resolved by cleaning or cable repair alone, with unchanged optics.
+- A receiver-side or switch-port failure isolated by controlled swaps and the actual result.
+- A configuration cause such as speed/FEC mismatch, with relevant
+  configuration/status evidence and a confirmed corrective action.
+
+For each, preserve both endpoints' inventory, speed, timestamps, optical rows, counters,
+MAC/fault state, relevant logs/configuration, each intervention in order, and before/after
+verification. State what was not collected. Remove sensitive identifiers before sharing captures;
+that authoring process is not presented to learners.
+
+## Code and checks
+
+- `data/cases.json`: the only deployed incident library.
+- `engine/cases.js`: validation, deterministic reasoning, progression, outcomes and handoffs.
+- `engine/state.js`: session initialization and guarded restart.
+- `ui/patrol.js`: briefing, evidence notebook, decisions and review.
+- `ui/aim.js`: drag/keyboard pickup-and-drop throwing, cancellation and decorative animation.
+- `ui/render.js`, `ui/controls.js`, `main.js`: rendering, native controls and loading/downloads.
 
 ```sh
 node tests/run.mjs
 ```
 
-**151 checks pass** in Node 26.13.0: all six independent diagnoses and alternatives, equal tool
-availability, displayed numbers, absent/degraded light, CRC/history boundaries, conflicting evidence,
-source/revision failures, safe retry, assistance, duplicate submission, direct progression and reset.
-The command fails on test failures. No runtime dependency is added.
+The Node suite checks all fifteen answers and distractors, malformed content, retries, hints,
+evidence/outcome/report gates, progression, reset, exact source fidelity and removal of retired
+runtime paths. Run [browser checks](http://127.0.0.1:8001/tests/) in Safari for the same case and aiming suites
+plus DOM rendering/control checks. Browser checks do not replace visual/accessibility review.
 
-The same suite has a [browser runner](http://127.0.0.1:8000/tests/). A missing import or zero tests is
-failure. See the [manual procedure](specs/001-noc-ninja-training/quickstart.md) and
-[verification record](specs/001-noc-ninja-training/verification.md). Isolated headless Chrome checks pass for mouse and touch drag/throw, cancellation, wrong/correct
-retry, keyboard aiming, all six dispatch destinations, tool access, restart cancellation, reduced
-motion and desktop/mobile layout. Live-region text was checked; a screen-reader and representative
-learner session remain unperformed. See `tests/browser-qa.mjs` for the repeatable browser checks.
+Current result: **42/42 Node checks pass**. Syntax and whitespace checks pass. Safari navigation
+was interrupted by browser activity; the new browser suite, fresh visual playthrough, narrow
+layout, screen-reader and download-click acceptance remain pending. Historical results for the
+retired six-incident game do not certify this version. See
+[current scope and acceptance](specs/001-noc-ninja-training/guided-patrol.md).
 
-## Repository
 
-- `data/levels.json`: schema 2; six mixed incidents in three neutral authoring groups.
-- `engine/`: content validation, all-method diagnosis, session state and computed feedback.
-- `ui/`, `style.css`: native controls, console, dojo and decorative animation.
-- `tests/`: dependency-free Node/browser assertions.
-- `specs/001-noc-ninja-training/`: current specification, contracts, tasks and evidence.
-
-The entire curriculum validates before play starts. No authored category or target key chooses the
-answer. Content changes require a new revision and actual source/display reassessment; copying a
-review flag is not review. Same-mechanic content reuses the existing rules and screens.
-
-## Complete interface output
-
-Both interface snapshots include hardware/MAC, peer description, MTU/MRU where supplied, duplex,
-uni-link, state age, link-change total, counter-clear history, five-minute rates, packet/byte totals,
-broadcast/multicast, runts/giants, CRC and other errors, discards, collisions and PAUSE counters.
-The platform-specific leaf/spine formats are preserved. State ages, changes and counters follow
-incident history; MACs and scenario values are simulated. See the [full supplied samples and
-mapping](specs/001-noc-ninja-training/evidence/full-interface-samples.md). Scroll the terminal to
-inspect all fields; the Error snapshots tool shows paired counters-errors tables.
-
-Error snapshots now use `show interfaces … counters errors` with FCS, Align, Symbol, Rx, Runts,
-Giants and Tx columns at both times. MAC / history shows the complete MAC state/fault table;
-expand its earlier snapshots to compare history. Port status provides the compact routed-port
-summary. See [U7 examples and interpretation](specs/001-noc-ninja-training/evidence/error-mac-samples.md).
-
-## Drag aiming and field dispatch
-
-Drag the shuriken in the ninja’s outstretched hand onto an answer target and release. The ninja
-stays in place while the star follows your pointer; on release, a spinning throw flies from his
-hand to the target. Releasing elsewhere or pressing Escape cancels. Click a target then Throw,
-or focus the shuriken and use ←/→ then Enter/Space. Reduced motion keeps the static result.
-After a correct diagnosis, the field dispatch shows the switch, port and optic to replace under
-the owner’s [training runbook](specs/001-noc-ninja-training/evidence/technician-runbook.md).
-CRC receiver → opposite optic; down/Remote Fault True → same side; bad Tx → that transmitter;
-flapping uses error or Remote Fault history. Missing/conflicting clues never guess a destination.
-Original local sprites and their built-in image-generation prompts are documented in
-[assets/README.md](assets/README.md). No external image service is used during play.
-
-## License
-
-Licensed under the Apache License, Version 2.0. See [LICENSE.md](LICENSE.md).
+Counter-history guidance follows the supplied environment: interface traffic/error counter clears
+do not clear MAC state/fault histories, which persist until reboot. This scoped operational rule
+is not a universal EOS guarantee. Lessons teach timed deltas and post-repair monitoring; no reboot
+is needed just to obtain a monitoring baseline. U10 also uses asymmetric Remote Fault history as
+corroboration of its strong optical evidence, while preserving both current flags as False.

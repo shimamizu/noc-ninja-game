@@ -1,3 +1,5 @@
+> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](../guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+
 # Interaction and Session Contract
 
 **Updated:** 2026-11-17 · One briefing → six mixed incidents → summary
@@ -48,3 +50,33 @@ elsewhere, pointer cancellation, lost capture or Escape cancels. Ninja left/righ
 a target; Enter/Space submits. Existing radio controls and Throw remain equivalent.
 Correct feedback adds the dispatch destination and rationale, and the live region announces
 the destination. The post-diagnosis recommendation does not add an attempt.
+# Guided patrol additions — 2026-11-18
+
+`begin-guided` selects guided mode; `begin` retains arcade. `inspect` saves unique per-round output
+IDs. `reasoning-select` accepts only known question/option pairs after correct diagnosis.
+`check-reasoning` provides per-option feedback; incomplete input does not count, valid attempts
+count once, and successful reasoning freezes further submissions. Guided `next` requires complete
+observation coverage and successful reasoning as well as correct diagnosis. Arcade `next` retains
+its prior behavior. Restart confirmation freezes interaction and confirmation resets the new state.
+
+`download-handoff` is a local UI action, guarded by completed guided reasoning and evidence coverage.
+It supports the current incident and completed summary entries; it sends nothing externally.
+Reasoning uses native radio/fieldset controls, text feedback and a live announcement. Guided success
+focuses the reasoning section; completed reasoning focuses Next when coverage is complete.
+New visual/keyboard/download acceptance is pending as recorded in `../evidence/skill-adaptation.md`.
+
+## Real-case events — 2026-11-18
+
+- `begin-real`: enter the real patrol from briefing or dojo summary; retain the return view.
+- `real-inspect`: select a valid case evidence panel and record a unique view.
+- `real-select`, `real-submit`: select and explicitly grade the current reviewed decision. Unknown
+  options do nothing; empty input gives guidance without an attempt; correct completion freezes it.
+- `real-hint`: record assistance and show the current decision’s explanation; never complete it.
+- `real-question-next`: advance only after the current decision is correct.
+- `real-reveal`: mark case complete and show owner outcome only after all decisions and panel views.
+- `real-next`: proceed to the next case, or final real summary, only after outcome reveal.
+- `real-download`: local text export only for completed cases, including summary downloads.
+- `real-home`: restore the original dojo’s prior screen, preserving both tracks’ records.
+
+The existing restart dialog freezes both tracks; cancel preserves and confirm clears their state.
+Real-case progress and question counts are separate from synthetic diagnosis progress.

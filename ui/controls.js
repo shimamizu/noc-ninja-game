@@ -1,14 +1,13 @@
-import {bindAim} from './aim.js';
+import {bindAim} from './aim.js?v=guided-v7';
 export function bindControls(dispatch,reload){
-  bindAim(document.querySelector('#app'),dispatch);
-  document.querySelector('#app').addEventListener('click',e=>{
+  const app=document.querySelector('#app');
+  bindAim(app,dispatch);
+  app.addEventListener('click',e=>{
     const b=e.target.closest('button[data-action]');if(!b||b.disabled)return;
-    const type=b.dataset.action;if(type==='submit')return;
+    const type=b.dataset.action;
     if(type==='reload'){reload();return;}
-    dispatch({type,outputId:b.dataset.outputId,helpId:b.dataset.helpId});
+    dispatch({type,outputId:b.dataset.outputId,caseId:b.dataset.caseId});
   });
-  document.querySelector('#app').addEventListener('change',e=>{if(e.target.matches('input[name="diagnosis"]'))dispatch({type:'select',choiceId:e.target.value});});
-  document.querySelector('#app').addEventListener('submit',e=>{if(e.target.id==='diagnosis-form'){e.preventDefault();dispatch({type:'submit'});}});
   const dialog=document.querySelector('#restart-dialog');
   document.querySelector('#cancel-restart').addEventListener('click',()=>dispatch({type:'cancel-restart'}));
   document.querySelector('#confirm-restart').addEventListener('click',()=>dispatch({type:'confirm-restart'}));

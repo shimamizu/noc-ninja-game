@@ -1,3 +1,5 @@
+> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+
 # Tasks: NOC Ninja Training — First Playable
 
 **Input**: [spec.md](spec.md), [plan.md](plan.md), [research.md](research.md), [data-model.md](data-model.md), [contracts](contracts/), [quickstart.md](quickstart.md), and [constitution](../../.specify/memory/constitution.md).
@@ -276,3 +278,29 @@ supersedes conflicting details of historical tasks above, without closing outsta
 - [X] T058 Generate and locally save original ninja/shuriken sprites; implement mouse/touch/pen drag aiming with cancellation, keyboard equivalents and decorative projectile.
 - [X] T059 Implement U9 technician destinations from CRC direction, Remote Fault current/history and Tx alarms; author corroborating cases, Tx observations and matched CLI outputs; preserve one primary diagnosis and fail closed on conflicting destinations.
 - [X] T060 Update constitution/spec/plan/contracts/source review and validate 144 automated checks plus isolated Chrome desktop/mobile interaction checks. Representative learner and screen-reader acceptance remain separate.
+- [X] T061 Read the owner's linked skill, platform index and Arista procedure; document source/version gaps and map the safe educational adaptation.
+- [X] T062 Add guided patrol with both-end evidence coverage, computed reasoning questions, misconception feedback, guarded advancement and separate attempt accounting.
+- [X] T063 Add local text handoffs with literal evidence, uncertainty and verification steps; retain downloads in the final review.
+- [X] T064 Reconcile spec/plan/interaction/README and run 163 automated checks, module syntax checks and whitespace review.
+- [ ] T065 Accept the guided UI in a fresh browser: keyboard, report download, narrow viewport, reduced motion and representative learner review. Browser connector unavailable and native Safari in active use; see evidence/skill-adaptation.md.
+
+- [X] T066 Reconcile owner-authorized real-case scope with constitution 1.4.0, source reviews and spec.
+- [X] T067 Preserve U10–U12 in versioned JSON; validate inventory, literal evidence, reviewed questions and outcome confidence.
+- [X] T068 Add playable real patrol with evidence panels, 15 decisions, safe retries/hints, gated outcomes, summary and downloads.
+- [X] T069 Preserve original dojo progress and restart semantics; verify 191 checks including exact source fidelity and every distractor.
+- [ ] T070 Complete fresh-browser keyboard, narrow-layout, screen-reader and download-click acceptance for real patrol. Browser connector unavailable; native browser attempt stalled/interrupted. See evidence/real-case-integration.md.
+
+
+## Single guided patrol — owner correction, 2026-11-18
+
+- [X] T071 Amend current scope and constitution 1.5.0: only supplied incident captures, one guided patrol, no learner-facing sanitization copy.
+- [X] T072 Remove simulated datasets, threshold/dispatch classifier, alternate-mode paths and obsolete tests. Load only validated U10–U12.
+- [X] T073 Integrate briefing, both-end evidence notebook, fifteen decisions, shuriken submission, hints, retry feedback, gated outcomes, verification steps and handoffs into the sole patrol.
+- [X] T074 Verify 39 Node checks including every distractor and capture fidelity; add Safari DOM/control checks; update assets' cache revisions, README and collection guidance.
+- [ ] T075 Complete Safari DOM/control suite, fresh visual playthrough, keyboard/screen-reader review, narrow layout and download-click acceptance. Safari input was interrupted by user activity; old cached screens were observed, not accepted as new-build verification.
+
+T050/T065/T070 are historical requirements for retired flows; T075 tracks current browser acceptance.
+
+- [X] T076 Remove below-circle captions, radio selectors and separate Throw button; require shuriken pickup/drop with circular hit testing, cancellation and keyboard drag equivalent. All 42 Node checks pass; browser UI tests updated, Safari visual review remains pending after concurrent browser activity interrupted preview.
+
+- [X] T077 Apply the owner’s standing exclusion of intentional transmitter disable across briefing, U10 questions/feedback, authoring instructions and future-example guidance; preserve all captured readings.

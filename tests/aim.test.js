@@ -1,5 +1,5 @@
 import {test,assert,equal} from './harness.js';
-import {bindAim,animateThrow} from '../ui/aim.js';
+import {bindAim,animateThrow,targetAtPoint} from '../ui/aim.js?v=guided-v7';
 
 // Small event fixture: exercise pointer ownership, release hit testing and cleanup
 // without depending on a browser's timing or the diagnostic state machine.
@@ -8,18 +8,18 @@ function fixture(reduced=false){
  const rect=(left,top,width,height)=>({left,top,width,height,right:left+width,bottom:top+height});
  const path={setAttribute(name,value){this[name]=value;},removeAttribute(name){delete this[name];}},readout={};
  const board={getBoundingClientRect:()=>rect(120,80,80,80)};
- const target={dataset:{choiceId:'opticalIssue'},classList:classes(),getBoundingClientRect:()=>rect(110,70,100,140),querySelector:()=>board};
+ const targets=['a','b','c'].map((id,i)=>({dataset:{choiceId:id},classList:classes(),querySelector:s=>s==='strong'?{textContent:id.toUpperCase()}:i?{getBoundingClientRect:()=>rect(240+i*100,80,80,80)}:board}));
  const arena={classList:classes(),clientLeft:1,clientTop:1,getBoundingClientRect:()=>rect(100,50,320,400),
-  querySelectorAll:()=>[target],querySelector:s=>s==='.aim-path'?path:s==='.drag-readout'?readout:s==='.shuriken-handle'?star:{textContent:'Light levels'}};
+  querySelectorAll:()=>targets,querySelector:s=>s==='.aim-path'?path:s==='.drag-readout'?readout:s==='.shuriken-handle'?star:{textContent:'Answer A'}};
  const star={disabled:false,style:{},classList:classes(),closest:s=>s==='.arena'?arena:star,matches:s=>s==='.shuriken-handle',
   getBoundingClientRect:()=>rect(270,320,44,44),setPointerCapture(id){this.capture=id;},hasPointerCapture(id){return this.capture===id;},
   releasePointerCapture(id){this.capture=null;events.lostpointercapture({pointerId:id});}};
- const shot={dataset:{choiceId:'opticalIssue'},style:{setProperty(name,value){this[name]=value;}},closest:()=>arena,
+ const shot={dataset:{choiceId:'a'},style:{setProperty(name,value){this[name]=value;}},closest:()=>arena,
   addEventListener(name,fn){this[name]=fn;},remove(){this.removed=true;}};
- const inputs=['opticalIssue','crcIncreasing','linkFlapping'].map(value=>({value,checked:false}));
+ const inputs=['a','b','c'].map(value=>({value,checked:false}));
  const root={ownerDocument:{defaultView:{matchMedia:()=>({matches:reduced})}},querySelector:()=>shot,querySelectorAll:()=>inputs,
   addEventListener(name,fn){events[name]=fn;}};
- bindAim(root,event=>{sent.push(event);if(event.type==='select')inputs.forEach(i=>i.checked=i.value===event.choiceId);});
+ bindAim(root,event=>{sent.push(event);if(event.type==='select')inputs.forEach(i=>i.checked=i.value===event.answerId);});
  const fire=(type,extra={})=>events[type]({target:star,pointerId:1,button:0,clientX:292,clientY:342,preventDefault(){},...extra});
  return {root,star,shot,path,readout,sent,fire};
 }
@@ -32,7 +32,7 @@ test('Dragging moves the shuriken and aims from its original hand position',()=>
 test('Release location selects a target even without a final pointermove; submits once',()=>{
  const f=fixture();f.fire('pointerdown');f.fire('pointerup',{clientX:160,clientY:120});
  f.fire('pointerup',{clientX:160,clientY:120});
- equal(f.sent,[{type:'select',choiceId:'opticalIssue'},{type:'submit'}]);equal(f.star.style.transform,'');
+ equal(f.sent,[{type:'select',answerId:'a'},{type:'submit'}]);equal(f.star.style.transform,'');
 });
 test('Off-target release, Escape and pointer cancellation reset without throwing',()=>{
  for(const cancellation of ['pointerup','pointercancel','lostpointercapture','Escape']){
@@ -47,10 +47,28 @@ test('A second touch cannot cancel or submit the active drag',()=>{
  f.fire('pointerup',{pointerId:2,clientX:160,clientY:120});equal(f.sent,[]);
  f.fire('pointerup',{clientX:160,clientY:120});equal(f.sent.length,2);
 });
-test('Shuriken keyboard aiming supports arrows and Enter; completed control is inert',()=>{
- const f=fixture();f.fire('keydown',{key:'ArrowRight'});f.fire('keydown',{key:'ArrowRight'});f.fire('keydown',{key:'Enter'});
- equal(f.sent,[{type:'select',choiceId:'opticalIssue'},{type:'select',choiceId:'crcIncreasing'},{type:'submit'}]);
- f.star.disabled=true;f.fire('keydown',{key:' '});f.fire('pointerdown');f.fire('pointerup',{clientX:160,clientY:120});equal(f.sent.length,3);
+test('Keyboard drag requires pickup, movement and drop; completed control is inert',()=>{
+ const f=fixture();f.fire('keydown',{key:'ArrowRight'});equal(f.sent,[]);
+ f.fire('keydown',{key:' '});f.fire('keydown',{key:'ArrowRight'});f.fire('keydown',{key:'ArrowRight'});equal(f.sent,[]);
+ f.fire('keydown',{key:' '});equal(f.sent,[{type:'select',answerId:'b'},{type:'submit'}]);
+ f.star.disabled=true;f.fire('keydown',{key:' '});f.fire('pointerdown');f.fire('pointerup',{clientX:160,clientY:120});equal(f.sent.length,2);
+});
+test('Keyboard pickup/drop without movement and Escape never submit',()=>{
+ for(const cancel of ['Escape',' ','focusout']){
+  const f=fixture();f.fire('keydown',{key:' '});
+  if(cancel!==' ')f.fire('keydown',{key:'ArrowRight'});
+  if(cancel==='focusout')f.fire('focusout');else f.fire('keydown',{key:cancel});
+  equal(f.sent,[]);
+ }
+});
+test('Circular targets reject corner and below-circle drops',()=>{
+ const t=[{id:'a',left:120,right:200,top:80,bottom:160}];
+ equal(targetAtPoint(160,120,t),'a');equal(targetAtPoint(121,81,t),null);equal(targetAtPoint(160,170,t),null);equal(targetAtPoint(NaN,120,t),null);
+ const f=fixture();f.fire('pointerdown');f.fire('pointerup',{clientX:160,clientY:180});equal(f.sent,[]);
+});
+test('An edge grip lands using the visible shuriken center',()=>{
+ const f=fixture();f.fire('pointerdown',{clientX:272,clientY:322});f.fire('pointerup',{clientX:140,clientY:100});
+ equal(f.sent,[{type:'select',answerId:'a'},{type:'submit'}]);
 });
 test('Throw animation uses measured hand and board centers and cleans up on completion',()=>{
  const f=fixture();animateThrow(f.root);

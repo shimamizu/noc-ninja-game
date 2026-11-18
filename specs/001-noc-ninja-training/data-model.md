@@ -1,3 +1,5 @@
+> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+
 # Data Model: Mixed Incident Dojo
 
 **Updated:** 2026-11-17 · **Schema:** 2 · **Revision:** noc-v3-2026-11-17

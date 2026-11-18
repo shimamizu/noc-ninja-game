@@ -1,5 +1,21 @@
 # NOC Ninja Training Constitution
 
+## Current scope amendment — version 1.5.0, 2026-11-18
+
+The owner explicitly replaces all simulated training evidence and separate modes with one guided
+NOC patrol based only on supplied U10–U12 captures. This amendment supersedes conflicting original
+scope, fixed-deployment, three-category classifier, arcade and separate-track requirements below.
+C1–C7 still apply: validate literal captures and review bounded reasoning questions; teach
+uncertainty without inventing readings or outcomes. Preserve each supplied platform and release.
+No learner-facing sanitization labels. Intentional transmitter disable is excluded from all current and future
+training incidents by owner instruction. Do not teach it as an alternative diagnosis or required
+check, and do not invent status readings to establish this scenario assumption. Keep evidence coverage, hints, feedback, handoffs and honest
+outcome reporting. Retired simulated datasets and their runtime paths must be removed. Future
+examples must be supplied captures, never generated telemetry. Preview with Safari.
+
+Specification, plan, acceptance and consistency review: `specs/001-noc-ninja-training/guided-patrol.md`.
+Historical rules and amendment records below document superseded versions, not extra play modes.
+
 ## Core Principles
 
 ### C1 · Technical truth is a release requirement
@@ -9,8 +25,10 @@ documented rule and the challenge inputs. Unsupported or ambiguous content is an
 show an explanation that the challenge is unavailable and prevent grading it.
 
 Document the model being taught:
-Protocol/vendor context: All command syntax, simulated show-command output, and troubleshooting
-behavior MUST model Arista EOS 4.36.3M. Devices connect through point-to-point Ethernet links using
+Protocol/vendor context: The original synthetic dojo’s command syntax, simulated show-command
+output, and troubleshooting behavior MUST model Arista EOS 4.36.3M. The owner-authorized real
+incident track preserves each supplied platform and EOS version, and grades bounded evidence
+reasoning rather than applying the synthetic classifier to incomplete real captures. Devices connect through point-to-point Ethernet links using
 routed physical interfaces with explicitly configured IPv6 addresses. Each challenge provides the
 relevant topology, intended configuration, and operational evidence. Any platform-specific behavior
 MUST identify the modeled hardware platform. Command availability and output MUST be verified
@@ -204,7 +222,7 @@ generated questions, and free-text AI grading require an explicit constitution, 
 and verification change before implementation. A scope exception MUST NOT silently bypass a
 principle.
 
-**Version**: 1.3.0 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-17
+**Version**: 1.5.0 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-18
 
 ## Amendment record — 2026-11-17
 
@@ -256,3 +274,19 @@ Tx → same transmitter. Multiple clues must agree. Recommendations are not proo
 component, a live dispatch or a completed repair. Tx uses the supplied −9.00/+3.30 dBm alarms.
 Version 1.3.0 expands the interaction and replacement-learning scope while retaining technical
 evidence, accessibility and honest-progress obligations.
+
+## Real incident extension — 2026-11-18
+
+Version 1.4.0 records the owner’s explicit instruction to make the three supplied real cases
+playable. This extends the deployment scope for a separate reasoning track while retaining C1–C7.
+The 10G/100G captures retain their original releases, ports, optics and incomplete histories.
+Questions may grade supported direction, counter interpretation, uncertainty and proposed next
+steps with source-reviewed choices; they MUST NOT invent measurements, transfer optic limits,
+or certify component failure from a flag alone. Case outcomes are revealed only after evidence
+review and successful decisions, and MUST distinguish recovery, intervention-only confirmation
+and combined repairs. No live network writes or runtime AI are added.
+
+Original dojo progression remains unchanged. Real-case decisions, attempts and hints are tracked
+separately; completion records practice, not independent mastery. New browser acceptance remains
+explicitly pending. Specification, plan, interaction contract, tasks, sources and README document
+the extension and its verification limits.

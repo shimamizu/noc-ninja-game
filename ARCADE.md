@@ -2,10 +2,10 @@
 # Creator details and publication consent confirmed by the owner. Unrecorded fields remain unknown.
 arcade_version: 1
 game:
-  title: "NOC Ninja — Network Dojo"
+  title: "NOC Ninja — Guided NOC Patrol"
   slug: "noc-ninja"
-  tagline: "Read the evidence, throw your diagnosis, and send the tech to the right optic."
-  summary: "Investigate six simulated Arista EOS link incidents by comparing transceiver readings, error counters and interface histories at both ends. Drag the shuriken from the ninja’s hand onto the supported diagnosis and release to send it spinning toward the target, then learn which optic the training runbook recommends replacing and why."
+  tagline: "Investigate the link, explain the evidence, and verify the outcome."
+  summary: "Work through three supplied Arista EOS link incidents and fifteen guided decisions. Compare both endpoints, challenge automated assessments, learn from feedback, and prepare evidence-supported handoffs before reviewing reported repair outcomes."
   topics:
     - "Arista EOS"
     - "Optical diagnostics"
@@ -15,7 +15,7 @@ game:
   category: "switching"
   skill_level: "beginner"
   play_minutes: 10
-  levels: 6
+  levels: 3
   card_image: "assets/arcade-card.webp"
   card_image_alt: "A cartoon ninja with a red headband stands beside the NOC Ninja title and the three topics: light levels, CRC errors and link flapping."
   repo: "https://github.com/shimamizu/noc-ninja-game"
@@ -118,52 +118,39 @@ runtime:
   requires_api_key: false
   uses_ai_at_runtime: false
   browsers:
-    - "Safari (desktop shuriken drag, cancellation, retry and throw animation)"
-    - "Chrome Beta 159.0.8154.6 (isolated headless desktop and mobile emulation)"
-  accessibility: "Browser-tested keyboard aiming and submission, native answer radios, visible focus, Escape and off-target cancellation, touch dragging, reduced motion, mobile layout and live-region destination text. Screen-reader listening and physical-device testing were not performed."
+    - "Safari (preferred; current visual and DOM acceptance pending)"
+  accessibility: "Keyboard pickup/move/drop, visible focus, textual feedback and live announcements implemented. Current keyboard, screen-reader, narrow-layout and download-click acceptance pending."
   save_state: "none; session progress is in memory and resets on page reload"
 verification:
   tests: "node tests/run.mjs"
-  tests_passing: 151
+  tests_passing: 42
   facts_sourced_from:
-    - "Owner-provided EOS captures and deployment context documented in specs/001-noc-ninja-training/evidence/"
-    - "Owner-provided ColorChip limits documented in specs/001-noc-ninja-training/evidence/colorchip-reference.md"
-    - "Arista EOS Ethernet Ports — https://www.arista.com/en/um-eos/eos-ethernet-ports"
-    - "Arista EOS Transceiver Performance Monitoring — https://www.arista.com/en/um-eos/eos-transceiver-performance-monitoring"
-    - "Arista 7050X3 Q&A and 7800R3 datasheet for platform context; exact scenario values are authored"
-    - "Technician replacement policy supplied by the owner and documented in specs/001-noc-ninja-training/evidence/technician-runbook.md"
+    - "Owner-supplied U10, U11 and U12 captures and follow-up in specs/001-noc-ninja-training/evidence/"
+    - "Source-reviewed questions and evidence limits in data/cases.json"
   known_limits:
-    - "Six authored incidents; no live switch connection, configuration changes or simulated repair outcome."
-    - "Four transitions in a 60-second window is the teaching threshold, not a universal EOS definition."
-    - "Optical thresholds and no-light semantics apply to the supplied ColorChip reference; they are not universal cutoffs."
-    - "Replacement destinations follow the owner training runbook and do not prove that a component has failed."
-    - "IPv6 addresses are correctly configured context; the game does not test IPv6 connectivity."
-    - "Exact release/platform compatibility has not been independently certified."
-    - "Ten minutes is a planning target, not a measured learner completion time."
-    - "Python 3 is needed for the example local server; any static HTTP host can serve the game without a build step. File URLs are unsupported."
-    - "No internet connection is needed during local play; hosted play needs access to the host."
-    - "Hosted URL, exact model IDs, build duration, token use and cost were not recorded."
-    - "The MCP list reflects exposed session namespaces; a complete historical connection inventory was not recorded."
-    - "Workshop attribution was not confirmed and is recorded as unknown."
+    - "Three captured incidents; no generated telemetry, live device operations or runtime AI."
+    - "Not all cases include confirmed recovery or post-repair measurements."
+    - "Historical counters alone do not establish current rates."
+    - "Ten minutes is an unmeasured planning target."
+    - "Current Safari visual, keyboard, narrow-layout and download-click acceptance remain pending."
+
 ---
 
 ## In one paragraph
 
-NOC Ninja is a browser game for new network operations engineers practicing physical-link troubleshooting. Each of its six incidents presents realistic Arista EOS output from both ends of a single-mode fiber link. Players compare light levels, CRC/FCS counters and timed state changes, then drag the shuriken from the ninja’s hand onto a diagnosis and release it. The ninja stays in place as the released star flies and spins into the target. A correct answer reveals where the training runbook would send a technician to replace an optic. Hints and unlimited retries support practice without a countdown or score penalty.
+NOC Ninja teaches physical-link troubleshooting in one guided NOC patrol using three supplied
+incident captures. Learners compare both endpoints, interpret optical channels and fault flags,
+question counter claims and prepare a bounded diagnosis. Shuriken targets submit the selected evidence decision. Fifteen decisions provide specific
+feedback and optional reasoning hints. Reported interventions and their evidence limits are
+revealed after each investigation; handoffs remain downloadable at the end.
 
-## How it was built
+## Current build
 
-We began with the owner's StarterKit constitution, specification and plan, then used GitHub Spec Kit to clarify requirements, define contracts, generate tasks, analyze consistency and implement a static browser game. The owner supplied the switch models, EOS version, ports, optical thresholds and real command examples. Those inputs shaped the simulation and its source notes.
+The earlier six-case simulation, alternate modes and threshold/dispatch classifier were removed
+at the owner's request on 2026-11-18. All playable readings now come from U10–U12. The historical
+build metadata above records tools used across earlier versions, not current browser acceptance.
+See [README](README.md) and [current scope](specs/001-noc-ninja-training/guided-patrol.md).
 
-The largest change was educational: the three categories became competing diagnoses within mixed incidents, rather than separate levels repeating the same problem. Subsequent reviews improved command formatting, aligned interface event times and distinguished shared link state from directional PHY and MAC fault histories. We also separated counters cleared recently from older MAC change totals.
-
-The owner then requested illustrated ninja and shuriken assets, drag-to-throw controls and a technician destination. We generated original sprites and encoded the replacement rules as a training runbook, with conflicting evidence rejected. Browser verification caught a release hit-testing defect; we fixed it and disabled caching to verify current files. The final checks covered mouse, touch, keyboard controls and all six destinations. The next builder should start with trustworthy examples, keep measured evidence separate from recommendations, and verify actual browser interaction alongside pure rule tests.
-
-The throwing control now uses the shuriken in the ninja’s hand. The star follows the pointer while aiming, and release starts a three-spin flight from the hand to the chosen board using measured positions. Keyboard controls and reduced-motion results remain available. Native Safari checks verified wrong/correct throws, off-target cancellation and the projectile arriving at the target; seven new automated checks cover gesture ownership, cancellation, keyboard aiming, flight coordinates and reduced motion.
-
-## What we'd tell the next builder
-
-- Build the scenario timeline before formatting CLI output. Interface, PHY, fault and counter-clear histories can represent different events.
-- Derive diagnoses and technician destinations from structured evidence, then check that the visible output contains exactly those values.
-- Test drag cancellation, keyboard alternatives, touch input and stale-browser-cache behavior before calling the interface complete.
-- Keep the local HTTP server running while playing or refreshing. If the page cannot connect or shows only “Skip to training,” check that the server is running from the repository root and that scripts and styles load; after restarting it, hard-refresh the page if needed.
+Future examples must use actual supplied captures. Missing readings remain unknown. Preserve
+measurement provenance, intervention order, and the distinction between suspected and confirmed
+causes. Preview the game in Safari and verify browser behavior as well as pure logic.

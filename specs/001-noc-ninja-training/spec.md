@@ -1,8 +1,39 @@
+> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+
 # Feature Specification: NOC Ninja — Mixed Incident Dojo
+
+## Guided patrol extension — 2026-11-18
+
+The owner requested applying the interface-link-troubleshooting skill to improve teaching.
+This extension adds a guided mode; existing diagnosis-only advancement below describes **Arcade
+practice**. Both modes share the six validated incidents and existing diagnostic/dispatch rules.
+
+- The opening screen offers guided patrol and arcade practice and introduces the NOC method.
+- Guided patrol tracks state/admin, optics, error snapshots and history for both endpoints. The
+  visible initial state snapshot counts; duplicate views do not add coverage. Coverage means
+  viewed, not demonstrated comprehension.
+- Correct diagnosis reveals two deterministic questions: identify measured supporting evidence,
+  and choose a condition-appropriate next diagnostic check. Specific distractor feedback explains
+  snapshot-only reasoning, unsupported component certainty, premature resets and premature closure.
+- Guided advancement requires correct diagnosis, all eight evidence checks and both correct
+  reasoning answers. Empty/partial reasoning gives guidance without counting an attempt. Valid
+  wrong answers remain retryable. Reasoning attempts and diagnosis throws remain separate.
+- A text handoff includes timestamps, inspected command output and exposed paired/history samples,
+  observed condition, next check, uncertainty, the separately labeled owner runbook recommendation,
+  and verification steps. Download is local only; no ticket is sent. Reports remain available
+  in the final summary until restart/reload.
+- New rounds reset reasoning and viewed evidence while retaining prior learning records. Restart
+  cancel preserves everything; confirm and reload clear both modes and all reports.
+- Final reasoning results explicitly describe practice after diagnosis feedback, not blind mastery.
+- Runtime remains static and deterministic. No new network fault classes, command samples, live
+  changes, AI grading or universal optical thresholds are introduced.
+
+Source scope and acceptance checks: [skill adaptation](evidence/skill-adaptation.md).
+Implementation and automated checks complete; new browser/learner acceptance remains pending.
 
 **Branch:** main · **Created / amended:** 2026-11-17
 **Status:** Revised to the owner's gameplay correction; implemented, browser acceptance pending.
-**Governance:** [Constitution 1.3.0](../../.specify/memory/constitution.md).
+**Governance:** [Constitution 1.4.0](../../.specify/memory/constitution.md).
 **Original input:** [StarterKit/SPEC.md](../../StarterKit/SPEC.md).
 
 The engineer investigates six mixed incidents and identifies whether each is a light-level,
@@ -196,3 +227,26 @@ arithmetic and simulations; it does not claim independent hardware or vendor qua
 No configuration changes, repairs, IPv6 faults, routing, VLANs, port channels, MLAG, spanning tree,
 accounts, multiplayer, persistence, live CLI, or generated questions. The initial workshop scope
 is extended by the owner's subsequent graphical/mixed-investigation request.
+
+## Playable real incidents — 2026-11-18
+
+Owner instruction: add the three supplied real examples now; further examples may be supplied later.
+Add a separate **Real incident patrol** from the opening screen and original dojo summary, containing
+U10, U11 and U12 with five sequential decisions each. Preserve supplied evidence and platform
+identity. No additional incident or missing measurement is fabricated.
+
+Each case exposes both endpoints’ optics, counters and MAC captures plus the original automated
+assessment. Teach the method before asking questions. Choices grade supported evidence reasoning,
+not the script’s certainty or the original dojo’s optical thresholds. Wrong answers explain their
+misconception and remain retryable; empty input does not count; hints record assistance.
+
+Reveal the owner-reported outcome only after all decisions are correct and all evidence panels
+have been opened. Outcome confidence: U10 recovery confirmed; U11 replacement only; U12 combined
+cleaning/replacement resolution. Next case requires reveal. Completed cases offer local text
+reports with evidence, answers, attempts and outcome limits, retained in the final patrol summary.
+Return to the original dojo preserves its prior view/progress; confirmed restart clears both
+tracks, cancellation preserves them, and reload starts fresh.
+
+The real-case data validates separately and fails closed for that patrol without removing access
+to a valid original dojo. Browser/mobile/keyboard/download acceptance remains pending; source
+fidelity and state behavior pass automated checks. See [integration record](evidence/real-case-integration.md).

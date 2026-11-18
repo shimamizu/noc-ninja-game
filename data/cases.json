@@ -1,0 +1,900 @@
+{
+  "schemaVersion": 1,
+  "revision": "guided-cases-2026-11-18-v5",
+  "cases": [
+    {
+      "id": "U10",
+      "revision": "guided-cases-2026-11-18-v5",
+      "title": "The 10G call",
+      "speed": "10G",
+      "intro": "A down link has errors on one receiver and very low optical readings in one direction.",
+      "method": "Correlate zero spine bias and Tx -30.00 with leaf Rx -26.78 and the spine’s more recent Remote Fault history. Together they make the spine optic the high-confidence replacement target. Monitor timed counter and state-history samples to distinguish continuing errors or bouncing from historical totals, and verify stability after replacement.",
+      "limits": "Use the installed Finisar 10G optic’s specifications. Device alarm thresholds were not supplied. The extreme readings are not calibrated path-loss measurements. The script counts each up/down transition as a flap; its rate calculation is unverified.",
+      "source": "specs/001-noc-ninja-training/evidence/10g-spine-transmitter-case.md",
+      "collectionNote": "Device-local MAC timestamps are one second apart. Optics/counter capture times and timezone are unspecified.",
+      "endpoints": [
+        {
+          "id": "leaf",
+          "name": "leaf-gw1",
+          "model": "DCS-7010T-48-R",
+          "eos": "4.28.12M",
+          "port": "Et52",
+          "manufacturer": "FINISAR CORP.",
+          "optic": "FTLX8574D3BCL"
+        },
+        {
+          "id": "spine",
+          "name": "spine-gw1",
+          "model": "DCS-7808-CH",
+          "eos": "4.31.10M",
+          "port": "Et9/34",
+          "manufacturer": "FINISAR CORP.",
+          "optic": "FTLX8574D3BCL"
+        }
+      ],
+      "evidence": [
+        {
+          "id": "leaf-optics",
+          "endpointId": "leaf",
+          "kind": "optics",
+          "label": "Optics",
+          "rows": [
+            [
+              "Et52",
+              "57.75",
+              "3.36",
+              "9.90",
+              "-4.34",
+              "-26.78"
+            ]
+          ]
+        },
+        {
+          "id": "leaf-errors",
+          "endpointId": "leaf",
+          "kind": "errors",
+          "label": "Error counters",
+          "rows": [
+            [
+              "Et52",
+              "24,786",
+              "0",
+              "4,686",
+              "24,834",
+              "0"
+            ]
+          ]
+        },
+        {
+          "id": "leaf-mac",
+          "endpointId": "leaf",
+          "kind": "mac",
+          "label": "MAC detail",
+          "text": "leaf-gw1# show interfaces Ethernet52 mac detail\n    Current System Time: Wed Nov 18 10:11:24 2026\n\n    Ethernet52\n                            Current State   Changes     Last Change\n    PHY State               linkDown        114503      0:18:14 ago\n    Interface State         linkDown        57617       0:18:20 ago\n    MAC Rx Local Fault      True            428027      0:18:14 ago\n    MAC Rx Remote Fault     False           622         16:09:16 ago"
+        },
+        {
+          "id": "spine-optics",
+          "endpointId": "spine",
+          "kind": "optics",
+          "label": "Optics",
+          "rows": [
+            [
+              "Et9/34",
+              "25.73",
+              "3.33",
+              "0.00",
+              "-30.00",
+              "-5.61"
+            ]
+          ]
+        },
+        {
+          "id": "spine-errors",
+          "endpointId": "spine",
+          "kind": "errors",
+          "label": "Error counters",
+          "rows": [
+            [
+              "Et9/34",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "id": "spine-mac",
+          "endpointId": "spine",
+          "kind": "mac",
+          "label": "MAC detail",
+          "text": "spine-gw1# show interfaces Ethernet9/34 mac detail\n    Current System Time: Wed Nov 18 10:11:25 2026\n\n    Ethernet9/34\n                            Current State   Changes     Last Change\n    PHY State               linkDown        742         0:18:14 ago\n    Interface State         linkDown        145521      0:18:15 ago\n    MAC Rx Local Fault      True            1485        0:18:15 ago\n    MAC Rx Remote Fault     False           1204820     0:18:15 ago"
+        },
+        {
+          "id": "script",
+          "endpointId": null,
+          "kind": "script",
+          "label": "Script assessment",
+          "text": "- Issue label: Link Down & Input Errors.\n- Summary: Optic Issue on spine-gw1.\n- Root Cause Device field: spine-gw1.\n- Evidence cited: spine Tx -30.00 dBm and leaf Rx -26.78 dBm; remote Tx failure suspected.\n- Historical claim: 38,732 status changes in 4 months, 30 days, 1 hour, 23 minutes, reported as\n  10.6/hour and described as link flapping.\n- Recommendation: replace the optic on spine-gw1 Et9/34."
+        }
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Which optic does the combined evidence identify as the replacement target?",
+          "options": [
+            {
+              "id": "a",
+              "text": "leaf-gw1, solely because it records the most FCS errors.",
+              "correct": false,
+              "feedback": "Receive errors identify where errors were observed; they do not by themselves locate the failed optic."
+            },
+            {
+              "id": "b",
+              "text": "spine-gw1 Et9/34: Tx -30.00 and Bias 0.00 correlate with leaf Rx -26.78.",
+              "correct": true,
+              "feedback": "The spine optic is the supported replacement target: its own bias and Tx readings agree with the loss of received light at the leaf."
+            },
+            {
+              "id": "c",
+              "text": "Neither endpoint, because spine's error counters are zero.",
+              "correct": false,
+              "feedback": "Zero receive errors on spine do not clear its transmitter; leaf receives that direction."
+            }
+          ],
+          "explanation": "Bias 0.00 and Tx -30.00 show no reported laser drive and essentially absent transmit light at the spine; leaf Rx -26.78 corroborates the same direction. This is strong, actionable evidence of spine optic transmit failure, not merely a guess based on receive errors.",
+          "sourceIds": [
+            "U10"
+          ]
+        },
+        {
+          "id": "q2",
+          "prompt": "What does the leaf's FCS count establish?",
+          "options": [
+            {
+              "id": "a",
+              "text": "There are 24,786 new errors per second.",
+              "correct": false,
+              "feedback": "A cumulative count has no per-second denominator."
+            },
+            {
+              "id": "b",
+              "text": "The snapshot reports 24,786 accumulated FCS errors; the current trend is unknown. Monitor timed samples to see whether the count is still increasing or reflects historical errors.",
+              "correct": true,
+              "feedback": "Correct. This substantial accumulated count warrants follow-up monitoring, but it does not establish a current error rate."
+            },
+            {
+              "id": "c",
+              "text": "The leaf optic must be replaced.",
+              "correct": false,
+              "feedback": "FCS at the receiver does not prove that receiver’s optic failed."
+            }
+          ],
+          "explanation": "Preserve the current reading and collect further timestamped samples from the same interface. Compare deltas with the elapsed time and record any counter clear, rollover or reboot. Increasing counts show new errors; an unchanged total shows no new errors during that interval. Because this link is currently down, repeat the check after recovery under traffic before judging it healthy. Monitoring complements the supported optic replacement; it does not require delaying it.",
+          "sourceIds": [
+            "U10"
+          ]
+        },
+        {
+          "id": "q3",
+          "prompt": "Does this snapshot prove the link is flapping now?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Yes; the large MAC totals establish frequent changes in the last minute.",
+              "correct": false,
+              "feedback": "Cumulative changes do not establish a recent transition window."
+            },
+            {
+              "id": "b",
+              "text": "No; it proves the link has never flapped.",
+              "correct": false,
+              "feedback": "This snapshot cannot rule out past instability."
+            },
+            {
+              "id": "c",
+              "text": "No current flap rate is established. Both interfaces are down and last changed roughly 18 minutes ago. Monitor link state and MAC change counts over a timed interval to see whether bouncing continues or the recorded changes are historical.",
+              "correct": true,
+              "feedback": "Correct. The last transition was about 18 minutes before the capture; new observations are needed to establish whether the link continues to bounce."
+            }
+          ],
+          "explanation": "Save both endpoints’ MAC detail with timestamps, then poll again and inspect event logs for new up/down transitions. Compare each row with its own earlier value; Interface State changes and Remote Fault changes are different histories. One up or down transition is one flap in this runbook. The script’s 10.6/hour rate still needs its source counter and interval checked; do not assume its baseline matches the MAC history or the last interface-counter clear. In the training environment, interface counter clears leave MAC state/fault change histories intact; those histories reset with a switch reboot. Monitor their deltas rather than rebooting to obtain a zero baseline.",
+          "sourceIds": [
+            "U10"
+          ]
+        },
+        {
+          "id": "q4",
+          "prompt": "Which corrective action is best supported by the optical readings and MAC fault history?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Replace the optic on spine-gw1 Et9/34, preserving the baseline and checking both-end link state, optical readings and new errors afterward.",
+              "correct": true,
+              "feedback": "Correct. The spine’s more recent Remote Fault history corroborates its zero bias and Tx -30.00, with leaf Rx -26.78 in the affected direction."
+            },
+            {
+              "id": "b",
+              "text": "Replace the leaf-gw1 Et52 optic because that interface has the larger FCS count.",
+              "correct": false,
+              "feedback": "The leaf receives the affected direction. Its historical FCS total does not outweigh the spine’s own zero bias and absent transmit light."
+            },
+            {
+              "id": "c",
+              "text": "Clean only the fiber and leave the spine optic in place; the low leaf Rx alone explains all the readings.",
+              "correct": false,
+              "feedback": "This ignores the spine’s local zero bias and Tx -30.00. Low peer Rx alone could suggest path loss, but the combined evidence points directly at the spine transmitter."
+            }
+          ],
+          "explanation": "Spine MAC Rx Remote Fault has 1,204,820 changes and last changed 0:18:15 ago; leaf has 622 changes and last changed 16:09:16 ago. The leaf has no comparably recent Remote Fault transition in this capture. Both flags are currently False: these are historical changes, not active alarms or counts of separate failures. Remote Fault at the spine means the leaf reported trouble receiving the spine-to-leaf signal. Repeated Remote Fault transitions on a flapping link are a useful clue to a possible transmitting-optic fault; here that directional history combines with zero spine bias, Tx -30.00 and very low leaf Rx to make the spine optic almost certainly bad under the game’s assumptions. Replace spine-gw1 Et9/34’s optic, then verify optical recovery, both-end state, new errors under traffic and continued stability.",
+          "sourceIds": [
+            "U10"
+          ]
+        },
+        {
+          "id": "q5",
+          "prompt": "Which handoff records the diagnosis and next action without claiming an unperformed repair?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Spine optic failure; replacement has already restored service, so close the incident now.",
+              "correct": false,
+              "feedback": "The problem is the claim that the repair and service verification have already happened. Those results are not in the pre-repair capture."
+            },
+            {
+              "id": "b",
+              "text": "High-confidence spine optic transmit failure: zero bias, Tx -30.00, low leaf Rx and the spine’s more recent Remote Fault history agree. Replace spine-gw1 Et9/34’s optic and verify recovery before closure.",
+              "correct": true,
+              "feedback": "Correct. This gives a clear operational diagnosis, the evidence, the replacement target and the verification still to perform."
+            },
+            {
+              "id": "c",
+              "text": "Confirmed leaf receive failure; the spine is healthy because its receive power is higher.",
+              "correct": false,
+              "feedback": "The receiving endpoint’s power value alone does not isolate its receiver as faulty."
+            }
+          ],
+          "explanation": "A strong diagnosis supports action; it does not mean the action has already succeeded. Record the spine optic replacement recommendation now, then document the actual intervention and both-end optical readings, link state, comparable error deltas, stability and service checks afterward.",
+          "sourceIds": [
+            "U10"
+          ]
+        }
+      ],
+      "outcome": {
+        "status": "confirmed-recovery",
+        "title": "Replacement restored link health",
+        "summary": "The follow-up confirms that replacing the spine-gw1 Et9/34 optic restored the link, transmit power and stable error counters.",
+        "limits": "No numeric post-repair readings, monitoring duration or separate service-test result were supplied. Record the confirmed link, transmit-power and counter recovery without inventing additional measurements."
+      }
+    },
+    {
+      "id": "U11",
+      "revision": "guided-cases-2026-11-18-v5",
+      "title": "The cross-rack outage",
+      "speed": "100G",
+      "intro": "Both interfaces are down. Inspect each optical channel and interpret the fault flags from each endpoint’s perspective.",
+      "method": "Local Fault means the reporting endpoint detects an incoming-signal issue; Remote Fault reports the peer’s incoming-signal issue. These identify a direction, not a unique failed component. Inspect every channel instead of averaging them.",
+      "limits": "403H alarm thresholds were not supplied. Do not borrow alarm limits from a different optic model. Preserve the different seven-day and 96-day state ages; no common outage start is established. A low wavelength channel does not identify a separate external fiber strand.",
+      "source": "specs/001-noc-ninja-training/evidence/100g-single-channel-receive-case.md",
+      "collectionNote": "Device-local MAC timestamps are one second apart. Optics/counter capture times and timezone are unspecified.",
+      "endpoints": [
+        {
+          "id": "leaf",
+          "name": "leaf-gw1",
+          "model": "DCS-7050SX3-48YC8-R",
+          "eos": "4.31.10M",
+          "port": "Et56/1",
+          "manufacturer": "ColorChip ltd",
+          "optic": "C100Q020CWDM403H"
+        },
+        {
+          "id": "spine",
+          "name": "spine-gw1",
+          "model": "DCS-7808-CH",
+          "eos": "4.31.10M",
+          "port": "Et4/23/1",
+          "manufacturer": "ColorChip ltd",
+          "optic": "C100Q020CWDM403H"
+        }
+      ],
+      "evidence": [
+        {
+          "id": "leaf-optics",
+          "endpointId": "leaf",
+          "kind": "optics",
+          "label": "Optics",
+          "rows": [
+            [
+              "Et56/1",
+              "48.09",
+              "3.30",
+              "57.51",
+              "0.47",
+              "-0.97"
+            ],
+            [
+              "Et56/2",
+              "48.09",
+              "3.30",
+              "57.51",
+              "0.74",
+              "-1.33"
+            ],
+            [
+              "Et56/3",
+              "48.09",
+              "3.30",
+              "57.85",
+              "0.89",
+              "-0.45"
+            ],
+            [
+              "Et56/4",
+              "48.09",
+              "3.30",
+              "57.51",
+              "0.43",
+              "-1.39"
+            ]
+          ]
+        },
+        {
+          "id": "leaf-errors",
+          "endpointId": "leaf",
+          "kind": "errors",
+          "label": "Error counters",
+          "rows": [
+            [
+              "Et56/1",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "id": "leaf-mac",
+          "endpointId": "leaf",
+          "kind": "mac",
+          "label": "MAC detail",
+          "text": "leaf-gw1# show interfaces Ethernet56/1 mac detail\n    Current System Time: Wed Nov 18 10:24:35 2026\n\n    Ethernet56/1\n                            Current State   Changes     Last Change\n    PHY State               linkDown        1           7 days, 16:11:36 ago\n    Interface State         linkDown        3           7 days, 16:11:34 ago\n    MAC Rx Local Fault      False           4           0:05:09 ago\n    MAC Rx Remote Fault     True            1           0:05:11 ago"
+        },
+        {
+          "id": "spine-optics",
+          "endpointId": "spine",
+          "kind": "optics",
+          "label": "Optics",
+          "rows": [
+            [
+              "Et4/23/1",
+              "43.34",
+              "3.27",
+              "56.93",
+              "-0.74",
+              "-0.91"
+            ],
+            [
+              "Et4/23/2",
+              "43.34",
+              "3.27",
+              "56.93",
+              "-0.57",
+              "-0.43"
+            ],
+            [
+              "Et4/23/3",
+              "43.34",
+              "3.27",
+              "56.84",
+              "0.05",
+              "0.25"
+            ],
+            [
+              "Et4/23/4",
+              "43.34",
+              "3.27",
+              "56.84",
+              "-0.50",
+              "-14.09"
+            ]
+          ]
+        },
+        {
+          "id": "spine-errors",
+          "endpointId": "spine",
+          "kind": "errors",
+          "label": "Error counters",
+          "rows": [
+            [
+              "Et4/23/1",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "id": "spine-mac",
+          "endpointId": "spine",
+          "kind": "mac",
+          "label": "MAC detail",
+          "text": "spine-gw1# show interfaces Ethernet4/23/1 mac detail\n    Current System Time: Wed Nov 18 10:24:36 2026\n\n    Ethernet4/23/1\n                            Current State   Changes     Last Change\n    PHY State               linkDown        3           96 days, 19:13:15 ago\n    Interface State         linkDown        3           96 days, 19:13:15 ago\n    MAC Rx Local Fault      True            9           83 days, 19:06:59 ago\n    MAC Rx Remote Fault     False           4           96 days, 19:13:15 ago"
+        },
+        {
+          "id": "script",
+          "endpointId": null,
+          "kind": "script",
+          "label": "Script assessment",
+          "text": "- Port Issue Type: Link Down.\n- Summary: Optic Issue on leaf-gw1.\n- Root Cause Device: leaf-gw1.\n- Script conclusion: leaf-gw1 Et56/1 TX failure, based on Remote Fault = True; labeled\n  “ROOT CAUSE IDENTIFIED.”\n- Recommendation: replace the leaf-gw1 Et56/1 optic."
+        }
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Which direction should the next investigation prioritize?",
+          "options": [
+            {
+              "id": "a",
+              "text": "spine → leaf because the leaf is reporting Remote Fault.",
+              "correct": false,
+              "feedback": "Remote Fault on leaf reports the peer’s receive problem, pointing toward leaf-to-spine."
+            },
+            {
+              "id": "b",
+              "text": "leaf → spine: the spine reports Local Fault and one low Rx channel; the leaf receives the peer's fault indication.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            },
+            {
+              "id": "c",
+              "text": "Neither direction because all error counters are zero.",
+              "correct": false,
+              "feedback": "Zero counters on a down link do not prove a healthy signal path."
+            }
+          ],
+          "explanation": "Read fault flags from the reporting endpoint's perspective and corroborate them with the peer's optics. Directionality does not by itself identify a failed component.",
+          "sourceIds": [
+            "U11"
+          ]
+        },
+        {
+          "id": "q2",
+          "prompt": "Which observation is easiest to miss in a module-level summary?",
+          "options": [
+            {
+              "id": "a",
+              "text": "All four spine receive channels have no light.",
+              "correct": false,
+              "feedback": "Only one spine receive row is the conspicuous outlier."
+            },
+            {
+              "id": "b",
+              "text": "Spine Et4/23/4 Rx is -14.09 dBm, while the other three Rx values are near 0 dBm.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            },
+            {
+              "id": "c",
+              "text": "Leaf Et56/4 reports zero transmit power.",
+              "correct": false,
+              "feedback": "Leaf channel 4 Tx is +0.43 dBm, not zero."
+            }
+          ],
+          "explanation": "Inspect individual channels. The leaf fourth-row Tx is +0.43 dBm; this case differs from the 10G example with reported Tx -30.00 and Bias 0.00. Do not average away the outlier.",
+          "sourceIds": [
+            "U11"
+          ]
+        },
+        {
+          "id": "q3",
+          "prompt": "What does leaf Remote Fault True prove about the leaf optic?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Its transmitter has definitely failed.",
+              "correct": false,
+              "feedback": "Remote Fault does not uniquely identify a failed local transmitter."
+            },
+            {
+              "id": "b",
+              "text": "Its receiver has definitely failed.",
+              "correct": false,
+              "feedback": "Remote Fault is not proof of a failed local receiver."
+            },
+            {
+              "id": "c",
+              "text": "It reports a peer-side receive problem; further evidence is needed to isolate the component.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            }
+          ],
+          "explanation": "The leaf optic is a candidate under the incident runbook. The flags and telemetry prioritize the direction, while transmitter/module, optical path and receiver/module causes remain to be isolated.",
+          "sourceIds": [
+            "U11"
+          ]
+        },
+        {
+          "id": "q4",
+          "prompt": "Which statement about counters and timestamps is justified?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Zero errors prove the 100G link is healthy.",
+              "correct": false,
+              "feedback": "Zero totals do not establish clean traffic under load."
+            },
+            {
+              "id": "b",
+              "text": "Both endpoints went down when the leaf Remote Fault changed five minutes ago.",
+              "correct": false,
+              "feedback": "The interface-state ages are about seven and 96 days, not five minutes."
+            },
+            {
+              "id": "c",
+              "text": "Both interfaces are currently down; neither clean traffic nor one common outage start is established by the counters and differing state ages.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            }
+          ],
+          "explanation": "Distinct rows record distinct histories. Preserve observations and request the missing logs/baselines rather than inventing a matching timeline.",
+          "sourceIds": [
+            "U11"
+          ]
+        },
+        {
+          "id": "q5",
+          "prompt": "What should the initial handoff say?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Leaf-to-spine optical/signal-path issue suspected, with low spine channel-4 Rx. Leaf optic replacement is the script/runbook recommendation; component failure and repair outcome are unconfirmed.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            },
+            {
+              "id": "b",
+              "text": "Confirmed leaf Tx failure solely because Remote Fault is True; no further verification needed.",
+              "correct": false,
+              "feedback": "A peer receive fault does not prove the leaf transmitter has failed."
+            },
+            {
+              "id": "c",
+              "text": "Confirmed spine receiver failure because the low reading is displayed on spine.",
+              "correct": false,
+              "feedback": "A symptom at the spine receiver can originate elsewhere on its incoming path."
+            }
+          ],
+          "explanation": "Preserve fresh per-channel readings, relevant logs and module thresholds. Record every intervention separately where possible. After an authorized repair, verify both-end link state, per-channel Rx/Tx, fault flags, traffic/error deltas, stability and the affected service. If cleaning, reseating or changing fiber accompanies optic replacement, record it before attributing recovery exclusively to the removed module.",
+          "sourceIds": [
+            "U11"
+          ]
+        }
+      ],
+      "outcome": {
+        "status": "intervention-only",
+        "title": "Replacement confirmed; recovery unconfirmed",
+        "summary": "The follow-up confirms that the leaf-gw1 Et56/1 optic was replaced.",
+        "limits": "Recovery of the link and low spine receive channel, and any accompanying cleaning or fiber work, were not explicitly confirmed. Do not mark this incident resolved from the replacement alone."
+      }
+    },
+    {
+      "id": "U12",
+      "revision": "guided-cases-2026-11-18-v5",
+      "title": "The green status light",
+      "speed": "100G",
+      "intro": "Both interfaces report up. Decide what the optical readings, counters and automated assessment actually establish.",
+      "method": "LinkUp and cleared fault flags describe current state, not complete health. Counter trends require timed samples and reset continuity. Keep aggregate counters separate from categories that may overlap.",
+      "limits": "403H alarm thresholds were not supplied. Both endpoints were polled together, but the source and aggregation of the script’s 533, 267 and displayed 277 totals still require verification. No current error rate or recent flap window is established.",
+      "source": "specs/001-noc-ninja-training/evidence/100g-link-up-receive-errors-case.md",
+      "collectionNote": "Both endpoints polled together; device-local timestamps, timezone unspecified.",
+      "endpoints": [
+        {
+          "id": "leaf",
+          "name": "leaf-gw1",
+          "model": "DCS-7050SX3-48YC8-R",
+          "eos": "4.31.10M",
+          "port": "Et56/1",
+          "manufacturer": "ColorChip ltd",
+          "optic": "C100Q020CWDM403H"
+        },
+        {
+          "id": "spine",
+          "name": "spine-gw1",
+          "model": "DCS-7808-CH",
+          "eos": "4.31.10M",
+          "port": "Et8/5/1",
+          "manufacturer": "ColorChip ltd",
+          "optic": "C100Q020CWDM403H"
+        }
+      ],
+      "evidence": [
+        {
+          "id": "leaf-optics",
+          "endpointId": "leaf",
+          "kind": "optics",
+          "label": "Optics",
+          "rows": [
+            [
+              "Et56/1",
+              "47.81",
+              "3.33",
+              "58.18",
+              "1.26",
+              "-0.00"
+            ],
+            [
+              "Et56/2",
+              "47.81",
+              "3.33",
+              "57.60",
+              "1.34",
+              "0.14"
+            ],
+            [
+              "Et56/3",
+              "47.81",
+              "3.33",
+              "57.60",
+              "1.30",
+              "0.74"
+            ],
+            [
+              "Et56/4",
+              "47.81",
+              "3.33",
+              "53.32",
+              "1.07",
+              "0.41"
+            ]
+          ]
+        },
+        {
+          "id": "leaf-errors",
+          "endpointId": "leaf",
+          "kind": "errors",
+          "label": "Error counters",
+          "rows": [
+            [
+              "Et56/1",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "id": "leaf-mac",
+          "endpointId": "leaf",
+          "kind": "mac",
+          "label": "MAC detail",
+          "text": "leaf-gw1# show interfaces Ethernet56/1 mac detail\n    Current System Time: Wed Nov 18 10:23:55 2026\n\n    Ethernet56/1\n                            Current State   Changes     Last Change\n    PHY State               linkUp          8           0:05:45 ago\n    Interface State         linkUp          10          0:05:45 ago\n    MAC Rx Local Fault      False           22          0:05:52 ago\n    MAC Rx Remote Fault     False           12          0:05:45 ago"
+        },
+        {
+          "id": "spine-optics",
+          "endpointId": "spine",
+          "kind": "optics",
+          "label": "Optics",
+          "rows": [
+            [
+              "Et8/5/1",
+              "38.43",
+              "3.27",
+              "56.59",
+              "0.76",
+              "0.56"
+            ],
+            [
+              "Et8/5/2",
+              "38.43",
+              "3.27",
+              "56.42",
+              "0.57",
+              "-15.21"
+            ],
+            [
+              "Et8/5/3",
+              "38.43",
+              "3.27",
+              "56.76",
+              "1.40",
+              "0.21"
+            ],
+            [
+              "Et8/5/4",
+              "38.43",
+              "3.27",
+              "56.51",
+              "0.70",
+              "0.33"
+            ]
+          ]
+        },
+        {
+          "id": "spine-errors",
+          "endpointId": "spine",
+          "kind": "errors",
+          "label": "Error counters",
+          "rows": [
+            [
+              "Et8/5/1",
+              "236",
+              "0",
+              "40",
+              "277",
+              "0"
+            ]
+          ]
+        },
+        {
+          "id": "spine-mac",
+          "endpointId": "spine",
+          "kind": "mac",
+          "label": "MAC detail",
+          "text": "spine-gw1# show interfaces Ethernet8/5/1 mac detail\n    Current System Time: Wed Nov 18 10:23:55 2026\n\n    Ethernet8/5/1\n                            Current State   Changes     Last Change\n    PHY State               linkUp          8           0:05:44 ago\n    Interface State         linkUp          8           0:05:45 ago\n    MAC Rx Local Fault      False           22          0:05:49 ago\n    MAC Rx Remote Fault     False           10          0:05:49 ago"
+        },
+        {
+          "id": "script",
+          "endpointId": null,
+          "kind": "script",
+          "label": "Script assessment",
+          "text": "- Issue: Link Issue; summary: Optic Issue on leaf-gw1; Root Cause Device: leaf-gw1.\n- Headline: leaf-gw1 Et56/1 TX failure causing 533 RX errors on spine-gw1 Et8/5/1 since ports\n  were enabled approximately five minutes ago; labeled “ROOT CAUSE IDENTIFIED.”\n- Breakdown: 267 RX errors: 227 FCS, 39 Symbol, 1 Runts.\n- Recommended sequence: replace leaf optic; if unresolved, clean all fiber connectors; check/clean\n  LIU ports; if still unresolved, replace the spine optic."
+        }
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Does linkUp with both fault flags False establish a healthy link?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Yes; those fields rule out all physical-layer issues.",
+              "correct": false,
+              "feedback": "Current state and cleared flags cannot establish complete link health."
+            },
+            {
+              "id": "b",
+              "text": "No; spine has a conspicuously low receive channel and recorded receive errors to investigate.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            },
+            {
+              "id": "c",
+              "text": "No; this proves the link is flapping four times per minute.",
+              "correct": false,
+              "feedback": "No timed sequence of recent transitions is supplied."
+            }
+          ],
+          "explanation": "Current link state, optical measurements, counter trends and service performance answer different questions. This snapshot warrants investigation without establishing an ongoing error rate.",
+          "sourceIds": [
+            "U12"
+          ]
+        },
+        {
+          "id": "q2",
+          "prompt": "Which direction and optical row deserve attention first?",
+          "options": [
+            {
+              "id": "a",
+              "text": "leaf → spine, particularly spine Et8/5/2 Rx -15.21 dBm.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            },
+            {
+              "id": "b",
+              "text": "spine → leaf because spine is where errors are displayed.",
+              "correct": false,
+              "feedback": "Spine is receiving from leaf; reporting location is not transmit direction."
+            },
+            {
+              "id": "c",
+              "text": "All channels are equally impaired because they share a module temperature.",
+              "correct": false,
+              "feedback": "Shared temperature does not erase the difference between optical channels."
+            }
+          ],
+          "explanation": "The spine receives from the leaf. Compare individual channels and preserve the endpoint reporting each measurement; do not infer component failure merely from where symptoms appear.",
+          "sourceIds": [
+            "U12"
+          ]
+        },
+        {
+          "id": "q3",
+          "prompt": "What additional evidence establishes whether FCS errors are increasing now?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Divide 236 by the interface-state age.",
+              "correct": false,
+              "feedback": "Interface-state age is not the counter baseline."
+            },
+            {
+              "id": "b",
+              "text": "Add FCS, Symbol and RX together to get a larger total.",
+              "correct": false,
+              "feedback": "The categories may overlap; adding them can double count."
+            },
+            {
+              "id": "c",
+              "text": "Obtain ordered timestamped samples of the same FCS counter, establish reset continuity and note traffic conditions.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            }
+          ],
+          "explanation": "Neither uptime nor a single accumulated count supplies a valid current error rate.",
+          "sourceIds": [
+            "U12"
+          ]
+        },
+        {
+          "id": "q4",
+          "prompt": "How should you handle the script's 533-error headline?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Accept it because an automated analysis must be more accurate than raw output.",
+              "correct": false,
+              "feedback": "Automated conclusions require the same evidence checks as manual conclusions."
+            },
+            {
+              "id": "b",
+              "text": "Verify its source and aggregation: the breakdown totals 267, and 533 equals 267 + 227 + 39, which may count overlapping categories twice. Trace the script's source reads and calculation.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            },
+            {
+              "id": "c",
+              "text": "Replace every value with 277 and discard the original observations.",
+              "correct": false,
+              "feedback": "Replacing all observations with one total destroys their provenance."
+            }
+          ],
+          "explanation": "Both endpoints were polled together. Retain provenance and check the code before declaring either an aggregation bug or a counter trend from the differing table/breakdown values. Neither the largest number nor the newest-looking number automatically resolves the discrepancy.",
+          "sourceIds": [
+            "U12"
+          ]
+        },
+        {
+          "id": "q5",
+          "prompt": "Before the intervention, which initial handoff is supported?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Confirmed failed leaf transmitter; the link has accumulated exactly 533 new errors in five minutes.",
+              "correct": false,
+              "feedback": "Neither the failed component nor the 533 new-errors claim is established."
+            },
+            {
+              "id": "b",
+              "text": "Link currently up with recorded spine receive errors and low channel-2 Rx; leaf-to-spine impairment suspected. Leaf optic is the script's first replacement candidate; cause, trend and repair result require verification.",
+              "correct": true,
+              "feedback": "Supported by the supplied evidence."
+            },
+            {
+              "id": "c",
+              "text": "Incident resolved because both fault flags are False.",
+              "correct": false,
+              "feedback": "Cleared fault flags do not prove that the low receive channel or error issue is resolved."
+            }
+          ],
+          "explanation": "Record the incident replacement/cleaning/LIU/spine-fallback sequence as a proposed runbook, not completed work. Preserve pre-action evidence and document each intervention and its result. After authorized work, check per-channel optics, both-end state, new error deltas under traffic, stability over an appropriate interval and the affected service. LinkUp alone is insufficient here.",
+          "sourceIds": [
+            "U12"
+          ]
+        }
+      ],
+      "outcome": {
+        "status": "combined-recovery",
+        "title": "Cleaning and replacement resolved the issue",
+        "summary": "The follow-up reports that cleaning and replacing the optic on leaf-gw1 resolved the issue. Both endpoints were polled at the same time.",
+        "limits": "The combined intervention does not isolate cleaning from replacement or reconnection. Exact post-repair readings, monitoring duration, cleaned surfaces and intervention order were not supplied."
+      }
+    }
+  ]
+}

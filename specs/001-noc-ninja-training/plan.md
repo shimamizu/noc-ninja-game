@@ -1,3 +1,5 @@
+> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+
 # Implementation Plan: Mixed Incident Dojo
 
 **Updated:** 2026-11-17 · **Branch:** main
@@ -141,3 +143,36 @@ no stored correct optic ID. `engine/rules.js` recognizes corroborated flapping a
 path. `engine/content.js` validates four Tx readings and agreement with displayed power values.
 See `evidence/technician-runbook.md` for independent case outcomes. Verify pure rules, mouse
 and touch dragging, cancellation, keyboard equivalents, reduced motion and all six destinations.
+# Guided patrol extension — 2026-11-18
+
+`engine/coaching.js` derives measured answer text from the existing `findings()` output and
+builds per-condition reasoning checks; authored condition explanations live in `data/coaching.js`.
+It also computes both-end observation coverage and assembles handoffs from original command text,
+including paired counters and exposed historical snapshots. Source interpretation is bounded by
+`evidence/skill-adaptation.md`; existing content and evaluation remain authoritative.
+
+`engine/state.js` records mode, per-round evidence IDs, reasoning selections, check count and result.
+Guided Next requires diagnosis, eight checks and correct reasoning; arcade progression remains
+diagnosis-only. `ui/coaching.js` renders native radio groups, a notebook and report preview.
+Controls use delegated events and the existing focus/live-region system. `main.js` downloads a
+local text Blob only after the complete guided record exists. No backend or dependency is added.
+
+Automated coverage is shared by Node and browser test runners. Browser acceptance for the new UI
+is pending; the manual procedure and known verification limitations are recorded in the source
+adaptation review. C1/C5 retain the existing simulated evidence and offline runtime; C2/C3 add
+explicit reasoning with honest retries; C4 awaits browser/keyboard acceptance; C6 keeps derived
+answers separate from UI; C7 records acceptance gaps rather than claiming release completion.
+
+## Real-case implementation — 2026-11-18
+
+Use separate JSON, validator, state and rendering modules for the owner’s real captures. This
+avoids weakening the fixed synthetic deployment validator or fabricating histories to satisfy it.
+`data/real-cases.json` owns evidence, inventory, reviewed questions and outcomes.
+`engine/real-cases.js` owns validation, deterministic answer checks, progression and report text.
+`ui/real-cases.js` renders native controls and exact evidence; main loads both tracks concurrently
+and handles local downloads and accessibility announcements. Counts derive from case data.
+
+Review C1–C7: source-fidelity checks protect literal captures; source-reviewed answers keep grading
+within available evidence; attempts/hints and outcome confidence stay distinct; runtime remains
+offline and deterministic. Keyboard/visual acceptance is not yet demonstrated. Existing six-incident
+checks still pass. See the [integration record](evidence/real-case-integration.md) for remaining QA.

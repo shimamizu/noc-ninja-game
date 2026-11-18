@@ -272,3 +272,7 @@ supersedes conflicting details of historical tasks above, without closing outsta
 - [X] T056 Incorporate U8 paired down-link evidence: distinguish Interface State from directional PHY/fault rows, maintain independent MAC row event clocks, and separate full-interface counts since clear from MAC totals. Adapt both optical examples, feedback, validation and regression tests; correct constitution/spec/plan/contracts. All 130 checks pass; browser checks remain in T050.
 
 - [X] T057 Align cleared Remote Fault Last Change ages and supporting change histories throughout both flap cases; give leaf and spine distinct transceiver profiles without altering intended Rx faults. Update specifications, plans and content review; verify all 133 automated checks.
+
+- [X] T058 Generate and locally save original ninja/shuriken sprites; implement mouse/touch/pen drag aiming with cancellation, keyboard equivalents and decorative projectile.
+- [X] T059 Implement U9 technician destinations from CRC direction, Remote Fault current/history and Tx alarms; author corroborating cases, Tx observations and matched CLI outputs; preserve one primary diagnosis and fail closed on conflicting destinations.
+- [X] T060 Update constitution/spec/plan/contracts/source review and validate 144 automated checks plus isolated Chrome desktop/mobile interaction checks. Representative learner and screen-reader acceptance remain separate.

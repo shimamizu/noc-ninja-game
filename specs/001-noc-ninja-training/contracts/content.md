@@ -1,6 +1,6 @@
 # Content Loading and Review Contract
 
-**Updated:** 2026-11-17 · schemaVersion 2 · noc-v2.6-2026-11-17
+**Updated:** 2026-11-17 · schemaVersion 2 · noc-v3-2026-11-17
 
 Resolve data/levels.json relative to the loader module. Check HTTP success and JSON parsing, then
 validate the entire document. Return deeply frozen content with no errors, or null content plus
@@ -42,3 +42,6 @@ play. Historical MAC records are separate outputs; their full text remains avail
 10. A valid `linkTimeline` reconciles both endpoints at every snapshot, including system clocks,
     operational state, full-interface Up/Down age, MAC row ages and transition increments.
     Reject missing timelines, mismatched endpoint histories or contradictory rendered values.
+
+11. Four structured Tx values must match the displayed transceiver Tx column. Compute U9
+    dispatch from evidence and require exactly one agreed destination for each playable case.

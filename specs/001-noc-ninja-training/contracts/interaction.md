@@ -24,7 +24,8 @@
 
 Explicit throw is the existing internal `submit` event. The animation uses no state timer and
 never gates feedback or Next. A static impact mark remains. Reduced motion removes the projectile;
-all evidence, results and controls remain available. There is no drag, precision hitbox or timing test.
+all evidence, results and controls remain available. Dragging is optional: broad answer targets
+accept a deliberate release, with equivalent click/radio/keyboard submission and no timing test.
 
 Targets are labeled native radios. Tab/Shift+Tab navigate controls, radio arrows aim, and native
 Enter/Space activate buttons. Visible focus surrounds targets and buttons. Endpoint changes preserve
@@ -38,3 +39,12 @@ arena; narrow screens stack them. Browser/accessibility checks must be observed,
 semantic markup or unit tests.
 
 Throws, completion and assistance are separate. No penalty, countdown, points or mastery claim.
+
+## Drag input and dispatch feedback
+
+Pointer down on the ninja captures that pointer. Movement updates an aiming line and target
+highlight without scoring. Release inside a target dispatches select, then submit once. Release
+elsewhere, pointer cancellation, lost capture or Escape cancels. Ninja left/right keys select
+a target; Enter/Space submits. Existing radio controls and Throw remain equivalent.
+Correct feedback adds the dispatch destination and rationale, and the live region announces
+the destination. The post-diagnosis recommendation does not add an attempt.

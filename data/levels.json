@@ -278,7 +278,7 @@
         "definitions": [
           {
             "term": "Light levels",
-            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent."
+            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent. Also check Tx: outside \u22129.00 to +3.30 dBm alarm limits supports a transmit-light problem."
           },
           {
             "term": "CRC / errors",
@@ -1405,7 +1405,7 @@
             {
               "id": "L1-R1-method",
               "kind": "method",
-              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "text": "Inspect both endpoints. Compare Tx and Rx against the supplied limits, subtract earlier error counters from later counters, and count actual Interface State changes. Then use error direction and Remote Fault history to choose the replacement location.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
@@ -1427,12 +1427,13 @@
             {
               "id": "L1-R1-solution",
               "kind": "solution",
-              "text": "spine-gw1 has 17 \u2212 5 = 12 new CRC errors. Its states are up; the other receiver\u2019s count is unchanged. Aim at CRC / errors. These observations do not isolate a failed cable, optic, or remote device.",
+              "text": "spine-gw1 has 17 \u2212 5 = 12 new CRC errors. Its states are up; the other receiver\u2019s count is unchanged. Aim at CRC / errors. These observations do not isolate a failed cable, optic, or remote device. Runbook: send the technician to leaf-gw1 Et51/1, opposite the spine receiving errors.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
                 "U3-U5",
-                "RULES"
+                "RULES",
+                "U9"
               ]
             }
           ],
@@ -2571,7 +2572,7 @@
             {
               "id": "L1-R2-method",
               "kind": "method",
-              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "text": "Inspect both endpoints. Compare Tx and Rx against the supplied limits, subtract earlier error counters from later counters, and count actual Interface State changes. Then use error direction and Remote Fault history to choose the replacement location.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
@@ -2594,13 +2595,14 @@
             {
               "id": "L1-R2-solution",
               "kind": "solution",
-              "text": "Both interfaces are down. leaf-gw1 has four \u221230 dBm Rx readings, PHY down and Local Fault True. spine-gw1 receives normal light with PHY up, Local Fault False and Remote Fault True. The fault flags describe opposite receive directions; PHY up alone does not make the interface operational. Aim at Light levels. These observations do not isolate a failed cable, optic or remote device.",
+              "text": "Both interfaces are down. leaf-gw1 has four \u221230 dBm Rx readings, PHY down and Local Fault True. spine-gw1 receives normal light with PHY up, Local Fault False and Remote Fault True. The fault flags describe opposite receive directions; PHY up alone does not make the interface operational. Aim at Light levels. These observations do not isolate a failed cable, optic or remote device. Runbook: send the technician to spine-gw1 Et3/15/1, the endpoint showing Remote Fault True.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
                 "U3-U5",
                 "RULES",
-                "U8"
+                "U8",
+                "U9"
               ]
             }
           ],
@@ -2646,7 +2648,7 @@
         "definitions": [
           {
             "term": "Light levels",
-            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent."
+            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent. Also check Tx: outside \u22129.00 to +3.30 dBm alarm limits supports a transmit-light problem."
           },
           {
             "term": "CRC / errors",
@@ -4279,7 +4281,7 @@
             {
               "id": "L2-R1-method",
               "kind": "method",
-              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "text": "Inspect both endpoints. Compare Tx and Rx against the supplied limits, subtract earlier error counters from later counters, and count actual Interface State changes. Then use error direction and Remote Fault history to choose the replacement location.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
@@ -4301,12 +4303,13 @@
             {
               "id": "L2-R1-solution",
               "kind": "solution",
-              "text": "Both leaf-gw1 Et51/1 and spine-gw1 Et3/15/1 record the same four link-state changes in 60 seconds, ending down. This is one flapping link. Compare the shared timeline; current status does not erase earlier transitions. Aim at Link flapping. The evidence does not isolate a failed component.",
+              "text": "Both leaf-gw1 Et51/1 and spine-gw1 Et3/15/1 record the same four link-state changes in 60 seconds, ending down. This is one flapping link. Compare the shared timeline; current status does not erase earlier transitions. Aim at Link flapping. The evidence does not isolate a failed component. The spine error count also rises 0 \u2192 12 during this flapping window. Runbook: send the technician to leaf-gw1 Et51/1, opposite that receiver.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
                 "U3-U5",
-                "RULES"
+                "RULES",
+                "U9"
               ]
             }
           ],
@@ -5452,7 +5455,7 @@
             {
               "id": "L2-R2-method",
               "kind": "method",
-              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "text": "Inspect both endpoints. Compare Tx and Rx against the supplied limits, subtract earlier error counters from later counters, and count actual Interface State changes. Then use error direction and Remote Fault history to choose the replacement location.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
@@ -5474,12 +5477,13 @@
             {
               "id": "L2-R2-solution",
               "kind": "solution",
-              "text": "leaf-gw1 has 145 \u2212 120 = 25 new CRC errors. Its states are up; the other receiver\u2019s count is unchanged. Aim at CRC / errors. These observations do not isolate a failed cable, optic, or remote device.",
+              "text": "leaf-gw1 has 145 \u2212 120 = 25 new CRC errors. Its states are up; the other receiver\u2019s count is unchanged. Aim at CRC / errors. These observations do not isolate a failed cable, optic, or remote device. Runbook: send the technician to spine-gw1 Et3/15/1, opposite the leaf receiving errors.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
                 "U3-U5",
-                "RULES"
+                "RULES",
+                "U9"
               ]
             }
           ],
@@ -5524,7 +5528,7 @@
         "definitions": [
           {
             "term": "Light levels",
-            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent."
+            "meaning": "Inspect Rx power. For these ColorChip optics, \u221230 dBm means no light; values below \u221215.70 dBm are very bad light, not necessarily absent. Also check Tx: outside \u22129.00 to +3.30 dBm alarm limits supports a transmit-light problem."
           },
           {
             "term": "CRC / errors",
@@ -6657,7 +6661,7 @@
             {
               "id": "L3-R1-method",
               "kind": "method",
-              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "text": "Inspect both endpoints. Compare Tx and Rx against the supplied limits, subtract earlier error counters from later counters, and count actual Interface State changes. Then use error direction and Remote Fault history to choose the replacement location.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
@@ -6679,12 +6683,13 @@
             {
               "id": "L3-R1-solution",
               "kind": "solution",
-              "text": "spine-gw1 has Rx values from \u221217.20 to \u221216.80 dBm, all below the \u221215.70 dBm low alarm. Very bad light does not mean no light. Aim at Light levels. These observations do not isolate a failed cable, optic, or remote device.",
+              "text": "spine-gw1 has Rx values from \u221217.20 to \u221216.80 dBm, all below the \u221215.70 dBm low alarm. Very bad light does not mean no light. Aim at Light levels. These observations do not isolate a failed cable, optic, or remote device. Leaf Tx is \u221216.00, \u221215.70, \u221215.90, \u221215.80 dBm, below the \u22129.00 dBm low alarm. Runbook: replace the transmitting optic at leaf-gw1 Et51/1; its Remote Fault True agrees with that destination.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
                 "U3-U5",
-                "RULES"
+                "RULES",
+                "U9"
               ]
             }
           ],
@@ -8208,7 +8213,7 @@
             {
               "id": "L3-R2-method",
               "kind": "method",
-              "text": "Inspect both endpoints. Check the Rx readings, subtract earlier CRC counts from later counts, and count actual state changes.",
+              "text": "Inspect both endpoints. Compare Tx and Rx against the supplied limits, subtract earlier error counters from later counters, and count actual Interface State changes. Then use error direction and Remote Fault history to choose the replacement location.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
@@ -8230,12 +8235,13 @@
             {
               "id": "L3-R2-solution",
               "kind": "solution",
-              "text": "Both leaf-gw1 Et51/1 and spine-gw1 Et3/15/1 record the same four link-state changes in 60 seconds, ending up. This is one flapping link. Compare the shared timeline; current status does not erase earlier transitions. Aim at Link flapping. The evidence does not isolate a failed component.",
+              "text": "Both leaf-gw1 Et51/1 and spine-gw1 Et3/15/1 record the same four link-state changes in 60 seconds, ending up. This is one flapping link. Compare the shared timeline; current status does not erase earlier transitions. Aim at Link flapping. The evidence does not isolate a failed component. Leaf Remote Fault asserts True at 12:00:10 and 12:00:40, then clears as the link returns up. Runbook: send the technician to leaf-gw1 Et51/1, even though the current flag is False.",
               "sourceIds": [
                 "U-deployment",
                 "U4",
                 "U3-U5",
-                "RULES"
+                "RULES",
+                "U9"
               ]
             }
           ],

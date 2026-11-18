@@ -79,3 +79,19 @@ age must agree, as must MAC Interface State Last Change ages. PHY and fault rows
 by endpoint; in optical incidents the normal-light peer has PHY up but Interface State down. Stable-up histories align all
 four rows. Both endpoints of a flapping case show the same four transitions, counted once
 in feedback. Device-local counter-clear times and accumulated counts may differ.
+
+## v3 drag and dispatch acceptance
+
+1. Start the game, drag the ninja to an incorrect answer and release; verify one retryable throw.
+2. Drag onto the correct answer and release; verify one additional throw and a dispatch panel.
+3. Release in empty arena space and press Escape during another drag; neither scores.
+4. Focus the ninja: left/right aim, Enter/Space throws. Native target radios and Throw also work.
+5. Verify case destinations in order: leaf, spine, leaf, spine, leaf, leaf, using Et51/1 or Et3/15/1.
+6. In case 5 inspect low leaf Tx and poor spine Rx; in case 6 inspect leaf Remote Fault True in
+   historical snapshots despite current False. These clues must remain visible before answering.
+7. Repeat with touch and reduced motion. The destination must appear in persistent text and
+   the live-region announcement; no real dispatch action occurs.
+
+Optional repeatable Chrome checks (Node 26, server on port 8000): launch a separate Chrome
+profile with `--headless=new --remote-debugging-port=9228 --user-data-dir=/tmp/noc-ninja-qa`,
+then run `node tests/browser-qa.mjs 9228`. Do not attach it to a personal browser profile.

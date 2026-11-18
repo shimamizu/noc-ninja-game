@@ -149,7 +149,7 @@ snapshots, and complete state history at both endpoints. The three answer target
 3. **Link flapping**: identify at least four actual operational changes in an inclusive
    60-second window, even when the final state is up. This is an authored teaching threshold.
 
-All three methods run for every incident. Exactly one diagnosis must be supported; matching flaps at both endpoints count as one link condition;
+All three methods run for every incident. Exactly one primary diagnosis must be supported; a complete shared flap history can include corroborating receive errors, and a bad transmitter with bad peer Rx is one optical path; matching flaps at both endpoints count as one link condition;
 missing, contradictory, or ambiguous evidence prevents grading. Learners choose the category;
 feedback derives the affected endpoint. No diagnosis establishes a specific failed component.
 
@@ -204,7 +204,7 @@ generated questions, and free-text AI grading require an explicit constitution, 
 and verification change before implementation. A scope exception MUST NOT silently bypass a
 principle.
 
-**Version**: 1.2.2 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-17
+**Version**: 1.3.0 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-17
 
 ## Amendment record — 2026-11-17
 
@@ -242,3 +242,17 @@ the directional PHY/fault histories in the owner’s static down-link examples.
 
 Version 1.2.2 records the owner’s flap timestamp and distinct endpoint telemetry corrections;
 the diagnosis rules and selected deployment remain unchanged.
+
+## Drag aiming and technician runbook — 2026-11-17
+
+The owner authorizes optional direct manipulation: drag the ninja onto a diagnosis target and
+release to throw. Release outside a target or cancel without an attempt. Keep equivalent native
+controls and reduced-motion behavior. Use original illustrated ninja/shuriken assets.
+
+After a correct diagnosis, show the destination switch, port and optic under the owner’s U9
+training runbook: receive CRC → opposite optic; down with Remote Fault True → same optic;
+flapping → use receive errors or observed Remote Fault assertions to select the side; alarm-level
+Tx → same transmitter. Multiple clues must agree. Recommendations are not proof of a failed
+component, a live dispatch or a completed repair. Tx uses the supplied −9.00/+3.30 dBm alarms.
+Version 1.3.0 expands the interaction and replacement-learning scope while retaining technical
+evidence, accessibility and honest-progress obligations.

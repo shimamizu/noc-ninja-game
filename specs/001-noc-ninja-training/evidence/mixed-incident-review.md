@@ -1,6 +1,6 @@
 # Mixed Incident Source-to-Simulation Review
 
-**Date:** 2026-11-17 · **Revision:** noc-v2.6-2026-11-17
+**Date:** 2026-11-17 · **Revision:** noc-v3-2026-11-17
 **Reviewer:** Codex — source-to-simulation review
 **Basis:** Owner-requested mixed diagnoses and graphical shuriken submission, Constitution 1.1.0.
 
@@ -118,3 +118,10 @@ from the normal-light peer in U8. Spine retains the U4 profile. All normal readi
 within the supplied warning limits; receive powers do not exceed the peer’s transmit values.
 The four −30 leaf values and four degraded spine values remain unchanged. Automated checks
 compare numeric columns at both endpoints, displayed/structured readings and all six diagnoses.
+
+## v3 superseding review
+
+[U9](technician-runbook.md) is the current independent six-case table. It supersedes older
+no-CRC statements for L2-R1, normal-Tx statements for L3-R1 and all-False leaf Remote Fault
+statements for L3-R2. Category answers remain the same; the visible secondary evidence now
+supports a unique replacement recommendation. Runbook actions are not proven component causes.

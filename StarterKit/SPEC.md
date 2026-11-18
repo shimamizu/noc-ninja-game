@@ -2,7 +2,7 @@
 
 **Branch:** main · **Created / amended:** 2026-11-17
 **Status:** Revised to the owner's gameplay correction; implemented, browser acceptance pending.
-**Governance:** [Constitution 1.2.2](../.specify/memory/constitution.md).
+**Governance:** [Constitution 1.3.0](../.specify/memory/constitution.md).
 **Aligned working specification:** [spec.md](../specs/001-noc-ninja-training/spec.md).
 **Companion documents:** [CONSTITUTION.md](CONSTITUTION.md) and [PLAN.md](PLAN.md).
 
@@ -105,10 +105,10 @@ The sequence is fixed and interleaved; neutral incident titles do not name the f
 | --- | --- | --- | --- |
 | L1-R1 | leaf-gw1 CRC 900→900; spine-gw1 5→17, both up; normal Rx, stable history | CRC / errors | spine-gw1 gained 12 errors in 60s |
 | L1-R2 | leaf-gw1 down; four Rx rows −30 dBm; unchanged CRC and stable down history | Light levels | leaf-gw1 absent receive light |
-| L2-R1 | Both endpoints initially down; up at 5s, down 15s, up 35s, down 55s; normal Rx, no CRC increase | Link flapping | Four changes, ending down |
+| L2-R1 | Both endpoints initially down; up at 5s, down 15s, up 35s, down 55s; normal Rx, spine FCS 0→12 | Link flapping | Four changes, ending down; replace leaf optic |
 | L2-R2 | leaf-gw1 CRC 120→145, up; spine-gw1 2400→2400; normal Rx, stable history | CRC / errors | leaf-gw1 gained 25; old peer total is irrelevant |
-| L3-R1 | spine-gw1 down; Rx −17.20, −16.80, −17.00, −16.90 dBm; no CRC increase or transitions | Light levels | Very bad light below −15.70, not absent |
-| L3-R2 | Both endpoints initially up; down 10s, up 20s, down 40s, up 60s; normal Rx, no CRC increase | Link flapping | Four changes, ending up |
+| L3-R1 | spine-gw1 down; Rx −17.20, −16.80, −17.00, −16.90 dBm; leaf Tx below −9.00; no CRC increase or transitions | Light levels | Bad Tx at leaf and degraded Rx at spine; replace leaf optic |
+| L3-R2 | Both endpoints initially up; down 10s, up 20s, down 40s, up 60s; normal Rx, leaf Remote Fault asserts during down intervals | Link flapping | Four changes, ending up; replace leaf optic |
 
 Boundary checks include same-state reports, inclusive history boundaries, out-of-window events,
 unchanged high counters, invalid/decreasing counters, resets, incomplete evidence, mismatched
@@ -159,6 +159,10 @@ ambiguous diagnoses. Exact low-alarm equality is not “below”; this is not a 
 - **FR-026 / AC25:** All authored command snapshots share one link timeline. At the same observation time, both endpoints show matching Interface State, Up/Down duration and MAC Interface State Last Change ages. Stable-up histories align all four MAC rows. Down/flapping histories retain independent PHY and fault events at each endpoint; PHY up does not imply Interface State up. Compare absolute event times when snapshot clocks differ. Reconcile system timestamps, full interface output, port status, counters and historical MAC snapshots. Matching flaps at both ends count once. Device-local counter-clear ages and accumulated totals may differ; full-interface counts since clear are independent of MAC row totals.
 
 - **FR-027 / AC26:** In the authored flapping examples, Remote Fault False has the same Last Change age as the shared link event in every current and historical snapshot. Supporting fault-change totals must remain temporally consistent. Give both endpoints distinct transceiver profiles, with matching displayed/structured Rx values; preserve the intended absent/degraded readings and all supplied thresholds.
+
+- **FR-028 / AC27:** Drag the ninja using mouse, pen or touch. Highlight the answer under it and show the aiming line. Release on a target selects and submits exactly once. Off-target release, Escape and pointer cancellation produce no attempt. Retain click-to-aim, Throw and keyboard equivalents; solved incidents cannot throw again.
+- **FR-029 / AC28:** After a correct diagnosis, show the technician destination, switch/port and optic, with evidence explaining U9. Support CRC→peer, down/Remote Fault True→same side, corroborated flapping, and alarm-level Tx→same side. Conflicting or insufficient clues block playable content. These are training replacement recommendations, not proven causes.
+- **FR-030 / AC29:** Persist original transparent ninja/shuriken sprites locally. Compare structured Tx and Rx with displayed output. Four shared interface flaps take precedence over corroborating CRC; one bad transmitter and peer Rx form a single optical diagnosis.
 
 ## Success criteria
 

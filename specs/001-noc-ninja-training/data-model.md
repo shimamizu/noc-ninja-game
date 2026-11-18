@@ -1,6 +1,6 @@
 # Data Model: Mixed Incident Dojo
 
-**Updated:** 2026-11-17 · **Schema:** 2 · **Revision:** noc-v2.6-2026-11-17
+**Updated:** 2026-11-17 · **Schema:** 2 · **Revision:** noc-v3-2026-11-17
 This supersedes the single-condition schema used in the initial build.
 
 ## Content Document
@@ -133,3 +133,11 @@ examples retain their independent fault clocks.
 Leaf telemetry uses 32.32 °C / 3.27 V with lane-specific bias and Tx from the U8 working
 peer; normal Rx is −0.30, 1.26, 1.20, 1.14 dBm. Spine keeps its distinct U4 working profile.
 The absent leaf and degraded spine Rx values are preserved. Display and structured Rx agree.
+
+## v3 Tx and dispatch
+
+Every light observation has four `txReadings` with channel, metric `tx_power`, finite value,
+unit `dBm` and sourceIds. Both optical columns must match CLI text. `technicianDispatch`
+returns status `ready`, `insufficient` or `conflicting`, a computed interfaceId/endpoint when
+ready, and reasons. No target ID or answer key is stored. Dispatch is instructional feedback
+after a correct diagnosis; it does not add a second graded attempt or a real maintenance action.

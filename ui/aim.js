@@ -5,6 +5,7 @@ export function targetAtPoint(x,y,targets){
 }
 export function bindAim(root,dispatch){
  let drag=null;
+ const hit=(x,y,arena)=>targetAtPoint(x,y,[...arena.querySelectorAll('.target')].map(t=>({id:t.dataset.choiceId,...Object.fromEntries(['left','right','top','bottom'].map(k=>[k,t.getBoundingClientRect()[k]]))})));
  const clear=()=>{
   if(!drag)return;
   drag.ninja.style.transform='';drag.ninja.classList.remove('dragging');

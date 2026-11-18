@@ -51,7 +51,7 @@ retain the result. Feedback and controls never wait for animation.
 
 Both use `service routing protocols model multi-agent` and COLORCHIP C100Q020CWDM403B
 QSFP28 100G CWDM4 optics over single-mode fiber. All 20 supplied reference limits and confirmed
-units are preserved. IPv6 is correctly configured context; there are no repair/configuration actions.
+units are preserved. IPv6 is correctly configured context; the game recommends an optic replacement location after diagnosis; it does not operate live devices or simulate a completed repair.
 
 For this supplied optic reference, −30 dBm means no light and Rx below −15.70 dBm means very bad
 light. The optical incidents include both absence and degraded light; these meanings are distinct.
@@ -76,17 +76,17 @@ event histories. Matching interface flaps count once per link.
 node tests/run.mjs
 ```
 
-**133 checks pass** in Node 26.13.0: all six independent diagnoses and alternatives, equal tool
+**144 checks pass** in Node 26.13.0: all six independent diagnoses and alternatives, equal tool
 availability, displayed numbers, absent/degraded light, CRC/history boundaries, conflicting evidence,
 source/revision failures, safe retry, assistance, duplicate submission, direct progression and reset.
 The command fails on test failures. No runtime dependency is added.
 
 The same suite has a [browser runner](http://127.0.0.1:8000/tests/). A missing import or zero tests is
 failure. See the [manual procedure](specs/001-noc-ninja-training/quickstart.md) and
-[verification record](specs/001-noc-ninja-training/verification.md). Browser automation is currently
-unavailable, so the redesigned screen, complete pointer/keyboard playthrough, exact viewport sizes,
-reduced motion and screen-reader announcements remain unverified. Automated checks do not replace
-them. This is an implemented revision, not a claim of completed release acceptance.
+[verification record](specs/001-noc-ninja-training/verification.md). Isolated headless Chrome checks pass for mouse and touch drag/throw, cancellation, wrong/correct
+retry, keyboard aiming, all six dispatch destinations, tool access, restart cancellation, reduced
+motion and desktop/mobile layout. Live-region text was checked; a screen-reader and representative
+learner session remain unperformed. See `tests/browser-qa.mjs` for the repeatable browser checks.
 
 ## Repository
 
@@ -114,3 +114,18 @@ Error snapshots now use `show interfaces … counters errors` with FCS, Align, S
 Giants and Tx columns at both times. MAC / history shows the complete MAC state/fault table;
 expand its earlier snapshots to compare history. Port status provides the compact routed-port
 summary. See [U7 examples and interpretation](specs/001-noc-ninja-training/evidence/error-mac-samples.md).
+
+## Drag aiming and field dispatch
+
+Drag the ninja onto an answer target and release to throw. Releasing elsewhere or pressing
+Escape cancels. Click a target then Throw, or focus the ninja and use ←/→ then Enter/Space.
+After a correct diagnosis, the field dispatch shows the switch, port and optic to replace under
+the owner’s [training runbook](specs/001-noc-ninja-training/evidence/technician-runbook.md).
+CRC receiver → opposite optic; down/Remote Fault True → same side; bad Tx → that transmitter;
+flapping uses error or Remote Fault history. Missing/conflicting clues never guess a destination.
+Original local sprites and their built-in image-generation prompts are documented in
+[assets/README.md](assets/README.md). No external image service is used during play.
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE.md](LICENSE.md).

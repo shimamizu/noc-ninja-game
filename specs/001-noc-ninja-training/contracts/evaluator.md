@@ -44,3 +44,11 @@ numbers, exact low-alarm boundary, CRC deltas and stale totals, counter invarian
 up/down, window boundaries, repeated/outside reports, conflicting methods, ambiguity, invalid
 choices, purity and display-order independence. The spec case table supplies the six runtime
 expectations independently of the evaluator.
+
+## v3 corroboration and runbook
+
+Optical support also includes Tx strictly outside −9.00/+3.30 dBm. Exactly one bad
+transmitter and the opposite bad receiver form one optical finding. Identical paired flap
+histories may include corroborating positive CRC deltas; the primary category remains Link
+flapping. Optical plus unrelated flapping and ambiguous CRC-only cases remain errors.
+`engine/dispatch.js` applies U9 independently and requires a unique consistent destination.

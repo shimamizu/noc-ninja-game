@@ -1,7 +1,7 @@
 # Implementation Plan: Mixed Incident Dojo
 
 **Updated:** 2026-11-17 · **Branch:** main
-**Governance:** Constitution 1.2.2 · **Content revision:** noc-v2.6-2026-11-17
+**Governance:** Constitution 1.3.0 · **Content revision:** noc-v3-2026-11-17
 **Status:** Implementation and automated checks complete; manual browser acceptance pending.
 
 ## Result and owner-authorized change
@@ -129,3 +129,15 @@ For the owner’s flap display convention, align cleared Remote Fault ages with 
 interface event and keep supporting fault changes consistent. Use separate authored transceiver
 profiles for each endpoint, derived from the supplied working examples. Validate normal values
 against the supplied warning ranges and preserve intended optical faults and diagnoses.
+
+## v3 implementation
+
+`ui/aim.js` handles pointer capture, broad target hit testing, drag preview, cancellation and
+keyboard aim/throw. It delegates selection/submission to the existing state engine; DOM preview
+does not grade. `ui/render.js` uses local transparent assets and adds a post-diagnosis dispatch
+panel. `engine/dispatch.js` derives the destination from measured Tx, FCS deltas and current or
+observed historical Remote Fault states. It rejects missing/conflicting destinations; there is
+no stored correct optic ID. `engine/rules.js` recognizes corroborated flapping and a bad Tx/Rx
+path. `engine/content.js` validates four Tx readings and agreement with displayed power values.
+See `evidence/technician-runbook.md` for independent case outcomes. Verify pure rules, mouse
+and touch dragging, cancellation, keyboard equivalents, reduced motion and all six destinations.

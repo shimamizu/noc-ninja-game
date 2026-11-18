@@ -1,12 +1,41 @@
-# Mixed Incident Implementation Verification
+# Verification record
 
-**Date:** 2026-11-17 · **Content:** noc-v2.6-2026-11-17 · **Schema:** 2
+**Current revision:** noc-v3-2026-11-17 · **Constitution:** 1.3.0 · **Schema:** 2
+
+- `node tests/run.mjs`: **144 passed, 0 failed**. Includes independent dispatch outcomes,
+  CRC receive/transmit direction, current/historical Remote Fault, Tx alarm boundaries,
+  corroborated flapping, missing/conflicting evidence, and drag target hit testing.
+- Chrome Beta, isolated headless session: passed mouse drag/throw; off-target and Escape
+  cancellation; wrong/correct retry; no duplicate submission; successful loading of both
+  sprites; six independent technician destinations; complete six-incident progression;
+  all five tools; restart cancellation; ninja keyboard aiming/throw; destination text in
+  the live region; mobile touch drag and reduced motion.
+- Visually inspected browser screenshots at 1366×900 and 375×812. Keyboard checks also
+  used 1366×768. No horizontal page overflow on mobile; terminal output scrolls within
+  its own region. No browser JavaScript exceptions occurred in the final pass.
+- A release hit-testing issue was corrected during browser verification. Final verification
+  disabled the browser cache to load current JavaScript, then passed the complete checks.
+- Syntax and `git diff --check` pass. No new runtime packages or external asset requests.
+
+Browser checks are repeatable with `tests/browser-qa.mjs` and a local server on port 8000.
+The script uses an isolated Chrome debugging session and saves screenshots under `/tmp`.
+CUA remains unavailable; these observations used Chrome's local debugging protocol instead.
+Screen-reader listening, representative learner timing and independent external technical
+review remain unperformed. Automated live-region checks are not a screen-reader session.
+
+## Historical verification log
+
+The records below describe earlier revisions. Their browser-unavailable statements and
+old fixture expectations are superseded by the current report and U9 runbook above.
+
+
+**Date:** 2026-11-17 · **Content:** noc-v3-2026-11-17 · **Schema:** 2
 **Code:** working tree based on 361c963; no commit/deployment performed by this implementation.
 **Environment:** macOS 27.3, Node v26.13.0. Browser control unavailable for this revision.
 
 ## Executed checks
 
-- `node tests/run.mjs`: **133 discovered, 133 passed, 0 failed**. Independent expectations cover
+- `node tests/run.mjs`: **144 discovered, 144 passed, 0 failed**. Independent expectations cover
   all three categories at both endpoints, all six actual incidents and every alternative category,
   optical absence/degradation, CRC arithmetic, history boundaries, contradictory evidence, complete
   tool sets, output-number agreement, source gates, safe retries, help, direct progression and reset.
@@ -70,7 +99,7 @@ separate and is not inferred from tests, markup, successful browser launch, or s
 
 ## Cross-artifact review
 
-Constitution 1.2.2, spec, plan, schema-2 data model/contracts, README and current tasks agree on:
+Constitution 1.3.0, spec, plan, schema-2 data model/contracts, README and current tasks agree on:
 three competing categories; six interleaved incidents; both endpoints and all tools every time;
 one opening briefing; explicit aim then throw; direct Next; immediate feedback and reduced-motion
 alternative; preserved hardware, thresholds, source gate and honest assistance. Historical research
@@ -142,7 +171,7 @@ this change does not claim a new browser observation.
 
 Revision noc-v2.5-2026-11-17, U8: retain shared Interface State events but independent
 PHY/local/remote event histories. Full-interface counts since clear no longer have to equal
-MAC totals. All 133 automated checks pass, including both optical directions, peer PHY up
+MAC totals. All 144 automated checks pass, including both optical directions, peer PHY up
 with Interface down, distinct row ages, zero post-clear counts with nonzero MAC history,
 and rejection of drifting row clocks or unexplained counter increments. The earlier v2.4
 all-row equality statement is superseded. Browser/manual checks remain pending.

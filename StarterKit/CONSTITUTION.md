@@ -1,7 +1,7 @@
 # NOC Ninja Training · Project constitution
 
 **Updated:** 2026-11-17. This StarterKit document reflects the owner's current requirements and
-[governing constitution 1.2.2](../.specify/memory/constitution.md). The detailed learning and
+[governing constitution 1.3.0](../.specify/memory/constitution.md). The detailed learning and
 acceptance requirements are in [SPEC.md](SPEC.md); implementation follows [PLAN.md](PLAN.md).
 
 ## First-Release Scope and Technical Boundaries
@@ -27,7 +27,7 @@ snapshots, and complete state history at both endpoints. The three answer target
 3. **Link flapping**: identify at least four actual operational changes in an inclusive
    60-second window, even when the final state is up. This is an authored teaching threshold.
 
-All three methods run for every incident. Exactly one diagnosis must be supported; matching flaps at both endpoints count as one link condition;
+All three methods run for every incident. Exactly one primary diagnosis must be supported; a complete shared flap history can include corroborating receive errors, and a bad transmitter with bad peer Rx is one optical path; matching flaps at both endpoints count as one link condition;
 missing, contradictory, or ambiguous evidence prevents grading. Learners choose the category;
 feedback derives the affected endpoint. No diagnosis establishes a specific failed component.
 
@@ -207,3 +207,17 @@ In the authored flapping cases, Remote Fault False MUST share the link event’s
 age, with a consistent fault-change history. Endpoint transceiver profiles MUST be distinct,
 with source-derived normal ranges and explicitly authored fault values. This does not override
 the directional PHY/fault histories in the owner’s static down-link examples.
+
+## Drag aiming and technician runbook — 2026-11-17
+
+The owner authorizes optional direct manipulation: drag the ninja onto a diagnosis target and
+release to throw. Release outside a target or cancel without an attempt. Keep equivalent native
+controls and reduced-motion behavior. Use original illustrated ninja/shuriken assets.
+
+After a correct diagnosis, show the destination switch, port and optic under the owner’s U9
+training runbook: receive CRC → opposite optic; down with Remote Fault True → same optic;
+flapping → use receive errors or observed Remote Fault assertions to select the side; alarm-level
+Tx → same transmitter. Multiple clues must agree. Recommendations are not proof of a failed
+component, a live dispatch or a completed repair. Tx uses the supplied −9.00/+3.30 dBm alarms.
+Version 1.3.0 expands the interaction and replacement-learning scope while retaining technical
+evidence, accessibility and honest-progress obligations.

@@ -5,7 +5,7 @@ game:
   title: "NOC Ninja — Network Dojo"
   slug: "noc-ninja"
   tagline: "Read the evidence, throw your diagnosis, and send the tech to the right optic."
-  summary: "Investigate six simulated Arista EOS link incidents by comparing transceiver readings, error counters and interface histories at both ends. Drag a ninja onto the supported diagnosis, then learn which optic the training runbook recommends replacing and why."
+  summary: "Investigate six simulated Arista EOS link incidents by comparing transceiver readings, error counters and interface histories at both ends. Drag the shuriken from the ninja’s hand onto the supported diagnosis and release to send it spinning toward the target, then learn which optic the training runbook recommends replacing and why."
   topics:
     - "Arista EOS"
     - "Optical diagnostics"
@@ -81,7 +81,7 @@ build:
     - "speckit-analyze"
     - "speckit-implement"
     - "imagegen"
-    - "unified-computer-use (attempted; unavailable)"
+    - "unified-computer-use (native Safari verification; browser connector unavailable)"
   other_tools:
     - "Built-in image_gen"
     - "Node.js 26.13.0 and dependency-free test harness"
@@ -99,7 +99,7 @@ build:
     cost_note: "unknown"
   ai_generated_assets:
     - "assets/ninja.png — original transparent ninja sprite generated with built-in image_gen"
-    - "assets/shuriken.png — original transparent shuriken sprite generated with built-in image_gen"
+    - "assets/shuriken.png — original transparent shuriken sprite generated with built-in image_gen; also used as the browser favicon"
     - "assets/arcade-card.webp — browser-rendered HTML/CSS composition using the generated sprites"
 runtime:
   kind: "static-web"
@@ -118,12 +118,13 @@ runtime:
   requires_api_key: false
   uses_ai_at_runtime: false
   browsers:
+    - "Safari (desktop shuriken drag, cancellation, retry and throw animation)"
     - "Chrome Beta 159.0.8154.6 (isolated headless desktop and mobile emulation)"
   accessibility: "Browser-tested keyboard aiming and submission, native answer radios, visible focus, Escape and off-target cancellation, touch dragging, reduced motion, mobile layout and live-region destination text. Screen-reader listening and physical-device testing were not performed."
   save_state: "none; session progress is in memory and resets on page reload"
 verification:
   tests: "node tests/run.mjs"
-  tests_passing: 144
+  tests_passing: 151
   facts_sourced_from:
     - "Owner-provided EOS captures and deployment context documented in specs/001-noc-ninja-training/evidence/"
     - "Owner-provided ColorChip limits documented in specs/001-noc-ninja-training/evidence/colorchip-reference.md"
@@ -148,7 +149,7 @@ verification:
 
 ## In one paragraph
 
-NOC Ninja is a browser game for new network operations engineers practicing physical-link troubleshooting. Each of its six incidents presents realistic Arista EOS output from both ends of a single-mode fiber link. Players compare light levels, CRC/FCS counters and timed state changes, then drag a ninja onto a diagnosis and release a shuriken. A correct answer reveals where the training runbook would send a technician to replace an optic. Hints and unlimited retries support practice without a countdown or score penalty.
+NOC Ninja is a browser game for new network operations engineers practicing physical-link troubleshooting. Each of its six incidents presents realistic Arista EOS output from both ends of a single-mode fiber link. Players compare light levels, CRC/FCS counters and timed state changes, then drag the shuriken from the ninja’s hand onto a diagnosis and release it. The ninja stays in place as the released star flies and spins into the target. A correct answer reveals where the training runbook would send a technician to replace an optic. Hints and unlimited retries support practice without a countdown or score penalty.
 
 ## How it was built
 
@@ -158,8 +159,11 @@ The largest change was educational: the three categories became competing diagno
 
 The owner then requested illustrated ninja and shuriken assets, drag-to-throw controls and a technician destination. We generated original sprites and encoded the replacement rules as a training runbook, with conflicting evidence rejected. Browser verification caught a release hit-testing defect; we fixed it and disabled caching to verify current files. The final checks covered mouse, touch, keyboard controls and all six destinations. The next builder should start with trustworthy examples, keep measured evidence separate from recommendations, and verify actual browser interaction alongside pure rule tests.
 
+The throwing control now uses the shuriken in the ninja’s hand. The star follows the pointer while aiming, and release starts a three-spin flight from the hand to the chosen board using measured positions. Keyboard controls and reduced-motion results remain available. Native Safari checks verified wrong/correct throws, off-target cancellation and the projectile arriving at the target; seven new automated checks cover gesture ownership, cancellation, keyboard aiming, flight coordinates and reduced motion.
+
 ## What we'd tell the next builder
 
 - Build the scenario timeline before formatting CLI output. Interface, PHY, fault and counter-clear histories can represent different events.
 - Derive diagnoses and technician destinations from structured evidence, then check that the visible output contains exactly those values.
 - Test drag cancellation, keyboard alternatives, touch input and stale-browser-cache behavior before calling the interface complete.
+- Keep the local HTTP server running while playing or refreshing. If the page cannot connect or shows only “Skip to training,” check that the server is running from the repository root and that scripts and styles load; after restarting it, hard-refresh the page if needed.

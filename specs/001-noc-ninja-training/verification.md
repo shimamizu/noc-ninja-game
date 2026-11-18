@@ -183,3 +183,17 @@ False ages throughout both flap histories, rejection of stale fault timestamps, 
 endpoint telemetry within supplied normal limits. Existing tests verify fault-change histories,
 displayed/structured Rx agreement and the six unchanged diagnoses. No new browser observation
 is claimed; outstanding manual checks remain open.
+
+
+## Shuriken hand control and spinning throw
+
+2026-11-17: the draggable control is now the shuriken over the ninja’s outstretched hand.
+The ninja stays still, aiming moves only the star, and release starts a 700 ms, three-spin
+flight from the measured hand position to the chosen target board. Feedback remains immediate.
+Seven new automated checks cover movement, release hit testing, single submission, cancellation,
+second-pointer isolation, keyboard controls, measured flight endpoints and reduced motion.
+All 151 checks pass. Native Safari verification confirmed the hand placement, wrong-answer
+retry, off-target cancellation without another attempt, and correct submission with exactly two
+throws after one wrong answer; a screenshot captured the flying star arriving at the correct board.
+The existing Chrome desktop/mobile runner was updated to use the shuriken control but was not
+rerun for this change. No new physical-touch or screen-reader check is claimed.

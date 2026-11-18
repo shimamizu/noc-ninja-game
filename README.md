@@ -27,8 +27,9 @@ analytics, API key, runtime AI or online grading service.
 1. Read the opening guide to all three diagnoses and select **Enter the dojo**.
 2. Inspect **leaf-gw1** and **spine-gw1**. Each has **Interface now**, **Port status**, **Optics**, **Error snapshots**,
    and **MAC / history**. Compare measurements, timestamps and actual changes.
-3. Click/tap a target to aim, or use native radio-button arrow keys. Activate **Throw shuriken**
-   when ready. Aiming alone does not submit.
+3. Drag the shuriken from the ninja’s hand onto a target and release to throw. It flies from
+   his hand and spins into the chosen target. You can also click/tap a target or use native
+   radio-button arrow keys, then activate **Throw shuriken**. Aiming alone does not submit.
 4. Read the explanation. Wrong diagnoses stay retryable; correct diagnoses enable **Next incident**.
    Six successes lead to the final patrol summary, without category-specific lesson breaks.
 
@@ -76,7 +77,7 @@ event histories. Matching interface flaps count once per link.
 node tests/run.mjs
 ```
 
-**144 checks pass** in Node 26.13.0: all six independent diagnoses and alternatives, equal tool
+**151 checks pass** in Node 26.13.0: all six independent diagnoses and alternatives, equal tool
 availability, displayed numbers, absent/degraded light, CRC/history boundaries, conflicting evidence,
 source/revision failures, safe retry, assistance, duplicate submission, direct progression and reset.
 The command fails on test failures. No runtime dependency is added.
@@ -117,8 +118,10 @@ summary. See [U7 examples and interpretation](specs/001-noc-ninja-training/evide
 
 ## Drag aiming and field dispatch
 
-Drag the ninja onto an answer target and release to throw. Releasing elsewhere or pressing
-Escape cancels. Click a target then Throw, or focus the ninja and use ←/→ then Enter/Space.
+Drag the shuriken in the ninja’s outstretched hand onto an answer target and release. The ninja
+stays in place while the star follows your pointer; on release, a spinning throw flies from his
+hand to the target. Releasing elsewhere or pressing Escape cancels. Click a target then Throw,
+or focus the shuriken and use ←/→ then Enter/Space. Reduced motion keeps the static result.
 After a correct diagnosis, the field dispatch shows the switch, port and optic to replace under
 the owner’s [training runbook](specs/001-noc-ninja-training/evidence/technician-runbook.md).
 CRC receiver → opposite optic; down/Remote Fault True → same side; bad Tx → that transmitter;

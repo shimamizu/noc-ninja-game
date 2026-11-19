@@ -1,0 +1,738 @@
+# Manufacturer-specific optic specifications
+# Values taken from actual optic datasheets and 'show interfaces transceiver detail'
+optics:
+  # Arista SFP+ 10G LR (Long Reach)
+  "SFP-10G-LR":
+    manufacturer: "Arista Networks"
+    type: "SFP+"
+    speed: "10G"
+    lanes: 1
+    temperature:
+      high_alarm: 90.0
+      high_warn: 85.0
+      low_warn: -40.0
+      low_alarm: -45.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.14
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 80.0
+      high_warn: 75.0
+      low_warn: 10.0
+      low_alarm: 8.0
+    tx_power:
+      high_alarm: 4.50
+      high_warn: 0.50
+      low_warn: -8.20
+      low_alarm: -12.20
+    rx_power:
+      high_alarm: 4.50
+      high_warn: 0.50
+      low_warn: -14.40
+      low_alarm: -18.39
+
+  # Arista SFP+ 10G SR (Short Reach)
+  "SFP-10G-SR": &arista_sfp_10g_sr
+    manufacturer: "Arista Networks"
+    type: "SFP+"
+    speed: "10G"
+    lanes: 1
+    temperature:
+      high_alarm: 80.0
+      high_warn: 75.0
+      low_warn: -5.0
+      low_alarm: -10.0
+    voltage:
+      high_alarm: 3.70
+      high_warn: 3.63
+      low_warn: 2.97
+      low_alarm: 2.85
+    bias_current:
+      high_alarm: 10.0
+      high_warn: 8.50
+      low_warn: 3.0
+      low_alarm: 2.60
+    tx_power:
+      high_alarm: -1.0
+      high_warn: -1.30
+      low_warn: -7.50
+      low_alarm: -8.0
+    rx_power:
+      high_alarm: 1.50
+      high_warn: 1.0
+      low_warn: -12.0
+      low_alarm: -14.0
+
+  # Arista SFP+ 10G SRL (Short Reach Lite)
+  "SFP-10G-SRL":
+    <<: *arista_sfp_10g_sr
+
+  # Arista 40G Universal QSFP - works with single or multimode
+  "QSFP-40G-UNIV":
+    manufacturer: "Arista Networks"
+    type: "QSFP"
+    speed: "40G"
+    lanes: 4
+    temperature:
+      high_alarm: 70.0
+      high_warn: 65.0
+      low_warn: 0.0
+      low_alarm: -5.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.14
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 100.0
+      high_warn: 90.0
+      low_warn: 0.30
+      low_alarm: 0.20
+    tx_power:
+      high_alarm: 8.16
+      high_warn: 4.30
+      low_warn: -7.0
+      low_alarm: -11.0
+    rx_power:
+      high_alarm: 8.16
+      high_warn: 7.30
+      low_warn: -13.71
+      low_alarm: -17.72
+
+  # Arista 40G PLRL4 QSFP - Single mode 40G -> 4 x 10G breakout
+  "QSFP-40G-PLRL4":
+    manufacturer: "Arista Networks"
+    type: "QSFP"
+    speed: "40G"
+    lanes: 4
+    temperature:
+      high_alarm: 80.0
+      high_warn: 75.0
+      low_warn: -10.0
+      low_alarm: -15.0
+    voltage:
+      high_alarm: 3.60
+      high_warn: 3.50
+      low_warn: 3.10
+      low_alarm: 3.00
+    bias_current:
+      high_alarm: 100.0
+      high_warn: 95.0
+      low_warn: 6.50
+      low_alarm: 6.0
+    tx_power:
+      high_alarm: 2.50
+      high_warn: 1.50
+      low_warn: -6.0
+      low_alarm: -7.0
+    rx_power:
+      high_alarm: 4.30
+      high_warn: 3.30
+      low_warn: -12.50
+      low_alarm: -13.50
+
+  # Arista 40G SR4 QSFP - Multimode 40G -> 4 x 10G breakout
+  "QSFP-40G-SR4":
+    manufacturer: "Arista Networks"
+    type: "QSFP"
+    speed: "40G"
+    lanes: 4
+    temperature:
+      high_alarm: 128.0
+      high_warn: 128.0
+      low_warn: -128.0
+      low_alarm: -128.0
+    voltage:
+      high_alarm: 6.55
+      high_warn: 6.55
+      low_warn: 0.0
+      low_alarm: 0.0
+    bias_current:
+      high_alarm: 131.07
+      high_warn: 131.07
+      low_warn: 0.0
+      low_alarm: 0.0
+    tx_power:
+      high_alarm: 4.40
+      high_warn: 3.40
+      low_warn: -8.60
+      low_alarm: -9.60
+    rx_power:
+      high_alarm: 3.40
+      high_warn: 2.40
+      low_warn: -9.50
+      low_alarm: -13.52
+
+  # Arista 40G XSR4 QSFP (Extended Short Reach) - Multimode 40G -> 4 x 10G breakout
+  "QSFP-40G-XSR4":
+    manufacturer: "Arista Networks"
+    type: "QSFP"
+    speed: "40G"
+    lanes: 4
+    temperature:
+      high_alarm: 75.0
+      high_warn: 70.0
+      low_warn: 0.0
+      low_alarm: -5.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.14
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 15.0
+      high_warn: 14.0
+      low_warn: 3.0
+      low_alarm: 2.0
+    tx_power:
+      high_alarm: 3.0
+      high_warn: 0.0
+      low_warn: -7.30
+      low_alarm: -11.30
+    rx_power:
+      high_alarm: 3.0
+      high_warn: 0.0
+      low_warn: -9.90
+      low_alarm: -13.90
+
+  # Arista 100G Active Optical Cable (3M)
+  "AOC-Q-Q-100G-3M":
+    manufacturer: "Arista Networks"
+    type: "AOC"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 78.0
+      high_warn: 73.0
+      low_warn: -3.0
+      low_alarm: -8.0
+    voltage:
+      high_alarm: 3.80
+      high_warn: 3.50
+      low_warn: 3.10
+      low_alarm: 2.80
+    bias_current:
+      high_alarm: 8.62
+      high_warn: 8.25
+      low_warn: 6.75
+      low_alarm: 6.37
+    tx_power:
+      high_alarm: 7.0
+      high_warn: 6.0
+      low_warn: -4.0
+      low_alarm: -5.0
+    rx_power:
+      high_alarm: 7.0
+      high_warn: 6.0
+      low_warn: -6.60
+      low_alarm: -7.60
+
+  # Arista 100G Active Optical Cable (5M)
+  "AOC-Q-Q-100G-5M": &arista_aoc_100g
+    manufacturer: "Arista Networks"
+    type: "AOC"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 80.0
+      high_warn: 75.0
+      low_warn: -5.0
+      low_alarm: -10.0
+    voltage:
+      high_alarm: 3.60
+      high_warn: 3.50
+      low_warn: 3.10
+      low_alarm: 3.00
+    bias_current:
+      high_alarm: 18.0
+      high_warn: 16.0
+      low_warn: 2.0
+      low_alarm: 1.0
+    tx_power:
+      high_alarm: 4.40
+      high_warn: 3.40
+      low_warn: -9.40
+      low_alarm: -10.40
+    rx_power:
+      high_alarm: 4.40
+      high_warn: 3.40
+      low_warn: -11.30
+      low_alarm: -12.30
+
+  # Arista 100G Active Optical Cable (7M)
+  "AOC-Q-Q-100G-7M":
+    <<: *arista_aoc_100g
+
+  # Arista 100G Active Optical Cable (10M)
+  "AOC-Q-Q-100G-10M":
+    manufacturer: "Arista Networks"
+    type: "AOC"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 80.0
+      high_warn: 75.0
+      low_warn: 0.0
+      low_alarm: -5.0
+    voltage:
+      high_alarm: 3.60
+      high_warn: 3.50
+      low_warn: 3.10
+      low_alarm: 3.00
+    bias_current:
+      high_alarm: 25.0
+      high_warn: 23.0
+      low_warn: 4.0
+      low_alarm: 2.0
+    tx_power:
+      high_alarm: 2.41
+      high_warn: 2.30
+      low_warn: -7.42
+      low_alarm: -8.42
+    rx_power:
+      high_alarm: 3.98
+      high_warn: 3.38
+      low_warn: -7.42
+      low_alarm: -8.42
+
+  # Arista 100G Active Optical Cable (15M)
+  "AOC-Q-Q-100G-15M":
+    <<: *arista_aoc_100g
+
+  # Arista 100G Active Optical Cable (25M)
+  "AOC-Q-Q-100G-25M":
+    <<: *arista_aoc_100g
+
+  # Arista 100G Passive Copper DAC (1M)
+  "CAB-Q-Q-100G-1M": &arista_dac_100g
+    manufacturer: "Arista Networks"
+    type: "DAC"
+    speed: "100G"
+    lanes: 4
+    dom_supported: false
+
+  # Arista 100G Passive Copper DAC (2M)
+  "CAB-Q-Q-100G-2M":
+    <<: *arista_dac_100g
+
+  # Arista 100G -> 4 x 25G Passive Copper DAC (1M)
+  "CAB-Q-4S-100G-1M":
+    <<: *arista_dac_100g
+
+  # Arista 100G -> 4 x 25G Passive Copper DAC (2M)
+  "CAB-Q-4S-100G-2M":
+    <<: *arista_dac_100g
+
+  # Arista 100G -> 4 x 25G Passive Copper DAC (3M)
+  "CAB-Q-4S-100G-3M":
+    <<: *arista_dac_100g
+
+  # Arista 100G -> 4 x 25G Passive Copper DAC (5M)
+  "CAB-Q-4S-100G-5M":
+    <<: *arista_dac_100g
+
+  # Finisar SFP+ 10G SR
+  "FTLX8574D3BCL":
+    manufacturer: "FINISAR CORP."
+    type: "SFP+"
+    speed: "10G"
+    lanes: 1
+    temperature:
+      high_alarm: 78.0
+      high_warn: 73.0
+      low_warn: -8.0
+      low_alarm: -13.0
+    voltage:
+      high_alarm: 3.70
+      high_warn: 3.60
+      low_warn: 3.00
+      low_alarm: 2.90
+    bias_current:
+      high_alarm: 13.0
+      high_warn: 12.50
+      low_warn: 5.0
+      low_alarm: 4.0
+    tx_power:
+      high_alarm: 0.0
+      high_warn: -1.0
+      low_warn: -5.0
+      low_alarm: -6.0
+    rx_power:
+      high_alarm: 0.0
+      high_warn: -1.0
+      low_warn: -18.01
+      low_alarm: -20.0
+
+  # Finisar SFP+ 10G
+  "FTLX1471D3BCL":
+    manufacturer: "FINISAR CORP."
+    type: "SFP+"
+    speed: "10G"
+    lanes: 1
+    temperature:
+      high_alarm: 78.0
+      high_warn: 73.0
+      low_warn: -8.0
+      low_alarm: -13.0
+    voltage:
+      high_alarm: 3.70
+      high_warn: 3.60
+      low_warn: 3.00
+      low_alarm: 2.90
+    bias_current:
+      high_alarm: 85.0
+      high_warn: 80.0
+      low_warn: 20.0
+      low_alarm: 15.0
+    tx_power:
+      high_alarm: 2.0
+      high_warn: 1.0
+      low_warn: -7.0
+      low_alarm: -8.0
+    rx_power:
+      high_alarm: 2.5
+      high_warn: 2.0
+      low_warn: -18.01
+      low_alarm: -20.0
+
+  # Finisar SFP+ 10G LR
+  "FTLX1475D3BCL":
+    manufacturer: "FINISAR CORP."
+    type: "SFP+"
+    speed: "10G"
+    lanes: 1
+    temperature:
+      high_alarm: 75.0
+      high_warn: 70.0
+      low_warn: 0.0
+      low_alarm: -5.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.14
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 110.0
+      high_warn: 100.0
+      low_warn: 2.0
+      low_alarm: 1.0
+    tx_power:
+      high_alarm: 3.50
+      high_warn: 0.50
+      low_warn: -8.20
+      low_alarm: -12.20
+    rx_power:
+      high_alarm: 3.50
+      high_warn: 0.50
+      low_warn: -14.40
+      low_alarm: -18.39
+
+  # Finisar SFP+ 10G SR
+  "FTLX8571D3BCL":
+    manufacturer: "FINISAR CORP."
+    type: "SFP+"
+    speed: "10G"
+    lanes: 1
+    temperature:
+      high_alarm: 78.0
+      high_warn: 73.0
+      low_warn: -8.0
+      low_alarm: -13.0
+    voltage:
+      high_alarm: 3.70
+      high_warn: 3.60
+      low_warn: 3.00
+      low_alarm: 2.90
+    bias_current:
+      high_alarm: 13.20
+      high_warn: 12.60
+      low_warn: 5.0
+      low_alarm: 4.0
+    tx_power:
+      high_alarm: 0.0
+      high_warn: -1.0
+      low_warn: -5.0
+      low_alarm: -6.0
+    rx_power:
+      high_alarm: 0.0
+      high_warn: -1.0
+      low_warn: -18.01
+      low_alarm: -20.0
+
+  # Cisco-Finisar SFP+ 10G SR
+  "FTLX8571D3BCL-C2":
+    manufacturer: "CISCO-FINISAR"
+    type: "SFP+"
+    speed: "10G"
+    lanes: 1
+    temperature:
+      high_alarm: 75.0
+      high_warn: 70.0
+      low_warn: 0.0
+      low_alarm: -5.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.14
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 11.80
+      high_warn: 10.80
+      low_warn: 5.0
+      low_alarm: 4.0
+    tx_power:
+      high_alarm: 1.70
+      high_warn: -1.30
+      low_warn: -7.30
+      low_alarm: -11.30
+    rx_power:
+      high_alarm: 2.0
+      high_warn: -1.0
+      low_warn: -9.90
+      low_alarm: -13.90
+
+  # Finisar QSFP 40G Universal (the version that required the "transceiver media override 40gbase-univ" command)
+  "FTL4C2QE2C": &finisar_40g_univ
+    manufacturer: "FINISAR CORP."
+    type: "QSFP 40GBASE-UNIV"
+    speed: "40G"
+    lanes: 4
+    temperature:
+      high_alarm: 78.0
+      high_warn: 75.0
+      low_warn: 0.0
+      low_alarm: -5.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.10
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 105.0
+      high_warn: 105.0
+      low_warn: 10.0
+      low_alarm: 8.0
+    tx_power:
+      high_alarm: 7.30
+      high_warn: 5.0
+      low_warn: -7.0
+      low_alarm: -11.0
+    rx_power:
+      high_alarm: 5.30
+      high_warn: 4.30
+      low_warn: -13.70
+      low_alarm: -17.70
+
+  # Finisar QSFP 40G Universal
+  "FTL4C3QE1C":
+    <<: *finisar_40g_univ
+
+  # Finisar QSFP 40G Universal (non-MSA variant)
+  "FTL4C3QE2C":
+    <<: *finisar_40g_univ
+
+  # Finisar QSFP 40G Universal (MSA variant with properly flashed firmware)
+  "FTL4C3QE2CMSA":
+    <<: *finisar_40g_univ
+
+  # Finisar QSFP28 100G SR4
+  "FTLC1151RDPL2":
+    manufacturer: "FINISAR CORP."
+    type: "QSFP28"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 65.0
+      high_warn: 60.0
+      low_warn: 15.0
+      low_alarm: 10.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.14
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 55.0
+      high_warn: 50.0
+      low_warn: 30.0
+      low_alarm: 25.0
+    tx_power:
+      high_alarm: 7.50
+      high_warn: 4.50
+      low_warn: -4.30
+      low_alarm: -8.30
+    rx_power:
+      high_alarm: 5.50
+      high_warn: 4.50
+      low_warn: -10.60
+      low_alarm: -14.60
+
+  # Finisar QSFP28 100G (variant without -1Y suffix)
+  "FTLC1157RGPL2":
+    manufacturer: "FINISAR CORP."
+    type: "QSFP28"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 65.0
+      high_warn: 60.0
+      low_warn: 15.0
+      low_alarm: 10.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.14
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 77.0
+      high_warn: 72.0
+      low_warn: 18.0
+      low_alarm: 13.0
+    tx_power:
+      high_alarm: 5.50
+      high_warn: 2.50
+      low_warn: -4.0
+      low_alarm: -8.0
+    rx_power:
+      high_alarm: 3.50
+      high_warn: 2.50
+      low_warn: -12.0
+      low_alarm: -16.0
+
+  # Finisar QSFP28 100G (variant with -1Y suffix)
+  "FTLC1157RGPL2-1Y":
+    manufacturer: "FINISAR CORP."
+    type: "QSFP28"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 75.0
+      high_warn: 70.0
+      low_warn: -5.0
+      low_alarm: -10.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.50
+      low_warn: 3.13
+      low_alarm: 3.00
+    bias_current:
+      high_alarm: 90.0
+      high_warn: 85.0
+      low_warn: 15.0
+      low_alarm: 10.0
+    tx_power:
+      high_alarm: 4.0
+      high_warn: 2.0
+      low_warn: -8.0
+      low_alarm: -10.0
+    rx_power:
+      high_alarm: 4.0
+      high_warn: 2.0
+      low_warn: -14.0
+      low_alarm: -17.4
+
+  # ColorChip QSFP28 100G CWDM4
+  "C100Q020CWDM403B": &colorchip_100g_cwdm4
+    manufacturer: "ColorChip ltd"
+    type: "QSFP28"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 60.0
+      high_warn: 55.0
+      low_warn: 0.0
+      low_alarm: -5.0
+    voltage:
+      high_alarm: 3.60
+      high_warn: 3.50
+      low_warn: 3.10
+      low_alarm: 3.00
+    bias_current:
+      high_alarm: 78.0
+      high_warn: 75.0
+      low_warn: 25.0
+      low_alarm: 20.0
+    tx_power:
+      high_alarm: 3.30
+      high_warn: 2.30
+      low_warn: -7.0
+      low_alarm: -9.0
+    rx_power:
+      high_alarm: 3.30
+      high_warn: 2.30
+      low_warn: -13.70
+      low_alarm: -15.70
+
+  # ColorChip QSFP28 100G CWDM4 (403H variant)
+  "C100Q020CWDM403H":
+    <<: *colorchip_100g_cwdm4
+
+  # ColorChip QSFP28 100G CWDM4 (403J variant)
+  "C100Q020CWDM403J":
+    <<: *colorchip_100g_cwdm4
+
+  # INNOLIGHT QSFP28 100G CWDM4
+  "TR-FC13T-N00":
+    manufacturer: "INNOLIGHT"
+    type: "QSFP28"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 75.0
+      high_warn: 70.0
+      low_warn: 0.0
+      low_alarm: -5.0
+    voltage:
+      high_alarm: 3.63
+      high_warn: 3.47
+      low_warn: 3.14
+      low_alarm: 2.97
+    bias_current:
+      high_alarm: 65.0
+      high_warn: 60.0
+      low_warn: 20.0
+      low_alarm: 15.0
+    tx_power:
+      high_alarm: 3.50
+      high_warn: 2.50
+      low_warn: -6.50
+      low_alarm: -8.50
+    rx_power:
+      high_alarm: 3.50
+      high_warn: 2.50
+      low_warn: -10.0
+      low_alarm: -13.0
+
+  # KAIAM QSFP28 100G CWDM4
+  "XQX5004":
+    manufacturer: "KAIAM CORP"
+    type: "QSFP28"
+    speed: "100G"
+    lanes: 4
+    temperature:
+      high_alarm: 73.0
+      high_warn: 68.0
+      low_warn: 5.0
+      low_alarm: 0.0
+    voltage:
+      high_alarm: 3.46
+      high_warn: 3.41
+      low_warn: 3.18
+      low_alarm: 3.13
+    bias_current:
+      high_alarm: 100.0
+      high_warn: 90.0
+      low_warn: 10.0
+      low_alarm: 5.0
+    tx_power:
+      high_alarm: 5.0
+      high_warn: 2.50
+      low_warn: -5.50
+      low_alarm: -6.50
+    rx_power:
+      high_alarm: 5.0
+      high_warn: 2.50
+      low_warn: -10.50
+      low_alarm: -11.50

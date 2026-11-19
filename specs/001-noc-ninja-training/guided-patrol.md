@@ -1,10 +1,137 @@
+## Session randomization — 2026-11-19
+
+Shuffle scenario order, question order within each scenario, and answer-choice order when
+creating a patrol. Keep that order stable through evidence selection, hints, retries and
+rerenders. Confirmed restart creates a fresh shuffle; cancellation preserves the session.
+Use stable case/question/answer IDs for grading and progress, with visible A/B/C assigned
+from the shuffled positions. Review and handoff question order follows the session.
+Source evidence and the incident library remain unchanged. Validated with 48 Node checks
+and 56 Safari checks, including completion across shuffled sessions and answer-label mapping.
+
+## Second incident added — 2026-11-18
+
+Current scope: U13 and U14, four decisions each (eight total). U14 uses the supplied
+leaf-gw2 Et55/1 ↔ spine-gw1 Et4/28/1 recordings: increasing leaf error counters, lane 4
+Rx -14.91 dBm, leaf Local Fault and spine Remote Fault Changes each increasing by eight.
+Current fault flags remain False. The technician's spine optic replacement fixed the
+problem. Preserve all 14 original outputs, including the first leaf `senz` error table;
+only that explicitly marked shortcut is accepted, with matching host/port/table validation.
+The existing four-command dropdown, automatic paired readings and drag-to-answer remain.
+U13's questions and captures are unchanged. No post-repair measurements are generated.
+
+## Four-decision curriculum — 2026-11-18
+
+Owner correction: combine the former first and fifth questions into a direct diagnosis
+and replacement decision for the failed spine-gw1 Et6/2/1 optic, supported by spine Remote
+Fault True and DMZ Rx -30.00 dBm. Keep questions 2 and 4 unchanged. Question 3 teaches that
+no actively incrementing errors are visible in the repeated zero-counter readings.
+The active case now contains four decisions. Original command captures remain unchanged.
+
+## Compact command investigation — 2026-11-18
+
+Latest owner direction: changing the switch/interface or command immediately displays all
+available recordings for that pair. Remove the observation selector and request button.
+Show incident and follow-up samples together with their literal outputs and labels; repair
+recordings remain gated until outcome review. Missing recordings remain explicit in capture
+notes. Automatic display records the evidence coverage without changing answer attempts.
+
+Use a compact laptop workspace: smaller header/title, collapsed device details and teaching
+notes, question/targets/ninja beside the readings, and an independently scrolling capture
+area for long outputs. Preserve drag-to-answer and keyboard-equivalent submission.
+
+Validated in guided-v13: 43 Node checks and 50 Safari browser checks pass. Safari visual
+review confirms the paired MAC readings and ninja fit together at the current window size;
+dedicated narrow-layout and screen-reader acceptance remain pending.
+
 # Guided NOC patrol — current scope
 
 Owner correction, 2026-11-18. This replaces the six simulated incidents and the separate
 real-incident/arcade modes. Historical specifications and verification records remain as history;
-this document governs the current implementation together with constitution 1.5.0.
+this document governs the current implementation together with constitution 1.5.2.
 
 ## Specification
+
+### Latest owner correction — U13 only
+
+Inventory follow-up: spine-gw1 is Arista DCS-7808-CH and dmz-gw2 is Arista DCS-7804-CH.
+Both use EOS 4.31.10M and 7800R3-48CQ-LC line cards. Display these in endpoint cards and
+exported handoffs; remove them from missing-capture requests. Both endpoints use ColorChip C100Q020CWDM403H optics, as subsequently supplied by the owner. Original command captures are unchanged. Inventory revision guided-v12 passes
+42/42 Node checks; the 49/49 Safari run below predates this inventory-only update.
+
+This supersedes the four-case scope below. Remove U10–U12 from data/cases.json and all playable
+progression. Only U13 is active: one incident, five decisions and fourteen unchanged original
+captures. Keep the four interface-scoped commands and the drag-to-answer mechanic. Old source
+files are historical records, not runtime content. New examples will be supplied separately.
+
+The owner confirms that replacing the spine optic fixed the link. Outcome status is now
+confirmed-recovery. Numerical after-repair readings, stability interval and any cleaning/reseating
+remain unspecified. Do not expose the repair outcome before the evidence/decision gate or invent
+recovery measurements. Collection guidance requests only the remaining gaps.
+
+Single-case progression must finish directly at the session summary and retain one handoff.
+Tests must cover source fidelity, five reviewed choices and every distractor, fourteen-panel gate,
+confirmed outcome with missing verification, four-command replay, reset and exclusion of old cases.
+Current results: 42/42 Node and 49/49 Safari browser checks pass. Safari opening screen
+shows 1 incident / 5 decisions for guided-v10. Remaining manual narrow-layout, screen-reader
+and download acceptance is unchanged.
+
+
+### Current four-command scope and U13 — owner update
+
+The owner narrows every case to interface-scoped status, transceiver, MAC detail and counters
+errors. Remove full-interface detail, rates, discards and logging from the menu and collection
+workflow. Earlier broader command-workbench wording below is historical and superseded.
+
+Add U13 spine-gw1 Et6/2/1 ↔ dmz-gw2 Et6/21/1 as the fourth case: 20 decisions total. Replay
+all 14 literal supplied captures, including two MAC, optics and error observations per endpoint.
+Only MAC samples have absolute timestamps (41s spine / 39s DMZ across midnight). Unknown device
+and optic inventory remains null; no fabricated script assessment is required. Per-case evidence
+counts replace the fixed seven-panel copy. The operator recommends spine optic replacement;
+repair/recovery is unconfirmed. Teach fault direction and combined evidence, never that the
+Remote Fault flag causes low light. The standing transmitter-disable exclusion is unchanged.
+
+Implementation: strict command/endpoint matching accepts the equivalent spellings present in
+captures while preserving original prompts, whitespace, units and values. Literal evidence
+supports incident/follow-up observations; after-repair recordings stay gated. Outcome status
+recommended-action exposes diagnosis review without inventing a completed repair. C1–C7 remain
+applicable; source fidelity and reviewed answer choices cover the new case.
+
+Verification: 53/53 Node and 60/60 Safari browser checks passed. Safari shows four incidents /
+20 decisions. Browser DOM tests verify the four-option menu, all raw U13 output, unknown inventory,
+repeat-sample lookup, source fidelity, all 20 decisions and outcome gating. Full manual narrow
+layout, screen-reader and download acceptance remain pending. Runtime revision: guided-v9.
+
+
+### Recorded command investigation — 2026-11-18
+
+Owner authorizes a static command workbench within the same patrol. Choose an endpoint,
+show command and observation (incident, later monitoring, after repair), then request the
+recording. Use Arista's check-interface-health workflow as an authoring reference: status/errors,
+targeted interface/optics, conditional rates/discards. Add our existing both-end MAC history,
+timed comparisons and outcome verification. Do not import generic optical thresholds or the
+upstream incorrect interpretation of 0 dBm as no light.
+
+Literal MAC captures are replayable. Existing optics/error tables are script summaries with
+unknown original command provenance; label them accordingly, never wrap them as raw CLI.
+Unrecorded requests return an explicit absence, not zero counters, generated output or a live
+command failure. Record requests separately from viewed evidence. Missing requests neither
+block completion nor award evidence coverage. After-repair recordings stay locked until the
+reported outcome is revealed. Keep the seven-panel evidence review and all fifteen decisions,
+shuriken answering, confidence limits and no-intentional-disable assumption.
+
+Plan: engine/investigation.js owns the finite command catalog, lookup and collection manifest;
+data/cases.json stores case-specific capture needs and optional literal commandCaptures with
+endpoint, command, observation, timestamp, source and text. Validate provenance and unique keys.
+ui/patrol.js adds native selectors, purpose/status feedback, request history and existing evidence
+shortcuts. Handoffs include requests and missing captures. A repository collection guide lists
+exact endpoint commands, per-case priorities and how to provide independently timed recordings.
+
+Consistency review: C1/C5/C6 remain satisfied by finite local replay and no invented values;
+C2 gains command/evidence selection; C3 keeps unavailable captures separate from required views;
+C4 retains native keyboard controls and the drag answer mechanic. Existing exact-source tests
+must remain green. Add lookup, missing/summary handling, wrong-endpoint/timepoint, post-repair
+gating, invalid capture validation, report and DOM/control tests. Safari and narrow-layout
+checks must be reported as observed or pending. No MCP server, live shell or runtime AI is added.
 
 One opening screen offers **Start guided NOC patrol**. The only playable evidence is U10, U11
 and U12, in that order, with five reviewed decisions per incident. No simulated readings,
@@ -51,6 +178,18 @@ missing evidence is an explicit lesson, never an invitation to generate readings
 
 
 ## Verification — 2026-11-18
+
+Latest recorded-command update: 49/49 Node checks and 55/55 Safari browser checks passed.
+The latter includes rendering of every literal evidence panel, endpoint/command selection,
+request history reopening, missing/summary/locked responses, question progression and keyboard
+shuriken submission. Safari desktop visual inspection confirmed the new controls, readable
+targets, missing-output response and native command menu. Further manual interaction was
+interrupted by browser activity. Narrow-layout, screen-reader, full manual playthrough and actual
+download-click acceptance remain pending. This supersedes the earlier browser-suite status below.
+The runtime cache revision is guided-v8. Collection instructions and per-case priorities are in
+[capture-collection-guide.md](capture-collection-guide.md).
+
+Earlier verification record:
 
 42/42 dependency-free Node checks pass, including all reviewed choices, exact inventory/table/MAC
 source fidelity, invalid content, confidence limits, evidence gates, hints, retries, all-three-case

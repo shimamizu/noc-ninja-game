@@ -1,3 +1,5 @@
+> Archived by owner request. This example is not in the playable library; the current patrol uses U13 only. The record below is historical.
+
 # U12 — 100G link up with a low receive channel and recorded errors
 
 **Received:** 2026-11-18, owner-supplied, sanitized example.

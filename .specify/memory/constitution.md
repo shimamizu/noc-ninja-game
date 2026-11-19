@@ -1,9 +1,12 @@
+<!-- Scope update 2026-11-18: owner added U14 after U13. The active library now has two
+supplied incidents and eight decisions; this supersedes earlier single-U13 scope text.
+All original captures and the confirmed spine-optic repair outcomes are preserved. -->
 # NOC Ninja Training Constitution
 
-## Current scope amendment — version 1.5.0, 2026-11-18
+## Current scope amendment — version 1.5.2, 2026-11-18
 
 The owner explicitly replaces all simulated training evidence and separate modes with one guided
-NOC patrol based only on supplied U10–U12 captures. This amendment supersedes conflicting original
+NOC patrol based only on the supplied U13 spine–DMZ captures only. This amendment supersedes conflicting original
 scope, fixed-deployment, three-category classifier, arcade and separate-track requirements below.
 C1–C7 still apply: validate literal captures and review bounded reasoning questions; teach
 uncertainty without inventing readings or outcomes. Preserve each supplied platform and release.
@@ -222,7 +225,7 @@ generated questions, and free-text AI grading require an explicit constitution, 
 and verification change before implementation. A scope exception MUST NOT silently bypass a
 principle.
 
-**Version**: 1.5.0 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-18
+**Version**: 1.5.2 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-18
 
 ## Amendment record — 2026-11-17
 
@@ -290,3 +293,18 @@ Original dojo progression remains unchanged. Real-case decisions, attempts and h
 separately; completion records practice, not independent mastery. New browser acceptance remains
 explicitly pending. Specification, plan, interaction contract, tasks, sources and README document
 the extension and its verification limits.
+
+## Four-command scope and fourth real case — version 1.5.1
+
+Owner authorizes U13 and narrows the investigation menu to per-interface status, transceiver,
+MAC detail and counters errors. Preserve raw incident/follow-up captures, explicit unknown
+inventory and an optional script assessment. Recommended-action reviews must not imply a
+completed repair. This is a content/schema extension under C1–C7; no generated evidence or
+live connection is introduced. Current details are in guided-patrol.md.
+
+## Single-case restart — version 1.5.2
+
+The owner removes the earlier three examples from the playable curriculum and starts afresh
+with U13 only. Spine optic replacement and link recovery are confirmed by the owner. Preserve
+the pre-repair evidence and do not invent numerical recovery measurements or fiber work.
+The same four-command workflow and C1–C7 apply to future supplied examples.

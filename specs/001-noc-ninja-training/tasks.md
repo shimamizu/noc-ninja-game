@@ -304,3 +304,33 @@ T050/T065/T070 are historical requirements for retired flows; T075 tracks curren
 - [X] T076 Remove below-circle captions, radio selectors and separate Throw button; require shuriken pickup/drop with circular hit testing, cancellation and keyboard drag equivalent. All 42 Node checks pass; browser UI tests updated, Safari visual review remains pending after concurrent browser activity interrupted preview.
 
 - [X] T077 Apply the owner’s standing exclusion of intentional transmitter disable across briefing, U10 questions/feedback, authoring instructions and future-example guidance; preserve all captured readings.
+
+## Recorded command investigations — 2026-11-18
+
+- [X] T078 Review Arista check-interface-health as an authoring reference; document workflow adaptation and corrections to generic optical guidance in capture-collection-guide.md and guided-patrol.md.
+- [X] T079 Add finite endpoint/command/observation selection, literal replay, explicit summary/missing states, request history and gated after-repair inspection. Preserve all existing evidence and shuriken decisions.
+- [X] T080 Add case-specific command hints, capture priorities, exact collection lists and handoff capture manifests; support source-checked future recordings without generated readings.
+- [X] T081 Verify 49/49 Node and 55/55 Safari browser checks, capture fidelity, native selection/history, missing-output rendering and desktop workbench appearance.
+- [ ] T082 Finish current narrow-layout, full manual keyboard/screen-reader playthrough and download-click acceptance. T075's DOM/control portion is now satisfied; other manual checks remain open after browser activity interrupted further inspection.
+
+## Four commands and the DMZ case — owner update
+
+- [X] T083 Restrict the catalog, hints and collection guide to per-interface status, transceiver, MAC detail and counters errors; remove full detail and the three requested trailing options.
+- [X] T084 Preserve U13's 14 raw command captures, original prompts/units/categories and repeat samples; support unknown inventory and absence of a script assessment without manufacturing either.
+- [X] T085 Add five reviewed U13 decisions covering direction, PHY/interface distinctions, zero errors, 41s/39s MAC intervals and recommended spine optic replacement; keep repair confirmation separate.
+- [X] T086 Verify 53/53 Node checks and 60/60 Safari checks; align four-case/twenty-decision totals, optional diagnosis review, exact scoped commands, source fidelity and collection documentation. Remaining manual acceptance is tracked by T082.
+
+## Start afresh with U13 only — owner correction
+
+- [X] T087 Remove U10–U12 from the playable data, progression and active collection guidance; retain their source records as explicitly archived history. Show one incident and five decisions.
+- [X] T088 Record the owner's confirmed spine optic replacement and link recovery; preserve all 14 captures and leave numerical recovery measurements and concurrent fiber work unspecified.
+- [X] T089 Adapt regression tests to the sole active case, verify 42/42 Node and 49/49 Safari checks, and observe the single-case opening screen in Safari. Four-command selection, drag answers, gated outcome and handoff remain intact. T082 still tracks remaining manual acceptance.
+
+
+### U14 addition — completed 2026-11-18
+
+- [x] Add 14 literal leaf/spine captures, supplied inventory and confirmed spine-optic repair outcome.
+- [x] Add four decisions covering replacement, current state versus health, increasing errors, and paired fault-count increases.
+- [x] Preserve the supplied senz error-table prompt with narrowly validated alias support.
+- [x] Verify U13 remains unchanged; check two-case progression, evidence gating, reports and reset.
+- [x] Validate 45/45 Node checks and 52/52 Safari checks; return the existing game tab to the two-incident patrol.

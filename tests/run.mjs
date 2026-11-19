@@ -2,8 +2,11 @@ import './aim.test.js';
 import {readFile,access} from 'node:fs/promises';
 import {test,assert,run} from './harness.js';
 import {caseTests,caseSourceTests} from './cases.test.js';
+import {randomizationTests} from './randomization.test.js';
+import {investigationTests} from './investigation.test.js';
 const data=JSON.parse(await readFile(new URL('../data/cases.json',import.meta.url),'utf8'));
 caseTests(data);
+investigationTests(data);randomizationTests(data);
 caseSourceTests(data,Object.fromEntries(await Promise.all(data.cases.map(async c=>[c.id,await readFile(new URL('../'+c.source,import.meta.url),'utf8')]))));
 test('Retired simulation data and separate-mode runtime paths are removed',async()=>{
   for(const file of ['data/levels.json','data/coaching.js','data/real-cases.json','engine/content.js','engine/rules.js','engine/dispatch.js','ui/real-cases.js']){

@@ -43,3 +43,68 @@
 .patrol-decision .target-board>strong{margin:0;font:700 24px var(--mono);color:inherit}
 .patrol-decision .target:hover .target-board{transform:none}
 .patrol-decision .target.drag-aimed .target-board{transform:scale(1.09)}
+
+/* Recorded evidence requests share the existing patrol and never execute commands. */
+.command-workbench{margin:22px 0;padding:18px;border:1px solid #527c79;border-radius:12px;background:linear-gradient(125deg,#173239,var(--panel))}
+.command-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.command-fields>div:last-child{grid-column:1/-1}.command-fields>div{min-width:0}
+.command-fields label{display:block;font-size:12px;font-weight:700;margin-bottom:7px}
+.command-fields select{width:100%;min-width:0;font:12px/1.5 var(--mono);color:var(--ink);background:var(--bg);padding:12px 9px;border:1px solid #59617f;border-radius:7px}
+select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.command-purpose,.capture-response p{font-size:13px;line-height:1.7;margin:12px 0}
+.command-name{font-family:var(--mono);overflow-wrap:anywhere}
+.capture-response{border:1px solid #59617f;border-left:4px solid var(--mint);padding:16px;margin:20px 0;border-radius:8px}
+.capture-response.missing,.capture-response.summary-only,.capture-response.locked{border-left-color:var(--gold)}
+.captured-notebook summary,.request-history summary{cursor:pointer;padding:12px 0;font-size:13px;color:var(--mint)}
+.request-history{margin-top:12px}.request-history ol{padding-left:22px}.request-history li{margin:9px 0}
+.request-history button{text-align:left;overflow-wrap:anywhere;line-height:1.6;width:100%}
+.practice li{font-size:13px;line-height:1.7;margin:10px 0}
+@media(max-width:560px){.command-fields{grid-template-columns:1fr}.command-workbench{padding:13px}.command-fields select{font-size:12px}}
+
+/* Compact investigation workspace: keep evidence and the throwing arena together. */
+#app:has(.compact-patrol) .topbar{padding:8px 24px;gap:12px}
+#app:has(.compact-patrol) .brand>strong{font-size:15px}
+#app:has(.compact-patrol) .brand>.sprite{width:28px;height:28px}
+#app:has(.compact-patrol) .footer{padding:12px 24px}
+.compact-patrol{max-width:1680px;padding:12px 24px 20px}
+.case-heading{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.case-heading h1{font-size:26px;letter-spacing:-.7px;margin:0;line-height:1.2}
+.case-context{font-size:12px;color:var(--muted);margin-bottom:12px}
+.case-context summary{padding:4px 0}
+.case-context>p{margin:10px 0;max-width:1000px}
+.case-context .case-inventory{margin:10px 0;gap:10px}
+.case-context .device{padding:10px}
+.case-context .device p{margin:5px 0;font-size:12px}
+.compact-patrol .patrol-grid{grid-template-columns:minmax(0,1.25fr) minmax(390px,1fr);gap:16px}
+.compact-patrol .command-workbench{margin:0 0 10px;padding:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.command-workbench h2{font-size:16px;margin:0}
+.compact-patrol .command-fields{width:100%;grid-template-columns:minmax(170px,.7fr) minmax(0,1.3fr);gap:10px;margin:4px 0}
+.compact-patrol .command-fields>div:last-child{grid-column:auto}
+.compact-patrol .command-fields label{font-size:11px;margin-bottom:4px}
+.compact-patrol .command-fields select{padding:7px 5px;font-size:11px;min-height:34px}
+.command-help{width:100%;font-size:12px;color:var(--muted)}
+.command-help p{margin:8px 0 0;line-height:1.5}
+.recorded-readings{min-width:0}
+.recorded-reading h3{font-size:12px;color:var(--mint);margin:10px 0 5px}
+.recorded-reading .case-output{margin:0;max-height:none}
+.compact-patrol .case-terminal{font-size:11px;line-height:1.45;padding:10px}
+.compact-patrol .evidence-notes{margin-top:10px;padding:10px}
+.compact-patrol .patrol-decision{padding:12px;border-radius:12px;position:sticky;top:10px}
+.compact-patrol .patrol-decision>.tag{margin:0 0 8px;padding:3px 7px}
+.compact-patrol .patrol-decision h2{font-size:18px;line-height:1.3;margin-bottom:10px}
+.compact-patrol .decision-answers{margin:10px 0}
+.compact-patrol .reasoning-option{font-size:12px;line-height:1.45;padding:8px 10px;margin-bottom:6px}
+.compact-patrol .arena{height:250px;min-height:250px;padding:10px 6px 0}
+.compact-patrol .target-board{width:64px;height:64px}
+.compact-patrol .target-board>strong{font-size:21px}
+.compact-patrol .ninja-figure{width:125px;height:142px}
+.compact-patrol .launcher{bottom:22px}
+.compact-patrol .drag-readout{font-size:9px;bottom:6px}
+.compact-patrol .patrol-decision>.micro{font-size:10px;margin:8px 0 5px}
+.compact-patrol .patrol-decision>.primary{margin:10px 0;padding:10px 16px}
+.compact-patrol .feedback{margin:10px 0;padding:10px;line-height:1.5}
+.compact-patrol .feedback>strong{font-size:13px}
+.compact-patrol .help-text{padding:10px;margin:8px 0}
+@media(min-width:1000px){.compact-patrol .recorded-readings{max-height:calc(100dvh - 280px);overflow:auto;padding-right:3px;scrollbar-gutter:stable}}
+@media(max-width:999px){.compact-patrol{padding:12px}.compact-patrol .patrol-grid{grid-template-columns:minmax(0,1fr)}.compact-patrol .patrol-decision{position:static}.compact-patrol .recorded-readings{max-height:420px;overflow:auto}.compact-patrol .command-fields{grid-template-columns:1fr 1.5fr}}
+@media(max-width:560px){.case-heading h1{font-size:23px}.compact-patrol .command-fields{grid-template-columns:1fr}.compact-patrol .reasoning-option{font-size:13px}.compact-patrol .patrol-decision h2{font-size:18px}#app:has(.compact-patrol) .topbar{padding:8px 12px}.case-context summary{line-height:1.6}}

@@ -1,3 +1,5 @@
+> Archived by owner request. This example is not in the playable library; the current patrol uses U13 only. The record below is historical.
+
 # U10 — 10G link down with suspected spine transmitter failure
 
 **Received:** 2026-11-18, owner-supplied, sanitized example.

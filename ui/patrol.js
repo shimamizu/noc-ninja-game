@@ -1,12 +1,12 @@
-import {currentCase,patrolSummary,verificationChecklist,counterHistoryNote} from '../engine/cases.js?v=guided-v17';
-import {evidenceText,commandReadings,commands,commandText,resolveCapture,statusLabels} from '../engine/investigation.js?v=guided-v17';
+import {currentCase,patrolSummary,verificationChecklist,counterHistoryNote} from '../engine/cases.js?v=guided-v20';
+import {evidenceText,commandReadings,commands,commandText,resolveCapture,statusLabels} from '../engine/investigation.js?v=guided-v20';
 const el=(tag,cls='',text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
 function button(text,action,id){const b=el('button','',text);b.type='button';b.dataset.action=action;b.id=id;return b;}
 function title(text){const h=el('h1','',text);h.id='view-title';h.tabIndex=-1;return h;}
 
 export function patrolBriefing(content){
   const frag=document.createDocumentFragment(),hero=el('section','briefing-hero'),copy=el('div','hero-copy');
-  copy.append(el('span','tag','GUIDED NOC PATROL'),title('Master the link.'),el('p','lead','Observe. Reason. Explain. Hand off.'),el('p','intro',`${content.cases.length} incident${content.cases.length===1?'':'s'} · ${content.cases.reduce((n,c)=>n+c.questions.length,0)} decisions. Investigate both switches, interpret the captured outputs, and build a diagnosis you can support. Then compare your reasoning with the reported repair outcome.`));
+  copy.append(el('span','tag','GUIDED NOC PATROL'),title('Master the link.'),el('p','lead','Observe. Reason. Explain. Hand off.'),el('p','intro',`${content.cases.length} incident${content.cases.length===1?'':'s'} · ${content.cases.reduce((n,c)=>n+c.questions.length,0)} decisions. Investigate both switches, interpret the captured outputs, and build a diagnosis you can support. Then compare your reasoning with the diagnosis review and any reported repair outcome.`));
   const start=button('Start guided NOC patrol  →','begin-guided','begin-guided');start.className='primary';copy.append(start,el('p','micro','Reasoning hints · unlimited retries · downloadable handoffs'));
   const art=el('div','hero-art');art.setAttribute('aria-hidden','true');art.append(el('div','moon'),el('div','mountain mountain-back'),el('div','mountain'),el('div','torii'),el('div','dojo-floor'));
   const ninja=el('div','ninja'),img=el('img','icon sprite sprite-ninja');img.src='./assets/ninja.png';img.alt='';ninja.append(img);art.append(ninja,el('span','scene-caption','THE NETWORK NEEDS A SHARP MIND.'));hero.append(copy,art);frag.append(hero);
@@ -17,7 +17,7 @@ export function patrolBriefing(content){
     ['02 · Separate state from trend','LinkUp alone does not establish health. A cumulative counter is not an error rate. Ask for timed readings and reset history before concluding errors are increasing or a link is actively flapping.'],
     ['03 · Explain and verify','Check any supplied diagnosis against the outputs. State the suspected cause, supporting evidence and what is still unknown. After an authorized intervention, verify optics, new errors, stability and service.']
   ]){const card=el('article','guide-card');card.append(el('h3','',heading),el('p','',text));cards.append(card);}
-  guide.append(cards,el('p','intro','Training assumption: transmitters have not been intentionally disabled. The workbench opens saved evidence; it does not connect to switches. Requests without a recording say Not captured. Missing data stays unknown and does not block your progress. Complete the decisions and review each case’s available evidence to reveal its diagnosis review and any reported repair outcome, then request after-repair verification. Opening evidence alone does not demonstrate understanding.'));frag.append(guide);return frag;
+  guide.append(cards,el('p','intro','Training assumption: transmitters have not been intentionally disabled. The workbench opens saved evidence; it does not connect to switches. Complete the decisions and review each case’s available evidence to reveal its diagnosis review and any reported repair outcome, then request after-repair verification. Opening evidence alone does not demonstrate understanding.'));frag.append(guide);return frag;
 }
 
 function commandWorkbench(c,patrol){
@@ -125,6 +125,7 @@ function decisionPanel(c,patrol,animate){
   }
   section.append(el('span','tag',`DECISION ${patrol.questionIndex+1} / ${c.questions.length}`));
   const heading=el('h2','',q.prompt);heading.id='case-question-title';heading.tabIndex=-1;section.append(heading);
+  if(q.context)section.append(el('p','decision-context',q.context));
   const answers=el('div','decision-answers');answers.setAttribute('role','list');answers.setAttribute('aria-label','Answer choices');
   for(const [i,option] of q.options.entries()){
     const answer=el('div','reasoning-option answer-description',`${String.fromCharCode(65+i)}. ${option.text}`);answer.id='case-answer-'+option.id;answer.setAttribute('role','listitem');answers.append(answer);

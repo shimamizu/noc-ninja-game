@@ -1,21 +1,21 @@
-import {evidenceText} from '../engine/investigation.js?v=guided-v17';
+import {evidenceText} from '../engine/investigation.js?v=guided-v20';
 import {test,assert,equal} from './harness.js';
-import {render} from '../ui/render.js?v=guided-v17';
-import {bindControls} from '../ui/controls.js?v=guided-v17';
-import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v17';
+import {render} from '../ui/render.js?v=guided-v20';
+import {bindControls} from '../ui/controls.js?v=guided-v20';
+import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v20';
 const initialState=content=>makeState(content,()=>0.999999);
 const transition=(state,event,content)=>step(state,event,content,()=>0.999999);
 
 export function uiTests(data){
   const content={cases:data.cases},app=document.querySelector('#app');
-  const expected=[['b','a','c','b'],['b','a','c','b']];
+  const expected=[['b','a','c','b'],['b','a','c','b'],['b','a','c','b']];
   const go=(s,type,extra={})=>transition(s,{type,...extra},content);
   const begin=()=>go(initialState(content),'begin-guided');
   const checkIds=()=>{const ids=[...app.querySelectorAll('[id]')].map(n=>n.id);equal(ids.length,new Set(ids).size);};
   test('Opening screen has one guided start, accurate totals and educational briefing',()=>{
     render(content,initialState(content));checkIds();
     equal(app.querySelectorAll('[data-action="begin-guided"]').length,1);
-    assert(app.textContent.includes('2 incidents · 8 decisions'));
+    assert(app.textContent.includes('3 incidents · 12 decisions'));
     assert(app.textContent.includes('Build the evidence before the conclusion.'));
     assert(!/saniti[sz]|real incident patrol|arcade|six simulated|six incidents/i.test(app.textContent));
     assert(!app.querySelector('[data-action="begin"], [data-action="begin-real"]'));
@@ -38,7 +38,7 @@ export function uiTests(data){
     assert(app.querySelector('#patrol-feedback').textContent.includes('Evidence supports'));
     assert(!app.querySelector('#download-handoff'));
   });
-  test('The confirmed outcome and summary handoffs render in the same patrol',()=>{
+  test('Confirmed outcomes, diagnosis review and summary handoffs render in the same patrol',()=>{
     let s=begin();for(let ci=0;ci<content.cases.length;ci++){
       const c=content.cases[ci];for(const e of c.evidence)s=go(s,'inspect',{outputId:e.id});
       for(let qi=0;qi<4;qi++){s=go(go(s,'select',{answerId:expected[ci][qi]}),'submit');if(qi<3)s=go(s,'question-next');}
@@ -47,8 +47,8 @@ export function uiTests(data){
       assert(app.textContent.includes(c.outcome.limits));assert(app.textContent.includes('Before closing the ticket'));
       assert(app.querySelector('#download-handoff'));s=go(s,'next');
     }
-    render(content,s);checkIds();equal(app.querySelectorAll('[data-action="download-handoff"]').length,2);
-    assert(app.textContent.includes('2 incidents · 8 decisions completed'));assert(!/back to|real incident|saniti[sz]/i.test(app.textContent));
+    render(content,s);checkIds();equal(app.querySelectorAll('[data-action="download-handoff"]').length,3);
+    assert(app.textContent.includes('3 incidents · 12 decisions completed'));assert(!/back to|real incident|saniti[sz]/i.test(app.textContent));
   });
   test('Invalid content renders a reload action without playable fallback',()=>{
     render(null,{view:'content-error'},[{path:'Incident library',message:'Invalid evidence'}]);
@@ -73,6 +73,31 @@ export function uiTests(data){
     s=go(s,'request-capture',{selection:{endpointId:'dmz',commandId:'optics',observationId:'monitoring'}});render(content,s);checkIds();
     equal(app.querySelector('.case-terminal').textContent,c.evidence.find(e=>e.id==='dmz-optics-followup').text);
     assert(app.textContent.includes('Last Update is telemetry age'));assert(!app.textContent.includes('Voltage/Bias units were not shown'));
+  });
+  test('U15 displays both zero leaf counter samples and gates diagnosis review',()=>{
+    const c=content.cases[2],one={cases:[c]};let s=transition(initialState(one),{type:'begin-guided'},one);
+    const go=event=>{s=transition(s,event,one);};
+    go({type:'choose-capture',selection:{endpointId:'leaf',commandId:'errors'}});
+    render(one,s);checkIds();
+    equal([...app.querySelectorAll('.case-terminal')].map(n=>n.textContent),c.evidence.filter(e=>e.endpointId==='leaf'&&e.kind==='errors').map(e=>e.text));
+    assert(!app.querySelector('#capture-response').textContent.includes('Not captured'));
+    assert(app.textContent.includes('Arista DCS-7508N'));
+    for(const e of c.evidence)go({type:'inspect',outputId:e.id});
+    for(const q of c.questions){
+      if(q.context){
+        render(one,s);
+        equal(app.querySelector('.decision-context').textContent,q.context);
+        assert(app.querySelector('.decision-context').textContent.includes('63.35 − 27.33 = 36.02 mA'));
+        assert(app.querySelector('.decision-context').textContent.includes('10–20 mA'));
+        assert(!app.querySelector('#patrol-feedback'));
+      }
+      go({type:'select',answerId:q.options.find(o=>o.correct).id});go({type:'submit'});go({type:'question-next'});
+    }
+    render(one,s);assert(!app.querySelector('#reveal').disabled);
+    assert(app.querySelector('#reveal').textContent.includes('Review diagnosis'));
+    go({type:'reveal'});render(one,s);checkIds();
+    assert(app.textContent.includes('DIAGNOSIS REVIEW'));assert(!app.textContent.includes('REPORTED OUTCOME'));
+    assert(app.textContent.includes('link remains down AND the bias current variance between lanes on spine-gw1 stays high after the leaf swap'));
   });
   test('Shuffled visible letters map to their answer identities and remain stable on rerender',()=>{
     let s=step(makeState(content,()=>0),{type:'begin-guided'},content);

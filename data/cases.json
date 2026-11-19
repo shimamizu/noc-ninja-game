@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revision": "guided-cases-u13-u14-v2",
+  "revision": "guided-cases-u13-u14-u15-v3",
   "cases": [
     {
       "id": "U13",
-      "revision": "guided-cases-u13-u14-v2",
+      "revision": "guided-cases-u13-u14-u15-v3",
       "source": "specs/001-noc-ninja-training/evidence/100g-spine-dmz-remote-fault-case.md",
       "title": "The DMZ handoff",
       "speed": "100G",
@@ -311,7 +311,7 @@
     },
     {
       "id": "U14",
-      "revision": "guided-cases-u13-u14-v2",
+      "revision": "guided-cases-u13-u14-u15-v3",
       "source": "specs/001-noc-ninja-training/evidence/100g-leaf-lane4-errors-case.md",
       "title": "The unstable fourth lane",
       "speed": "100G",
@@ -576,7 +576,7 @@
         },
         {
           "id": "q4",
-          "prompt": "What do the increasing fault counts tell you?",
+          "prompt": "What do the increasing fault counts in show interfaces ethernet XX mac detail on each device tell you?",
           "sourceIds": [
             "U14"
           ],
@@ -616,6 +616,315 @@
         "If retained, provide the error/transceiver capture timestamps, timezone and reset history. MAC timestamps apply only to the MAC samples.",
         "Record whether any fiber cleaning or reseating accompanied the replacement; provide the spine line-card inventory if available."
       ]
+    },
+    {
+      "id": "U15",
+      "revision": "guided-cases-u13-u14-u15-v3",
+      "source": "specs/001-noc-ninja-training/evidence/100g-leaf-first-conditional-spine-case.md",
+      "title": "The persistent down link",
+      "speed": "100G",
+      "intro": "A 100G link is down between spine-gw1 Et8/10/1 and leaf-gw2 Et53/1. Compare both endpoints and decide how to sequence the repair and follow-up checks.",
+      "method": "Read the Bias Current (mA) column and subtract the lowest of the four lane values from the highest to find the bias current variance between lanes. Compare that range with the operator’s usual 10–20 mA maximum spread. Follow each transmitter toward the opposite receiver and correlate paired fault flags to sequence the repair.",
+      "limits": "Timezone, line cards and counter reset history were not supplied. All post-repair recordings are missing. No completed replacement or recovery was reported. The usual 10–20 mA maximum bias current variance between lanes is operator guidance for this environment, not a universal manufacturer alarm threshold.",
+      "collectionNote": "Fourteen supplied interface recordings: status once per endpoint; optics, MAC and error counters twice per endpoint. The two leaf error tables were supplied in an owner follow-up; their capture times are unknown. MAC timestamps span 45 seconds on spine and 105 seconds on leaf. Leaf Last Change ages advance by 104 seconds; preserve that discrepancy. Optical Last Update values are telemetry ages, not capture intervals.",
+      "endpoints": [
+        {
+          "id": "spine",
+          "name": "spine-gw1",
+          "port": "Et8/10/1",
+          "model": "Arista DCS-7508N",
+          "eos": "4.31.10M",
+          "manufacturer": "ColorChip ltd",
+          "optic": "C100Q020CWDM403B",
+          "type": "100GBASE-CWDM4",
+          "linecard": null
+        },
+        {
+          "id": "leaf",
+          "name": "leaf-gw2",
+          "port": "Et53/1",
+          "model": "Arista DCS-7050SX3-48YC8-R",
+          "eos": "4.31.10M",
+          "manufacturer": "ColorChip ltd",
+          "optic": "C100Q020CWDM403B",
+          "type": "100GBASE-CWDM4",
+          "linecard": null
+        }
+      ],
+      "evidence": [
+        {
+          "id": "spine-status",
+          "endpointId": "spine",
+          "kind": "status",
+          "observationId": "incident",
+          "label": "Status · incident",
+          "text": "spine-gw1(s1)#show interfaces ethernet 8/10/1 status \nPort       Name                                                    Status       Vlan     Duplex Speed  Type           Flags Encapsulation\nEt8/10/1   leaf-gw2_Et53/1 notconnect   in Po810 full   100G   100GBASE-CWDM4",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal captured status. Both endpoints are notconnect; local port-channel IDs do not establish a bundle fault."
+        },
+        {
+          "id": "spine-optics",
+          "endpointId": "spine",
+          "kind": "optics",
+          "observationId": "incident",
+          "label": "Transceiver · incident",
+          "text": "spine-gw1(s1)#show interfaces ethernet 8/10/1 transceiver \nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                               Bias      Optical   Optical                \n          Temp       Voltage   Current   Tx Power  Rx Power               \nPort      (Celsius)  (Volts)   (mA)      (dBm)     (dBm)     Last Update  \n-----     ---------  --------  --------  --------  --------  -------------------\nEt8/10/1   37.43      3.29      63.35    -1.33     -13.87    0:00:02 ago\nEt8/10/2   37.43      3.29      44.00    0.80      -4.56     0:00:02 ago\nEt8/10/3   37.43      3.29      39.24    0.25      0.09      0:00:02 ago\nEt8/10/4   37.43      3.29      27.33    -0.58     -0.89     0:00:02 ago",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal captured readings in mA and dBm. Last Update is telemetry age, not the elapsed interval between captures. Here, bias current variance between lanes means the highest reading minus the lowest. On spine-gw1: 63.35 − 27.33 = 36.02 mA, about 36 mA apart. The operator normally sees at most about 10–20 mA between the four lanes in this environment; 36 mA is a very large spread."
+        },
+        {
+          "id": "spine-optics-followup",
+          "endpointId": "spine",
+          "kind": "optics",
+          "observationId": "monitoring",
+          "label": "Transceiver · follow-up",
+          "text": "spine-gw1(s1)#show interfaces ethernet 8/10/1 transceiver \nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                               Bias      Optical   Optical                \n          Temp       Voltage   Current   Tx Power  Rx Power               \nPort      (Celsius)  (Volts)   (mA)      (dBm)     (dBm)     Last Update  \n-----     ---------  --------  --------  --------  --------  -------------------\nEt8/10/1   37.38      3.29      63.39    -1.33     -13.87    0:00:05 ago\nEt8/10/2   37.38      3.29      44.00    0.81      -4.56     0:00:05 ago\nEt8/10/3   37.38      3.29      39.22    0.25      0.09      0:00:05 ago\nEt8/10/4   37.38      3.29      27.30    -0.57     -0.90     0:00:05 ago",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal captured readings in mA and dBm. Last Update is telemetry age, not the elapsed interval between captures. Here, bias current variance between lanes means the highest reading minus the lowest. On spine-gw1: 63.35 − 27.33 = 36.02 mA, about 36 mA apart. The operator normally sees at most about 10–20 mA between the four lanes in this environment; 36 mA is a very large spread."
+        },
+        {
+          "id": "spine-mac",
+          "endpointId": "spine",
+          "kind": "mac",
+          "observationId": "incident",
+          "label": "MAC detail · incident",
+          "text": "spine-gw1(s1)#show interfaces ethernet 8/10/1 mac detail \nCurrent System Time: Thu Nov 19 18:27:32 2026\n\nEthernet8/10/1\n                              Current State     Changes            Last Change\n  PHY State                   linkDown                3     1 day, 1:51:07 ago\n  Interface State             linkDown                3     1 day, 1:51:07 ago\n  MAC Rx Local Fault          True                    5     1 day, 1:51:07 ago\n  MAC Rx Remote Fault         False                   4     1 day, 1:51:07 ago",
+          "capturedAt": "Thu Nov 19 18:27:32 2026 (timezone not supplied)",
+          "note": "Literal timestamped state history. Compare Changes between samples before claiming new flaps. Preserve the supplied Last Change ages."
+        },
+        {
+          "id": "spine-mac-followup",
+          "endpointId": "spine",
+          "kind": "mac",
+          "observationId": "monitoring",
+          "label": "MAC detail · follow-up",
+          "text": "spine-gw1(s1)#show interfaces ethernet 8/10/1 mac detail\nCurrent System Time: Thu Nov 19 18:28:17 2026\n\nEthernet8/10/1\n                              Current State     Changes            Last Change\n  PHY State                   linkDown                3     1 day, 1:51:52 ago\n  Interface State             linkDown                3     1 day, 1:51:52 ago\n  MAC Rx Local Fault          True                    5     1 day, 1:51:52 ago\n  MAC Rx Remote Fault         False                   4     1 day, 1:51:52 ago",
+          "capturedAt": "Thu Nov 19 18:28:17 2026 (timezone not supplied)",
+          "note": "Literal timestamped state history. Compare Changes between samples before claiming new flaps. Preserve the supplied Last Change ages."
+        },
+        {
+          "id": "spine-errors",
+          "endpointId": "spine",
+          "kind": "errors",
+          "observationId": "incident",
+          "label": "Error counters · incident",
+          "text": "spine-gw1(s1)#show interfaces ethernet 8/10/1 counters errors \nPort               FCS    Align   Symbol       Rx    Runts   Giants       Tx\nEt8/10/1             0        0        0        0        0        0        0",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal spine counters remain zero in both samples. Capture times and reset history are unknown. Leaf counters also remain zero in both supplied samples; a down link with zero errors is not healthy."
+        },
+        {
+          "id": "spine-errors-followup",
+          "endpointId": "spine",
+          "kind": "errors",
+          "observationId": "monitoring",
+          "label": "Error counters · follow-up",
+          "text": "spine-gw1(s1)#show interfaces ethernet 8/10/1 counters errors\nPort               FCS    Align   Symbol       Rx    Runts   Giants       Tx\nEt8/10/1             0        0        0        0        0        0        0",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal spine counters remain zero in both samples. Capture times and reset history are unknown. Leaf counters also remain zero in both supplied samples; a down link with zero errors is not healthy."
+        },
+        {
+          "id": "leaf-status",
+          "endpointId": "leaf",
+          "kind": "status",
+          "observationId": "incident",
+          "label": "Status · incident",
+          "text": "leaf-gw2#show int ethernet 53/1 status \nPort       Name                                                     Status       Vlan     Duplex Speed  Type           Flags Encapsulation\nEt53/1     spine-gw1_Et8/10/1 notconnect   in Po101 full   100G   100GBASE-CWDM4",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal captured status. Both endpoints are notconnect; local port-channel IDs do not establish a bundle fault."
+        },
+        {
+          "id": "leaf-optics",
+          "endpointId": "leaf",
+          "kind": "optics",
+          "observationId": "incident",
+          "label": "Transceiver · incident",
+          "text": "leaf-gw2#show interfaces ethernet 53/1 transceiver \nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                               Bias      Optical   Optical                \n          Temp       Voltage   Current   Tx Power  Rx Power               \nPort      (Celsius)  (Volts)   (mA)      (dBm)     (dBm)     Last Update  \n-----     ---------  --------  --------  --------  --------  -------------------\nEt53/1     46.44      3.28      61.58    -5.36     -2.30     0:00:00 ago\nEt53/2     46.44      3.28      64.67    0.81      -0.25     0:00:00 ago\nEt53/3     46.44      3.28      51.14    0.27      -0.89     0:00:00 ago\nEt53/4     46.44      3.28      60.76    -1.03     -2.99     0:00:00 ago",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal captured readings in mA and dBm. Last Update is telemetry age, not the elapsed interval between captures. Bias current variance between lanes means highest minus lowest in the Bias Current (mA) column; compare the four lanes within one reading."
+        },
+        {
+          "id": "leaf-optics-followup",
+          "endpointId": "leaf",
+          "kind": "optics",
+          "observationId": "monitoring",
+          "label": "Transceiver · follow-up",
+          "text": "leaf-gw2#show interfaces ethernet 53/1 transceiver \nIf device is externally calibrated, only calibrated values are printed.\nN/A: not applicable, Tx: transmit, Rx: receive.\nmA: milliamperes, dBm: decibels (milliwatts).\n                               Bias      Optical   Optical                \n          Temp       Voltage   Current   Tx Power  Rx Power               \nPort      (Celsius)  (Volts)   (mA)      (dBm)     (dBm)     Last Update  \n-----     ---------  --------  --------  --------  --------  -------------------\nEt53/1     46.39      3.28      61.61    -5.36     -2.30     0:00:00 ago\nEt53/2     46.39      3.28      64.70    0.82      -0.25     0:00:00 ago\nEt53/3     46.39      3.28      51.17    0.27      -0.89     0:00:00 ago\nEt53/4     46.39      3.28      60.76    -1.05     -3.01     0:00:00 ago",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal captured readings in mA and dBm. Last Update is telemetry age, not the elapsed interval between captures. Bias current variance between lanes means highest minus lowest in the Bias Current (mA) column; compare the four lanes within one reading."
+        },
+        {
+          "id": "leaf-mac",
+          "endpointId": "leaf",
+          "kind": "mac",
+          "observationId": "incident",
+          "label": "MAC detail · incident",
+          "text": "leaf-gw2#show interfaces ethernet 53/1 mac detail \nCurrent System Time: Thu Nov 19 18:28:40 2026\n\nEthernet53/1\n                              Current State     Changes            Last Change\n  PHY State                   linkDown                5     1 day, 1:52:16 ago\n  Interface State             linkDown                7     1 day, 1:52:16 ago\n  MAC Rx Local Fault          False                  12            1:56:00 ago\n  MAC Rx Remote Fault         True                    5            1:56:01 ago",
+          "capturedAt": "Thu Nov 19 18:28:40 2026 (timezone not supplied)",
+          "note": "Literal timestamped state history. Compare Changes between samples before claiming new flaps. Preserve the supplied Last Change ages."
+        },
+        {
+          "id": "leaf-mac-followup",
+          "endpointId": "leaf",
+          "kind": "mac",
+          "observationId": "monitoring",
+          "label": "MAC detail · follow-up",
+          "text": "leaf-gw2#show interfaces ethernet 53/1 mac detail\nCurrent System Time: Thu Nov 19 18:30:25 2026\n\nEthernet53/1\n                              Current State     Changes            Last Change\n  PHY State                   linkDown                5     1 day, 1:54:00 ago\n  Interface State             linkDown                7     1 day, 1:54:00 ago\n  MAC Rx Local Fault          False                  12            1:57:44 ago\n  MAC Rx Remote Fault         True                    5            1:57:45 ago",
+          "capturedAt": "Thu Nov 19 18:30:25 2026 (timezone not supplied)",
+          "note": "Literal timestamped state history. Compare Changes between samples before claiming new flaps. Preserve the supplied Last Change ages."
+        },
+        {
+          "id": "leaf-errors",
+          "endpointId": "leaf",
+          "kind": "errors",
+          "observationId": "incident",
+          "label": "Error counters · incident",
+          "text": "leaf-gw2#show interfaces ethernet 53/1 counters errors \nPort               FCS    Align   Symbol       Rx    Runts   Giants       Tx\nEt53/1               0        0        0        0        0        0        0",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal leaf counters supplied in the owner follow-up; all seven counters are zero in both samples. Capture times and reset history are unknown. Zero errors on a down link do not establish health."
+        },
+        {
+          "id": "leaf-errors-followup",
+          "endpointId": "leaf",
+          "kind": "errors",
+          "observationId": "monitoring",
+          "label": "Error counters · follow-up",
+          "text": "leaf-gw2#show interfaces ethernet 53/1 counters errors\nPort               FCS    Align   Symbol       Rx    Runts   Giants       Tx\nEt53/1               0        0        0        0        0        0        0",
+          "capturedAt": "Capture timestamp not supplied",
+          "note": "Literal leaf counters supplied in the owner follow-up; all seven counters are zero in both samples. Capture times and reset history are unknown. Zero errors on a down link do not establish health."
+        }
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Which optic should be replaced first in this down-link case?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Replace spine-gw1 Et8/10/1 first because the bias current variance between its four lanes is about 36 mA.",
+              "correct": false,
+              "feedback": "The high bias current variance between lanes on spine-gw1 needs follow-up after the leaf optic replacement; it does not make the spine optic the first replacement target."
+            },
+            {
+              "id": "b",
+              "text": "Replace leaf-gw2 Et53/1 first, using the low spine Rx and paired fault flags to follow the affected direction.",
+              "correct": true,
+              "feedback": "Yes. The combined evidence and the supplied runbook prioritize the leaf optic."
+            },
+            {
+              "id": "c",
+              "text": "Replace both optics at once before collecting any follow-up readings.",
+              "correct": false,
+              "feedback": "Separate the interventions: replace the leaf optic first and assess the result before considering the spine optic."
+            }
+          ],
+          "explanation": "Spine lane 1 Rx is -13.87 dBm in both samples with Local Fault True. Leaf Remote Fault is True and lane 1 Tx is -5.36 dBm. The affected direction is leaf Tx toward spine Rx. The owner recommends replacing the leaf optic first. Remote Fault alone is not a universal failed-optic indicator; the recommendation is not a reported repair result.",
+          "commandHint": "Open transceiver and mac detail on both switches. Follow leaf Tx toward spine Rx and compare Local/Remote Fault. Reassess the high bias current variance between lanes on spine-gw1 after replacing the leaf optic.",
+          "sourceIds": [
+            "U15"
+          ]
+        },
+        {
+          "id": "q2",
+          "prompt": "What does the bias current variance between lanes on spine-gw1 tell you?",
+          "options": [
+            {
+              "id": "a",
+              "text": "About 36 mA of bias current variance between lanes is unusually high; reassess it after replacing the leaf optic first.",
+              "correct": true,
+              "feedback": "Yes. The highest and lowest lanes are about 36 mA apart, well beyond the operator’s usual 10–20 mA maximum spread."
+            },
+            {
+              "id": "b",
+              "text": "The bias current on one lane changed by 36 mA over time, so replace the spine-gw1 optic first.",
+              "correct": false,
+              "feedback": "The 36 mA is the difference between the highest and lowest lane readings in one capture. Each individual lane changes very little between captures."
+            },
+            {
+              "id": "c",
+              "text": "Proof that the spine optic is healthy because every lane has nonzero bias current.",
+              "correct": false,
+              "feedback": "Nonzero current does not establish health. Compare the highest and lowest readings: their approximately 36 mA difference is unusually large for this environment."
+            }
+          ],
+          "explanation": "Read the Bias Current (mA) column on spine-gw1: 63.35, 44.00, 39.24 and 27.33 mA. Highest minus lowest is 63.35 − 27.33 = 36.02 mA. In the next capture, 63.39 − 27.30 = 36.09 mA. These ranges of 36.02 and 36.09 mA are the bias current variance between lanes meant in this lesson. The operator normally sees at most about 10–20 mA between the four lanes, so roughly 36 mA is a very large spread. Replace leaf-gw2 first. Consider the spine-gw1 optic only if the link remains down and this high variance persists after the leaf swap.",
+          "commandHint": "Open the spine-gw1 transceiver readings. In the Bias Current (mA) column, find the highest and lowest of the four lanes: 63.35 and 27.33. Subtract to get 36.02 mA. Compare with the operator’s usual 10–20 mA maximum spread, then repeat for the second capture.",
+          "sourceIds": [
+            "U15"
+          ],
+          "context": "Here, bias current variance between lanes means the highest reading minus the lowest. On spine-gw1: 63.35 − 27.33 = 36.02 mA, about 36 mA apart. The operator normally sees at most about 10–20 mA between the four lanes in this environment; 36 mA is a very large spread."
+        },
+        {
+          "id": "q3",
+          "prompt": "What can the repeated MAC and error captures establish?",
+          "options": [
+            {
+              "id": "a",
+              "text": "The link is healthy because both endpoints show zero error counters in both samples.",
+              "correct": false,
+              "feedback": "Both status and MAC captures show a down link. Zero errors on that link do not establish health or service."
+            },
+            {
+              "id": "b",
+              "text": "The accumulated MAC Changes prove the link is actively flapping during these samples.",
+              "correct": false,
+              "feedback": "The Changes totals do not increase between samples. Historical totals alone do not show new flaps in these windows."
+            },
+            {
+              "id": "c",
+              "text": "Both ends remain down with unchanged MAC Changes, and all error counters stay zero in both samples at each endpoint.",
+              "correct": true,
+              "feedback": "Yes. Both endpoints remain down without new recorded MAC transitions or increasing error counters. Zero errors do not make this down link healthy."
+            }
+          ],
+          "explanation": "Spine MAC snapshots span 45 seconds and leaf snapshots span 105 seconds. Their state/fault Changes totals remain unchanged and both interfaces stay linkDown. Both error-counter samples at each endpoint show zero FCS, Align, Symbol, Rx, Runts, Giants and Tx. The counter captures have no absolute timestamps or reset baseline, so do not infer a measured error rate or recovery.",
+          "commandHint": "Compare both mac detail timestamps and Changes columns, then compare the two counters errors tables at each endpoint. All seven error categories remain zero; read that alongside the down link state.",
+          "sourceIds": [
+            "U15"
+          ]
+        },
+        {
+          "id": "q4",
+          "prompt": "After replacing the leaf-gw2 optic, when could you consider replacing the spine-gw1 optic?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Whenever the bias current variance between lanes on spine-gw1 stays high, even if the link has recovered.",
+              "correct": false,
+              "feedback": "High bias current variance between lanes alone is insufficient here. The link must also remain down after the leaf optic replacement."
+            },
+            {
+              "id": "b",
+              "text": "Only if the link remains down AND the bias current variance between lanes on spine-gw1 stays high after the leaf swap.",
+              "correct": true,
+              "feedback": "Yes. Recheck both conditions after replacing leaf-gw2 Et53/1: a still-down link and persistently high bias current variance between the four lanes. Only then consider replacing spine-gw1 Et8/10/1."
+            },
+            {
+              "id": "c",
+              "text": "Whenever the link remains down after the leaf swap, even if the bias current variance between lanes has returned to normal.",
+              "correct": false,
+              "feedback": "A down link alone is insufficient for this second replacement. The high bias current variance between lanes on spine-gw1 must also persist; otherwise continue investigating."
+            }
+          ],
+          "explanation": "Replace leaf-gw2 Et53/1 first, then collect fresh readings. In the spine-gw1 Bias Current (mA) column, subtract the lowest lane from the highest. The current example is 63.35 − 27.33 = 36.02 mA, compared with the operator’s usual 10–20 mA maximum spread. Only if the link remains down AND the bias current variance between lanes on spine-gw1 stays high after the leaf swap could you consider replacing spine-gw1 Et8/10/1. Neither condition alone is sufficient. Record each intervention separately and verify optics, fault states, new errors, stability and service. No swap or recovery has been reported.",
+          "commandHint": "After the leaf-gw2 optic swap, check link status and calculate highest minus lowest across the four Bias Current (mA) readings on spine-gw1. Are they still about 36 mA apart, instead of the usual 10–20 mA maximum spread? Consider the spine-gw1 optic only if the link also remains down.",
+          "sourceIds": [
+            "U15"
+          ],
+          "context": "Here, bias current variance between lanes means the highest reading minus the lowest. On spine-gw1: 63.35 − 27.33 = 36.02 mA, about 36 mA apart. The operator normally sees at most about 10–20 mA between the four lanes in this environment; 36 mA is a very large spread."
+        }
+      ],
+      "outcome": {
+        "status": "recommended-action",
+        "title": "Replace the leaf optic first; reassess before escalating",
+        "summary": "Replace leaf-gw2 Et53/1 first: spine Rx -13.87 dBm and Local Fault True, leaf Remote Fault True and leaf lane 1 Tx -5.36 dBm support that direction. Then recheck both ends. On spine-gw1, the bias current variance between lanes is highest minus lowest: 63.35 − 27.33 = 36.02 mA, a very large spread compared with the operator’s usual 10–20 mA maximum. Only if the link remains down AND the bias current variance between lanes on spine-gw1 stays high after the leaf swap could you consider replacing spine-gw1 Et8/10/1. Neither condition alone is sufficient.",
+        "limits": "This is a recommended sequence, not a completed repair or confirmed recovery. The 10–20 mA comparison is operator guidance for this environment, not a universal manufacturer threshold. No post-repair readings were supplied. Record interventions separately and verify the link and service before closing the ticket."
+      },
+      "captureNeeds": [
+        "After replacing leaf-gw2 Et53/1, capture both-end status, transceiver, mac detail and timed error counters with reset history. Calculate bias current variance between lanes on spine-gw1: highest minus lowest in the Bias Current (mA) column.",
+        "Only if both continued link failure and high bias current variance between lanes on spine-gw1 persist after the leaf swap, consider replacing spine-gw1 Et8/10/1 and repeat both-end verification. Compare the measured range with the operator’s usual 10–20 mA maximum spread. Record each intervention and outcome separately.",
+        "Record timestamps, timezone, a stability interval and affected-service verification; do not infer recovery from replacement alone."
+      ],
+      "commandCaptures": []
     }
   ]
 }

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="720" viewBox="0 0 1280 720">
   <title>NOC Ninja — Guided NOC Patrol</title>
-  <desc>Two real Arista EOS incidents, eight decisions, and a new order every patrol. A ninja stands beside light levels, CRC errors and link flapping topics.</desc>
+  <desc>Three real Arista EOS incidents, twelve decisions, and a new order every patrol. A ninja stands beside light levels, CRC errors and link flapping topics.</desc>
   <defs>
     <linearGradient id="background" x2="1" y2="1"><stop stop-color="#101426"/><stop offset="1" stop-color="#30253f"/></linearGradient>
     <radialGradient id="glow"><stop stop-color="#674252" stop-opacity=".65"/><stop offset="1" stop-color="#674252" stop-opacity="0"/></radialGradient>
@@ -31,7 +31,7 @@
       <text x="274" y="519">CRC / ERRORS</text>
       <text x="425" y="519">LINK FLAPPING</text>
     </g>
-    <text x="70" y="582" fill="#a4f6d5" font-size="19" font-weight="700">2 REAL INCIDENTS · 8 DECISIONS</text>
+    <text x="70" y="582" fill="#a4f6d5" font-size="19" font-weight="700">3 REAL INCIDENTS · 12 DECISIONS</text>
     <text x="70" y="614" fill="#c3c9dd" font-size="17">New order every patrol. Drag the shuriken to answer.</text>
     <text x="70" y="682" fill="#9ba6c3" font-family="monospace" font-size="13" letter-spacing="2">ARISTA EOS · PLAY IN YOUR BROWSER</text>
   </g>

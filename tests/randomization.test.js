@@ -1,6 +1,6 @@
 import {test,assert,equal} from './harness.js';
-import {initialState,transition} from '../engine/state.js?v=guided-v17';
-import {currentCase,caseReport} from '../engine/cases.js?v=guided-v17';
+import {initialState,transition} from '../engine/state.js?v=guided-v20';
+import {currentCase,caseReport} from '../engine/cases.js?v=guided-v20';
 export function randomizationTests(data){
   const content={cases:data.cases};
   const rng=seed=>()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};

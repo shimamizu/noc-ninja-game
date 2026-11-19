@@ -1,6 +1,6 @@
 # Capture collection guide — four-command investigations
 
-The current guided patrol has two real cases and eight decisions. The exercise uses only:
+The current guided patrol has three real cases and twelve decisions. The exercise uses only:
 
 - show interfaces ethernet <port> status
 - show interfaces ethernet <port> transceiver
@@ -11,6 +11,17 @@ Full interface detail, rates, discards and logging are outside the command menu 
 workflow for this exercise. The owner narrowed the scope to these four commands. Additional
 operator notes about timing, resets, interventions and service verification are still useful;
 do not invent command output for them.
+
+## Required intake gate for every new case
+
+Before adding a case to the quiz, collect from **each endpoint** one status recording and
+incident/follow-up recordings for transceiver, mac detail and counters errors: **14 outputs**.
+If any expected output is absent, ask the owner for its exact host, port, command and sample
+and wait for it. Do not enable the case or relax validation to accommodate an accidental
+omission. Draft source notes/questions may stay outside `data/cases.json` while waiting.
+Ask for any further evidence necessary to support a proposed conclusion. Preserve raw values;
+unknown timing/reset history cannot support calculated rates. Post-repair evidence is optional
+for recommended-action cases and must never be invented.
 
 ## Available recordings
 
@@ -135,3 +146,20 @@ show interfaces ethernet 4/28/1 transceiver
 show interfaces ethernet 4/28/1 mac detail
 show interfaces ethernet 4/28/1 counters errors
 ```
+
+
+## U15 — leaf-first replacement and conditional spine replacement
+
+Endpoints: spine-gw1 Et8/10/1 (DCS-7508N) and leaf-gw2 Et53/1
+(DCS-7050SX3-48YC8-R), EOS 4.31.10M, ColorChip C100Q020CWDM403B.
+Available: one status and two transceiver/MAC/error readings at each end (14 outputs).
+Both leaf error tables were supplied in an owner follow-up and contain all zeros, as do
+both spine samples. Missing: line cards, timezone/reset history and all post-repair evidence.
+The operator supplied a usual 10–20 mA maximum range between lanes for this environment.
+Here, bias current variance means highest minus lowest: 63.35 − 27.33 = 36.02 mA.
+
+For further monitoring, collect the same four commands listed above for ports `8/10/1`
+and `53/1` with actual timestamps and reset history. Replace the leaf optic first, then record both-end status, optics,
+MAC detail and timed error counters. If and only if both link failure and high bias current variance between lanes on spine-gw1 persist after that swap, replace the spine optic and collect again.
+Record each intervention separately, a stability interval and service verification.
+No replacement or recovery is confirmed yet; do not prefill after-repair readings.

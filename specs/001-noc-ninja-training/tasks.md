@@ -1,10 +1,10 @@
-> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+> **Current scope (2026-11-19):** One guided NOC patrol using U13–U15: three incidents, twelve decisions. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
 
 # Tasks: NOC Ninja Training — First Playable
 
 **Input**: [spec.md](spec.md), [plan.md](plan.md), [research.md](research.md), [data-model.md](data-model.md), [contracts](contracts/), [quickstart.md](quickstart.md), and [constitution](../../.specify/memory/constitution.md).
 **Date**: 2026-11-17
-**Status**: Mixed-incident redesign implemented. Current tasks T043–T049 are complete; T050 and the original integrated/manual checks remain open. See [verification.md](verification.md).
+**Status**: Guided patrol U13–U15 implemented on guided-v20; documentation reconciled with constitution 1.7.1. Current verification: 53 Node / 62 Safari checks pass. Dedicated manual and hosted acceptance remain open. Earlier numbered tasks below are historical execution records, not current scope. See [verification.md](verification.md).
 
 > T001–T042 below are the original build execution history. Their category-specific levels,
 > causal distractors, schema 1 and intermediate summaries are superseded by T043 onward and
@@ -334,3 +334,45 @@ T050/T065/T070 are historical requirements for retired flows; T075 tracks curren
 - [x] Preserve the supplied senz error-table prompt with narrowly validated alias support.
 - [x] Verify U13 remains unchanged; check two-case progression, evidence gating, reports and reset.
 - [x] Validate 45/45 Node checks and 52/52 Safari checks; return the existing game tab to the two-incident patrol.
+
+
+### U15 addition — completed 2026-11-19
+
+- [x] Preserve the supplied 7508N/7050SX3 inventory, 403B optics and all 12 interface recordings in the source record and case data.
+- [x] Add four standalone questions with leaf-first replacement, inter-lane bias interpretation, unchanged MAC histories/missing leaf counters and the exact AND condition for spine replacement.
+- [x] Support absent error recordings and the supplied `show int` abbreviation; retain strict host/port/command matching and evidence/outcome gates.
+- [x] Verify all three cases, every distractor, exact source fidelity, conditional escalation, missing recordings, diagnosis review and handoffs: 52/52 Node and 61/61 Safari checks.
+- [x] Align current scope, README, collection guide, Arcade totals and rendered listing card; inspect the U15 layout in Safari. Manual acceptance still tracked by T082.
+
+
+### Bias current variance clarification — completed 2026-11-19
+
+- [x] Define the highest-minus-lowest lane range, show the 36.02 mA calculation and operator-supplied 10–20 mA comparison before the relevant questions; align hints, answers, feedback and handoffs.
+- [x] Retain leaf-first replacement and require both unresolved link failure and persistent high bias current variance between lanes before considering the spine-gw1 optic.
+- [x] Verify 52/52 Node and 61/61 Safari checks on guided-v19, including teaching context before submission and unchanged literal captures.
+
+
+### Current-document and Arcade reconciliation — completed 2026-11-19
+
+- [x] Verify `index.html`/host root opens the player briefing directly; `/tests/` is a separate developer runner with no game import or redirect.
+- [x] Synchronize both ARCADE files with three cases, twelve decisions, forty captures, current revisions, operator-scoped variance teaching and explicit public launch instructions.
+- [x] Replace active synthetic spec/plan/constitution text with the current build; retain original documents in `history/`. Constitution 1.6.0 preserves C1–C7 and records the expanded scope.
+- [x] Synchronize StarterKit SPEC/CONSTITUTION/PLAN with governing documents; review counts, inventory, outcomes, gates, input, missing data and publication requirements against code/data.
+- [ ] Verify the actual hosted Arcade Play target after a hosting URL exists. Existing manual acceptance gaps remain open.
+
+
+### Complete U15 counters and enforce future intake — 2026-11-19
+
+- [x] Preserve both owner-supplied leaf zero-counter tables in the U15 source and playable data; update its question, hint, feedback, handoff and count to 14 recordings (42 overall).
+- [x] Require one status plus incident/follow-up transceiver, MAC and error recordings at each endpoint; reject every required omission and test all 42 removal cases.
+- [x] Record the owner's ask-and-wait intake rule in AGENTS.md, constitution 1.7.0, spec, plan, content contract, collection guide and both ARCADE copies.
+- [x] Preserve the command-specific U14 prompt and the simplified homepage; refresh current content/cache revisions.
+- [x] Verify 53/53 Node and 62/62 Safari checks on guided-v20, return preview to the game briefing and synchronize the final handoff documents.
+
+## Publishing handoff — 2026-11-19
+
+- [x] Add local Himeji Castle arena and quiz-only Fuji/red maple page artwork.
+- [x] Enlarge ninja, retain target clearance and make incident badge/capture notes opaque.
+- [x] Reconcile constitution 1.7.1, spec, plan, ARCADE and StarterKit mirrors.
+- [x] Rerun Node (53/53) and Safari (62/62); leave preview at game briefing.
+- [ ] Publisher: configure hosted URL and complete hosted/manual acceptance already listed above.

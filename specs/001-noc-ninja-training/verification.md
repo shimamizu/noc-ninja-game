@@ -1,3 +1,108 @@
+# Publishing handoff verification — 2026-11-19
+
+Final working tree: application `guided-v20`, content `guided-cases-u13-u14-u15-v3`,
+stylesheet `guided-v20-fuji2`, constitution 1.7.1. Reran `node tests/run.mjs`: 53/53
+passed. Safari developer runner: 62 discovered, 62 passed, 0 failed. Returned Safari
+to the game briefing. Dated visual reviews below cover both scenic backgrounds, ninja
+clearance and opaque notes/badge surfaces. Root/StarterKit constitution, spec, plan and
+ARCADE are synchronized. Publication manifest includes both scenic WebP files.
+No hosted deployment performed; actual hosted launch, dedicated narrow-layout,
+screen-reader, full manual playthrough and download-click acceptance remain pending.
+
+# Solid quiz surfaces — 2026-11-19
+
+Stylesheet `guided-v20-fuji2`: the capture notes/limits panel and incident badge now
+use the opaque panel color (#191d36). Safari desktop visual review confirmed both
+cover the landscape behind them. The notes background applies regardless of its
+expanded state. CSS-only change; no functional suite rerun.
+
+# Fuji quiz-page background — 2026-11-19
+
+Stylesheet `guided-v20-fuji1`: Safari desktop visual review confirmed the homepage
+retains its original background and starting a patrol reveals the Fuji/red maple
+landscape behind the quiz panels. Command output and question panels remain opaque,
+and the Himeji Castle arena and ninja spacing are preserved. The decorative fixed
+layer has no pointer interaction. Asset/CSS-only change; functional suites were not
+rerun. Narrow-screen and hosted checks remain pending. Constitution 1.7.0 continues
+to apply without changes.
+
+# Himeji Castle arena background — 2026-11-19
+
+Stylesheet `guided-v20-castle1` loads the local 1536×768 WebP castle illustration.
+Safari desktop visual inspection confirmed the castle loads inside the arena, the ninja
+and A/B/C targets remain distinct, instructions remain readable, and headroom below B
+is preserved. The previous grid/floor decoration is removed from this arena.
+This change is asset/CSS-only; no new tests or suite rerun were needed. Previous
+guided-v20 functional results below remain the latest suite run. Narrow-screen visual
+acceptance and hosted verification remain pending. ARCADE and spec/plan handoff copies
+include the new artwork and required upload asset. Constitution 1.7.0 remains applicable.
+
+# Ninja size and target clearance — 2026-11-19
+
+Stylesheet `guided-v20-ninja1`: enlarged the figure from 125×142 to 145×165 CSS pixels
+and increased the arena from 250 to 300 pixels tall. Safari desktop visual review confirms
+a larger ninja with clear space between his head and target B, aligned hand/shuriken artwork,
+and readable controls. Runtime logic and teaching content are unchanged. No new test suite
+was added for this CSS adjustment; the existing guided-v20 results below describe logic checks.
+Dedicated narrow-layout and broader manual acceptance remain pending.
+
+# Complete-capture admission and U15 follow-up — guided-v20, 2026-11-19
+
+**53/53 Node checks and 62/62 Safari browser checks pass.** All three cases now have
+14 original interface recordings, 42 total. U15's owner-supplied leaf error tables show
+zero in every counter in both samples; the question and handoff now compare those with
+the zero spine counters. Timestamps/reset history and repair outcome remain unknown.
+
+Validation rejects a missing required capture before play: status once, transceiver/MAC/errors
+twice per endpoint. One regression removes each of the 42 expected recordings in turn and
+checks rejection with a specific missing-capture message. Source-fidelity and browser checks
+confirm both new leaf tables. The intake workflow in AGENTS.md and constitution 1.7.0 requires
+asking the owner for missing expected data and waiting before adding a new quiz case.
+
+The current U14 question names `show interfaces ethernet XX mac detail` on each device;
+the homepage missing-recording sentence remains removed. The Safari preview was returned to
+`index.html` and showed the game briefing directly after the tests. No public deployment was
+performed. Existing manual layout, screen-reader, full manual playthrough and download-click
+acceptance remain pending. Earlier entries below are revision-specific history.
+
+# Publication entry and document reconciliation — 2026-11-19
+
+Safari navigation to `http://127.0.0.1:8001/` displayed “Master the link”,
+“3 incidents · 12 decisions” and “Start guided NOC patrol” directly. The player module
+entry graph contains no test imports or test-page redirects. `/tests/` is a separately
+addressed developer runner. No hosted Arcade launch has been tested; no hosted URL exists.
+
+Both ARCADE copies and the StarterKit/governing spec, plan and constitution now match
+U13–U15, forty recordings, twelve decisions and the current variance/conditional-repair lesson.
+Constitution version 1.6.0 records the owner-authorized expanded scope while retaining C1–C7.
+Earlier synthetic requirements are archived. Runtime code and source captures are unchanged
+by this documentation reconciliation; the guided-v19 test results below remain applicable.
+
+# Bias current teaching revision — guided-v19, 2026-11-19
+
+52/52 Node checks and 61/61 Safari browser checks pass. The U15 variance and conditional
+replacement questions now display the definition and calculation before answers:
+63.35 − 27.33 = 36.02 mA (highest minus lowest across lanes), compared with the operator’s
+usual 10–20 mA maximum spread. Tests verify that context appears before submission,
+that both replacement conditions remain required, and that original captures are preserved.
+No new manual layout or accessibility qualification is claimed for this wording update.
+
+# Current verification — guided-v18, 2026-11-19
+
+U13–U15: three incidents, twelve decisions, forty supplied interface recordings.
+`node tests/run.mjs`: **52 passed, 0 failed**. Safari `/tests/?v=guided-v18`:
+**61 discovered, 61 passed, 0 failed**. Tests cover all choices, shuffled progression,
+source fidelity, literal `show int` status, missing leaf error counters, separate handoffs,
+recommended-action gating and both conditional spine-replacement boundaries.
+
+Safari visually showed the updated briefing and U15 with its supplied ports/status,
+question, choices, targets and ninja. The 1280×720 WebP listing card was regenerated
+from its SVG and visually checked. U13/U14 evidence and questions remain unchanged.
+Dedicated narrow-layout, screen-reader, full manual playthrough and download-click
+acceptance remain pending; no hosted deployment was performed.
+
+The following records describe earlier revisions and do not certify the current build.
+
 # Verification record
 
 **Current revision:** noc-v3-2026-11-17 · **Constitution:** 1.3.0 · **Schema:** 2

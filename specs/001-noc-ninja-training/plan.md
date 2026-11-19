@@ -1,178 +1,129 @@
-> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+# NOC Ninja — Implementation and publishing plan
 
-# Implementation Plan: Mixed Incident Dojo
-
-**Updated:** 2026-11-17 · **Branch:** main
-**Governance:** Constitution 1.3.0 · **Content revision:** noc-v3-2026-11-17
-**Status:** Implementation and automated checks complete; manual browser acceptance pending.
-
-## Result and owner-authorized change
-
-Replace sequential diagnosis-specific lessons with six interleaved investigations. All three
-methods are taught once, and every incident has identical tools at both endpoints. The engineer
-selects a diagnosis category by aiming at a target, then explicitly throws a shuriken. The game
-derives the affected endpoint from evidence. The graphical dojo adds no reflex or timing test.
-
-This revises the initial workshop build at the owner's explicit request. Hardware, source review,
-static architecture, honest progress, safe retry and accessibility obligations remain unchanged.
-The subsequent owner-selected topology names are leaf-gw1 (7050SX3) and spine-gw1 (7808),
-using 2001:db8:51::1/126 and 2001:db8:51::2/126 respectively.
+Updated 2026-11-19. Application `guided-v20`; content `guided-cases-u13-u14-u15-v3`;
+constitution 1.7.1. This describes the implemented architecture and remaining publication checks.
+See [spec.md](spec.md), [tasks.md](tasks.md) and [verification.md](verification.md).
+The previous simulation plan is [archived](history/plan-before-guided-v19-reconciliation.md).
 
 ## Architecture
 
-Use native HTML/CSS/ES modules and editable JSON. No framework, install/build step, backend,
-external assets, persistence, live device connection or runtime AI. Serve through localhost HTTP.
-
-| Module | Responsibility |
+| File | Responsibility |
 | --- | --- |
-| index.html / main.js | Shell, load boundary, dispatch, live announcements, dialog and focus |
-| engine/content.js | Schema 2, source/revision, topology, units/limits, uniform-tool and domain validation |
-| engine/rules.js | Pure optical, counter and history findings at both endpoints; exactly one diagnosis |
-| engine/state.js | Aim/inspect, explicit submit, attempts, assistance, safe retry and six-incident progression |
-| engine/feedback.js | Explanations from computed evidence, specific to the selected category |
-| ui/render.js / ui/controls.js | Semantic native inputs, graphical arena, console and responsive display |
-| style.css | Night dojo, targets, shuriken animation, gauges and reduced-motion alternative |
-| data/levels.json | Three neutral groups, six mixed incidents, source-backed authored observations |
-| tests/ | Independent rule, content and state assertions; Node and browser runners |
+| `index.html` | Public player entry; mounts the app, styles, accessible announcements and restart dialog |
+| `main.js` | Loads/validates cases, dispatches actions, manages focus and downloads plain-text handoffs |
+| `data/cases.json` | U13–U15: 42 captures, 12 decisions, inventory, teaching context, sources, limits and outcomes |
+| `data/optics-reference.yaml` | Authoring reference only; not fetched or used to grade |
+| `engine/state.js` | Fisher–Yates shuffling of session arrays, stable identities and guarded restart |
+| `engine/cases.js` | Library validation, frozen source data, progression, reviewed-answer grading and handoff generation |
+| `engine/investigation.js` | Finite four-command catalog, endpoint/command matching, capture lookup, grouped readings, missing/locked states and alias display |
+| `ui/patrol.js` | Briefing, compact command workbench, pre-answer teaching context, questions, outcome review and summary |
+| `ui/aim.js` | Pointer and keyboard pickup/move/drop, circular hit testing, cancellation and decorative flight |
+| `ui/render.js`, `ui/controls.js` | Rendering, navigation, native command selectors and control bindings |
+| `style.css`, `assets/` | Responsive layout; 145×165 ninja in a 300px arena with target clearance and a local Himeji Castle twilight background; quiz-only Fuji/red maple page layer; separate Arcade listing card |
+| `tests/run.mjs` | Developer Node test runner |
+| `tests/index.html` | Separately addressed developer browser test page; never part of the public entry graph |
 
-The retained `levels` container is an authoring grouping, not a diagnosis progression. One briefing
-leads directly through six challenges to a final summary. Do not introduce an intermediate lesson
-view or use group identity to select a rule. Choice identities name categories, never correctness.
+## Loading, validation and sessions
 
-## Evaluation and data flow
+`index.html` imports `main.js`; the loader fetches the relative versioned `data/cases.json`.
+Schema version 1 requires unique cases/evidence/questions, consistent content revisions,
+case-local source paths, two endpoints, complete required capture sets at each end and exactly
+one correct choice among three. Optional question context must be nonempty. Validate literal
+command host/port/kind, observation uniqueness, capture provenance and allowed outcome status.
+Require literal status once and optics/MAC/errors twice per endpoint. Validation rejects any
+missing required command/sample with its case, endpoint and port. The author must ask the owner
+for omitted outputs and wait before publishing the case. Optional observations may still resolve
+to missing; this is not a bypass of the admission gate.
 
-1. Load and validate the whole document before starting. Review metadata must match its revision.
-2. Every incident contains `observations.light`, `observations.counters`, and `observations.history`
-   for both interfaces, plus the same five display tools at both switches.
-3. Compute all six findings. Check endpoint identities, window alignment and current states across
-   tools. Zero or multiple supported findings are content errors.
-4. Match only the selected category to the computed condition. Feedback identifies the receiver.
-5. Only explicit Throw submits. Evaluate and expose feedback/Next immediately; decorative motion
-   has no callback or timer that can affect state. Reduced motion hides the projectile.
-6. A wrong throw retains the incident. A correct throw completes once. Explicit Next moves onward.
+Successful loading freezes the library, copies/shuffles scenario/question/answer arrays and
+enters the briefing. Stable IDs govern grading and progress. Evidence and source values remain
+unchanged. Failed loading or validation enters a nonplayable content-error view. No fallback.
+A confirmed restart creates a new shuffled session; cancellation retains existing state.
 
-## Visual and interaction design
+## Investigation, teaching and outcomes
 
-A night dojo with inline vector ninja, moon, gate and three targets sits beside the investigation
-console. Clicking/tapping a target or using native radio arrows aims; the separate Throw button
-commits the answer. A projectile moves toward the selected target; a static impact mark and text
-carry the result. No lives, countdowns, points or aim precision.
+Selection of an endpoint and one of four commands shows all available incident/follow-up
+readings immediately. Capture requests and viewed evidence are tracked separately from answers.
+Original literal output remains in the evidence source and data. Display expansion is limited
+to the reviewed U14 `senz` alias; U15 `show int` is accepted as captured with endpoint validation.
 
-Endpoint buttons preserve the selected diagnostic tool. Tool buttons offer Interface now, Port status, Optics,
-Error snapshots and MAC / history in a fixed order on every incident. Optical gauges supplement
-numeric dBm rows; counter pairs remain side by side; static history lists the initial state and
-reports. Terminal text uses textContent, labeled scrolling, and no HTML interpretation.
+All three cases have 14 recordings each. U15 includes the owner-supplied pair of zero leaf
+error tables, with unknown capture times/reset baseline. No after-repair
+recordings are supplied. Display explicit missing states; gate any future after-repair output
+until outcome review. Available-evidence coverage controls completion, not a fixed panel count.
 
-## Constitution check
+U15's variance and second-replacement questions include context rendered before choices:
+highest minus lowest is 63.35 − 27.33 = 36.02 mA, compared with the operator's usual 10–20 mA
+maximum range between lanes. Keep the explanation valid regardless of question order.
+The reviewed answer requires leaf replacement first, then continued down link AND persistently
+high bias current variance between lanes before considering spine replacement. This is case
+reasoning, not a new numeric classifier or an automatic repair action.
 
-| Principle | Design / evidence |
-| --- | --- |
-| C1 Technical truth | Independent expectations, source-to-simulation review, all-method evaluation and content rejection |
-| C2 Decision learning | Unknown category per incident, equal evidence access, category targets, reasoned feedback |
-| C3 Honest progress | Explicit submit/Next, no penalties, unique completion, separate assistance |
-| C4 Access | Native radios/buttons, visible focus, live text, no motion dependency; manual checks pending |
-| C5 Determinism | Fixed interleaved cases and pure rules; static local assets |
-| C6 Separation | JSON content, independent domain engine, renderer and session state |
-| C7 Demonstrated done | Automated report and explicit manual gaps in verification.md |
+Every decision must be correct and every available evidence item viewed before reveal/export.
+U13/U14 show confirmed-recovery reports; U15 shows recommended-action diagnosis review. Handoffs
+include evidence, reasoning, attempts/hints, inventory and verification gaps; all three remain
+available at the end. No result claims unmeasured service health.
 
-## Implementation and validation sequence
+## Visual presentation
 
-1. Amend scope/specification and independent expected case table for the owner's correction.
-2. Replace single-method observations with complete mixed evidence and review all displayed values.
-3. Compute all diagnoses and reject contradictions/ambiguity; update content schema and tests.
-4. Replace lesson transitions with direct incident progression; preserve help/reset/attempt semantics.
-5. Build native target controls, deliberate throws, graphical dojo and console; retain motion fallback.
-6. Run rule/content/state checks, inspect source/display agreement, check syntax and whitespace.
-7. Open index.html through the local server; conduct full pointer/keyboard playthrough, laptop/narrow
-   layouts, reduced motion and announcements. Record unavailable checks as Not run.
+Stylesheet revision: `guided-v20-fuji2`. The 145×165 ninja and its hand control sit in a
+300px Himeji Castle arena with clearance below the answer targets. The fixed Fuji/red maple
+page layer is scoped to quiz incidents through `.compact-patrol`, so the homepage keeps
+its original appearance. Decorative layers cannot intercept input. Capture notes/limits
+(including expanded notes) and the incident badge use opaque `#191d36` backgrounds.
+Both scenic WebP assets are local files listed in the publishing manifest.
 
-## Traceability
+## Local verification
 
-FR-001–008 → rules/content/data; FR-009–015 → feedback/state; FR-016–019 → render/controls/styles;
-FR-020–023 → review gate, evidence package, README and verification. AC1–AC24 and SC-001–SC-008
-remain explicit in spec.md and verification.md. Historical T001–T042 describe the original build;
-new tasks T043 onward cover this replacement behavior and current validation.
+From the repository root:
 
-## Full interface realism update
+```sh
+node tests/run.mjs
+python3 -m http.server 8001 --bind 127.0.0.1
+```
 
-Both current and earlier interface views use complete platform-specific samples rather than
-reduced excerpts. Preserve the supplied prompt, peer description, MTU/MRU, uni-link and
-counter-clear differences. Populate all background fields and reconcile uptime/downtime,
-link-change totals and traffic/error counters with the complete incident timeline. Keep generated
-traffic averages distinct from the counter interval. No extra fault category or scoring path is
-introduced. Review U6 and run `tests/interface-output.test.js` through the existing test runner.
-FR-024 / AC23 cover completeness and consistency; source and browser limitations remain explicit.
+Player preview: `http://127.0.0.1:8001/index.html` (or the server root).
+Developer browser checks: `http://127.0.0.1:8001/tests/`.
+Keep these URLs distinct; the test page is not an intermediate player screen.
 
-## Error-table and MAC-detail update
+Publishing handoff rerun (2026-11-19), guided-v20 with stylesheet guided-v20-fuji2: **53/53 Node and 62/62 Safari checks pass**.
+Coverage includes source fidelity, supported/distractor choices, missing captures, teaching
+context before answers, shuffled grading, three-case progression, gates, reports and restart.
+Shared aiming tests and Safari controls cover pointer/keyboard behavior and reduced motion.
+Pending: dedicated narrow-layout, screen-reader, full manual playthrough and actual download-click
+acceptance. Browser DOM checks are not a claim that those manual acceptance tasks are complete.
 
-Use explicit earlier/later counters-errors tables with FCS, Align, Symbol, Rx, Runts, Giants and
-Tx; validate the pair reference and FCS mapping. Current MAC detail and every archived snapshot
-retain system time and four complete state/fault rows. Render the authored timeline outside the
-CLI text. Add the supplied Port status command consistently on both switches, and preserve current
-and expandable earlier full interface detail. U7 records the supplied port mismatch and the
-unchanged FCS versus rising Rx/runts example; no new causal conclusion or grading rule is inferred.
+## Publication handoff
 
-## Shared event timeline implementation
+1. Use root `ARCADE.md` as the canonical listing metadata; keep `StarterKit/ARCADE.md` synced.
+   Share the repository, current documentation and evidence with the publisher. The StarterKit
+   directory by itself is not the application.
+2. Serve the repository root on an HTTP(S) static host, preserving relative paths and revision
+   queries. Configure the Arcade Play destination to the hosted `index.html`, or host root with
+   that default document. Never use `/tests/`, `/tests/index.html` or `/StarterKit/` as Play.
+3. Deploy `index.html`, `style.css`, `main.js`, `engine/`, `ui/`, `data/cases.json`,
+   `assets/ninja.png`, `assets/shuriken.png`, `assets/himeji-castle.webp`, `assets/fuji-maple.webp` and `LICENSE.md`. Supply the root metadata and
+   `assets/arcade-card.webp` for the listing. No package installation, build, backend or secrets.
+4. The public playable subset does not require `tests/` or source documentation. Keep them in
+   the source handoff; omit them from the public upload if a player-only deployment is wanted.
+   If tests are hosted, their explicit developer URL still does not enter the game flow.
+5. On the actual hosted URL, verify the Play target, briefing, asset MIME types, all three
+   cases, input, missing-output states, outcome gates and handoff downloads. Invalidate stale
+   cached files on updates. Repeat appropriate manual acceptance checks.
+6. Fill `runtime.hosted_url` in both ARCADE files only when the real URL is known. No Arcade
+   upload or hosted validation is part of this documentation update; the field remains blank.
 
-Store each round’s `linkTimeline` once and reconcile both endpoints against it in
-`engine/timeline.js`, called by the content gate. Validate command timestamps, link state,
-Up/Down durations, MAC row ages and cumulative transition increments. The evaluator accepts
-identical paired flap histories as one diagnosis and feedback names both endpoints without
-doubling the event count. `tests/link-timeline.test.js` covers synchronized histories and
-rejects contradictory ages, clocks, states and independent faults. Raw source captures remain
-evidence; their unrelated historical uptimes are not copied into a simulated shared link.
+## Extension and consistency rules
 
-U8 refines the shared timeline: reconcile Interface State across endpoints, retain independent
-PHY/local-fault/remote-fault clocks, and validate each row over time. Keep full-interface
-`linkStatusChanges` separate from MAC change totals. Optical cases model the directional
-fault observations in `evidence/paired-down-link.md`; hardware and routed-port scope are unchanged.
+Inventory the required 14 captures before quiz admission. Ask the owner for any missing
+endpoint/port/command/sample and wait; draft outside the playable library in the meantime.
+Add only complete supplied capture sets with source-reviewed choices and honest outcome status. Preserve
+unknown timing and inventory; never borrow line cards or optic variants across cases.
+Retain the four-command mechanic unless the owner approves a scope change. New data shapes
+require validation and relevant checks. Keep all listing counts, card text, README, StarterKit
+summaries, spec, plan, constitution and verification records in sync.
 
-For the owner’s flap display convention, align cleared Remote Fault ages with each shared
-interface event and keep supporting fault changes consistent. Use separate authored transceiver
-profiles for each endpoint, derived from the supplied working examples. Validate normal values
-against the supplied warning ranges and preserve intended optical faults and diagnoses.
-
-## v3 implementation
-
-`ui/aim.js` handles pointer capture, broad target hit testing, drag preview, cancellation and
-keyboard aim/throw. It delegates selection/submission to the existing state engine; DOM preview
-does not grade. `ui/render.js` uses local transparent assets and adds a post-diagnosis dispatch
-panel. `engine/dispatch.js` derives the destination from measured Tx, FCS deltas and current or
-observed historical Remote Fault states. It rejects missing/conflicting destinations; there is
-no stored correct optic ID. `engine/rules.js` recognizes corroborated flapping and a bad Tx/Rx
-path. `engine/content.js` validates four Tx readings and agreement with displayed power values.
-See `evidence/technician-runbook.md` for independent case outcomes. Verify pure rules, mouse
-and touch dragging, cancellation, keyboard equivalents, reduced motion and all six destinations.
-# Guided patrol extension — 2026-11-18
-
-`engine/coaching.js` derives measured answer text from the existing `findings()` output and
-builds per-condition reasoning checks; authored condition explanations live in `data/coaching.js`.
-It also computes both-end observation coverage and assembles handoffs from original command text,
-including paired counters and exposed historical snapshots. Source interpretation is bounded by
-`evidence/skill-adaptation.md`; existing content and evaluation remain authoritative.
-
-`engine/state.js` records mode, per-round evidence IDs, reasoning selections, check count and result.
-Guided Next requires diagnosis, eight checks and correct reasoning; arcade progression remains
-diagnosis-only. `ui/coaching.js` renders native radio groups, a notebook and report preview.
-Controls use delegated events and the existing focus/live-region system. `main.js` downloads a
-local text Blob only after the complete guided record exists. No backend or dependency is added.
-
-Automated coverage is shared by Node and browser test runners. Browser acceptance for the new UI
-is pending; the manual procedure and known verification limitations are recorded in the source
-adaptation review. C1/C5 retain the existing simulated evidence and offline runtime; C2/C3 add
-explicit reasoning with honest retries; C4 awaits browser/keyboard acceptance; C6 keeps derived
-answers separate from UI; C7 records acceptance gaps rather than claiming release completion.
-
-## Real-case implementation — 2026-11-18
-
-Use separate JSON, validator, state and rendering modules for the owner’s real captures. This
-avoids weakening the fixed synthetic deployment validator or fabricating histories to satisfy it.
-`data/real-cases.json` owns evidence, inventory, reviewed questions and outcomes.
-`engine/real-cases.js` owns validation, deterministic answer checks, progression and report text.
-`ui/real-cases.js` renders native controls and exact evidence; main loads both tracks concurrently
-and handles local downloads and accessibility announcements. Counts derive from case data.
-
-Review C1–C7: source-fidelity checks protect literal captures; source-reviewed answers keep grading
-within available evidence; attempts/hints and outcome confidence stay distinct; runtime remains
-offline and deterministic. Keyboard/visual acceptance is not yet demonstrated. Existing six-incident
-checks still pass. See the [integration record](evidence/real-case-integration.md) for remaining QA.
+C1–C7 review: source evidence and operator-scoped guidance support the curriculum; context precedes
+questions; retries/gates are honest; keyboard/reduced motion are implemented with manual checks
+still pending; runtime is static; content is separated from logic; public entry and documentation
+match the current build. Historical tasks and archived documents are not active requirements.

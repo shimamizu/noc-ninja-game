@@ -1,47 +1,32 @@
-# Content Loading and Review Contract
+# Guided patrol content contract
 
-**Updated:** 2026-11-17 · schemaVersion 2 · noc-v3-2026-11-17
+Current: guided-v20, `data/cases.json` schemaVersion 1, revision
+`guided-cases-u13-u14-u15-v3`, constitution 1.7.0. U13–U15 contain 42 recordings and 12 decisions.
 
-Resolve data/levels.json relative to the loader module. Check HTTP success and JSON parsing, then
-validate the entire document. Return deeply frozen content with no errors, or null content plus
-structured errors (code, path, optional levelId/roundId, message). Never start a partial curriculum.
+Load relative to the module, verify HTTP/JSON, then validate the whole library. Return frozen
+cases with no errors, or an empty set with an explanatory error. Never partially start or
+restore retired examples on failure.
 
-Validation requires:
+Require unique case/evidence/question/option IDs, matching revisions, local evidence sources,
+two endpoint identities, valid literal command targets/observations and reviewed explanations.
+Require **one incident status plus incident/follow-up optics, MAC and errors per endpoint**:
+14 original recordings. An omitted required capture fails validation with case, host, port,
+command kind and observation. Ask the owner for missing expected data and wait before adding
+the case to the quiz. Draft intake notes may stay outside the runtime library.
 
-1. Supported schema, nonempty revision, three neutral groups and two uniquely identified rounds each.
-2. Source records with exact locator/section/claims, explicit deployment applicability, and dated,
-   named reviews matching this revision. No pending/rejected/stale review is playable.
-3. Exact selected hardware, EOS architecture, corrected card/slot, ports, multi-agent mode and optic;
-   valid distinct IPv6 addresses in the same /126 subnet; correct link endpoints and medium.
-4. All 20 supplied optical limits, confirmed units, interpretation metadata and references preserved.
-5. A common all-method briefing, neutral incident identities, and no preselected condition/target key.
-6. Exactly one visible status, port-status, optics, counters and history tool at each endpoint; valid command/text/time,
-   identity, source and output-review references. All incidents expose the same tool set. Interface snapshots retain every supplied U6 field;
-   platform formats and background counters/ages are checked in source review and regression tests.
-7. Light/counter/history observations for both endpoints with valid output/source mappings and times.
-   All current states and window boundaries agree; finite readings and valid histories are required.
-8. Three unique category choices and ordered method/step/solution help with source references.
-9. Pure domain evaluation finds one supported endpoint/category or matching shared-link flapping histories; conflicting or missing
-   evidence disables grading. Labels and order do not choose the answer.
+Literal prompts must match host, interface and kind, including the captured `show int`
+abbreviation. Only the reviewed `senz` counters alias has display expansion; preserve its
+body and original source prompt. Do not substitute summaries for required literal recordings.
 
-Error categories include load-failed, invalid-json, invalid-schema, invalid-reference,
-unverified-content, inconsistent-evidence and ambiguous-answer. Explain errors without recording
-learner attempts. Reload reruns the full gate, starting fresh only on success. No bypass exists.
+Questions may have nonempty context shown before choices. Each has exactly three options
+and one correct choice, feedback, explanation, command hint and matching case source ID.
+Outcome type and uncertainty are explicit. U13/U14 are confirmed-recovery; U15 recommended-action.
 
-Machine checks cannot certify arbitrary CLI prose or establish vendor compatibility. Review the
-source-to-simulation mapping, all displayed values, hints and explanations before recording verified
-metadata. New revisions need reassessment of applicable reviews. The current mixed incident review
-records exact expected results and explicitly distinguishes user captures from authored faults.
+Optional recordings, including after-repair data, retain explicit provenance and unique keys.
+Missing optional observations resolve to Not captured without fabricated values or evidence
+credit. They do not bypass required admission or imply that a proposed repair has occurred.
+Unknown timing, reset history and inventory remain explicit. After-repair recordings stay
+locked until review completion. The optics YAML is authoring reference, not runtime grading.
 
-Error snapshots require a same-endpoint later `counter-snapshot` via pairedOutputId; both must use
-`counters errors`. The seven structured error fields are nonnegative integers and FCS equals the
-graded count. Full interface records remain supporting evidence. MAC snapshot IDs/times resolve
-to their endpoint and have all four complete rows. Missing pair references or FCS mismatches block
-play. Historical MAC records are separate outputs; their full text remains available in the UI.
-
-10. A valid `linkTimeline` reconciles both endpoints at every snapshot, including system clocks,
-    operational state, full-interface Up/Down age, MAC row ages and transition increments.
-    Reject missing timelines, mismatched endpoint histories or contradictory rendered values.
-
-11. Four structured Tx values must match the displayed transceiver Tx column. Compute U9
-    dispatch from evidence and require exactly one agreed destination for each playable case.
+See [data-model.md](../data-model.md), [spec.md](../spec.md), [plan.md](../plan.md) and the
+[capture collection guide](../capture-collection-guide.md). Prior contracts are archived in history.

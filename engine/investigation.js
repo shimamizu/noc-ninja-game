@@ -18,7 +18,7 @@ export function matchesCommand(text,endpoint,commandId,alias){
     const lines=text.split('\n').slice(1).filter(line=>line.trim());
     return lines.length===2&&lines[0].trim().split(/\s+/).join(' ')==='Port FCS Align Symbol Rx Runts Giants Tx'&&lines[1].trim().split(/\s+/)[0]===endpoint.port&&/^\S+(?:\s+\d+){7}$/.test(lines[1].trim());
   }
-  const match=text?.split('\n')[0].trim().match(/^([^#]+)#\s*show\s+interfaces\s+(?:ethernet\s*)?(\d+(?:\/\d+)*)\s+(status|transceiver|mac\s+detail|counters\s+errors)\s*$/i);
+  const match=text?.split('\n')[0].trim().match(/^([^#]+)#\s*show\s+(?:interfaces|int)\s+(?:ethernet\s*)?(\d+(?:\/\d+)*)\s+(status|transceiver|mac\s+detail|counters\s+errors)\s*$/i);
   if(!match)return false;
   const host=match[1].replace(/\([^)]*\)$/,'');
   const suffix={status:'status',optics:'transceiver',mac:'mac detail',errors:'counters errors'}[commandId];

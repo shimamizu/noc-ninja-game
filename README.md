@@ -1,8 +1,8 @@
 # NOC Ninja — Guided NOC Patrol
 
-One guided patrol teaches link troubleshooting through two incident captures and eight
+One guided patrol teaches link troubleshooting through three incident captures and twelve
 reasoning decisions. Inspect both switches, explain the evidence, prepare a handoff and compare
-your reasoning with the reported intervention. Only supplied incident readings are used.
+your reasoning with the diagnosis and any reported intervention. Only supplied incident readings are used.
 There is no separate incident mode, arcade mode or generated telemetry.
 
 ## Run
@@ -13,7 +13,8 @@ No install or build step is needed:
 python3 -m http.server 8001 --bind 127.0.0.1
 ```
 
-Open [the game in Safari](http://127.0.0.1:8001/). Reload an existing tab to pick up the updated
+Open [the game in Safari](http://127.0.0.1:8001/). The root URL serves `index.html` and
+opens the game briefing directly. `/tests/` is a separate developer page, not part of player entry. Reload an existing tab to pick up the updated
 patrol; the changed entry modules and stylesheet have revisioned URLs to avoid older cached UI.
 Native modules and JSON require HTTP, not a file URL. Stop the server with Ctrl+C.
 
@@ -36,7 +37,11 @@ API key, external fonts or online grading service. Reload clears in-memory progr
    missing verification stays missing in capture notes. Download the learning handoff, including command requests
    and the case's missing-capture list,
    or continue. Device details, investigation guidance and capture notes expand on demand;
-   the compact desktop layout keeps the question and ninja beside the readings. The final summary retains the case handoff download.
+   the compact desktop layout keeps the question and ninja beside the readings. The ninja arena
+   uses a local Himeji Castle-inspired twilight backdrop. During quiz incidents, Mount Fuji
+   and red maple branches fill the page behind the panels; the homepage stays unchanged.
+   Artwork provenance and prompts are in
+   [assets/README.md](assets/README.md). The final summary retains the case handoff download.
 
 Scenario order, question order within each scenario, and answer positions are shuffled for
 each new patrol. The order stays fixed while investigating, using hints or retrying. Confirming
@@ -47,7 +52,8 @@ not a fabricated status reading. Questions and hints must not require ruling it 
 
 The patrol teaches directionality, per-channel optics, Local/Remote Fault interpretation,
 counter provenance, historical versus current instability, confidence and post-repair verification.
-A missing second sample stays missing. No invented alarm thresholds, interface output, readings,
+Required command samples must be collected before a case becomes playable; optional
+post-repair observations remain unknown until supplied. No invented alarm thresholds, interface output, readings,
 flap histories or recovery measurements are used to complete a case.
 
 For keyboard accessibility, focus the shuriken: Space picks it up, arrow keys move between
@@ -68,9 +74,18 @@ The second case links leaf-gw2 (Arista DCS-7050SX3-48YC8-R, Et55/1) to spine-gw1
 Its first error capture displays the full counters-errors command in the game and handoff;
 the original shortcut prompt remains in the source record. All 14 readings are preserved. The line card for this incident was not supplied.
 
+The third case links spine-gw1 (Arista DCS-7508N, Et8/10/1) to leaf-gw2
+(Arista DCS-7050SX3-48YC8-R, Et53/1), both on EOS 4.31.10M with ColorChip
+C100Q020CWDM403B optics. Its 14 supplied interface recordings preserve spine Rx
+-13.87 dBm, leaf Remote Fault True and the large bias current variance between lanes on spine-gw1.
+Replace the leaf optic first. Only if the link remains down **and** the bias current variance between lanes on spine-gw1
+remains high after that swap could you consider replacing the spine optic. Both leaf error-counter samples supplied in the follow-up are zero, as are both spine samples.
+Line cards and repair results were not supplied. The operator normally sees at most about
+10–20 mA between lanes in this environment; 63.35 − 27.33 = 36.02 mA is a very large spread.
+
 The supplied [optics reference YAML](data/optics-reference.yaml) stores model-specific
 warning/alarm thresholds and DOM support information, including the ColorChip
-C100Q020CWDM403H used in this case. Its original comments, values and shared profiles
+C100Q020CWDM403H used in U13/U14. Its original comments, values and shared profiles
 (YAML anchors/aliases) are preserved. This is an authoring reference; the game does not
 load it or apply its thresholds to scoring. Reference specifications are separate from
 recorded incident measurements, and have not been independently verified against datasheets.
@@ -79,6 +94,7 @@ recorded incident measurements, and have not been independently verified against
 | --- | --- | --- |
 | [U13: 100G spine/DMZ down](specs/001-noc-ninja-training/evidence/100g-spine-dmz-remote-fault-case.md) | PHY versus interface state, paired fault direction, four low Rx channels and repeated MAC observations | Spine optic replacement confirmed to have fixed the link; numerical post-repair captures not supplied |
 | [U14: 100G leaf lane 4 errors](specs/001-noc-ninja-training/evidence/100g-leaf-lane4-errors-case.md) | Increasing leaf errors, low lane 4 Rx, paired fault-count increases despite False current flags | Spine Et4/28/1 optic replacement confirmed to have fixed the problem; numerical post-repair captures not supplied |
+| [U15: 100G leaf-first repair](specs/001-noc-ninja-training/evidence/100g-leaf-first-conditional-spine-case.md) | Low spine Rx, leaf Remote Fault, bias current variance between lanes and conditional escalation | Leaf Et53/1 replacement recommended first; spine Et8/10/1 only if both down link and high bias current variance between lanes on spine-gw1 persist afterward; no repair outcome supplied |
 
 The evidence-first teaching approach was informed by the
 [Interface and Link Troubleshooting skill](https://infraagentskills.ai/skills/interface-link-troubleshooting/).
@@ -89,7 +105,7 @@ The recorded-command workflow also uses the phase structure of the
 [Arista EOS MCP interface-health skill](https://github.com/aristanetworks/eos-mcp-server/blob/main/skills/check-interface-health/SKILL.md)
 as an authoring reference. We reviewed and corrected its optical guidance: 0 dBm is 1 mW,
 not absent light, and generic optical/temperature cutoffs are not universal limits. No MCP
-server is installed or used by the game. All eight reasoning hints now include evidence-request
+server is installed or used by the game. All twelve reasoning hints now include evidence-request
 guidance; command selection does not execute a shell or connect to a switch.
 
 See the [per-case capture collection guide](specs/001-noc-ninja-training/capture-collection-guide.md)
@@ -100,8 +116,14 @@ from the playable library; their source documents remain historical records only
 
 ## Adding future incidents
 
-Add actual captures and documented follow-up to an evidence source, then add a reviewed case to
-`data/cases.json`. Do not generate telemetry to fill gaps. The current schema supports paired
+Before adding a new case, inventory the expected outputs at both endpoints: status once;
+transceiver, mac detail and counters errors twice each (incident and follow-up). If any are
+missing, **ask the owner for the exact host/port/command/sample and wait before adding the
+case to the quiz**. Draft source notes may be prepared outside the playable library.
+The validator requires all 14 original interface recordings and rejects incomplete sets.
+
+Once complete, add the supplied captures and documented follow-up to an evidence source,
+then add the reviewed case to `data/cases.json`. Do not generate telemetry to fill gaps. The current schema supports paired
 10G/100G optical-link cases with inventory, per-endpoint optics/counters/MAC detail, an optional supplied automated
 assessment, reviewed choices and an outcome with confidence limits. U13 supports raw status,
 optics, MAC and errors at incident/follow-up observations, explicit unknown inventory, and a
@@ -137,23 +159,20 @@ that authoring process is not presented to learners.
 node tests/run.mjs
 ```
 
-The Node suite checks all eight answers and distractors, malformed content, retries, hints,
-evidence/outcome/report gates, progression, reset, exact source fidelity, U13/U14 raw replay and removal of retired
+The Node suite checks all twelve answers and distractors, malformed content, retries, hints,
+evidence/outcome/report gates, progression, reset, exact source fidelity, U13/U14/U15 raw replay and removal of retired
 runtime paths. Run [browser checks](http://127.0.0.1:8001/tests/) in Safari for the same case and aiming suites
 plus DOM rendering/control checks. Browser checks do not replace visual/accessibility review.
 
-Current result (2026-11-19, guided-v17): **48/48 Node checks and 56/56 Safari browser checks pass**.
-Shuffle checks cover stable sessions, correct A/B/C mappings, both-case completion and restart.
-Original readings and correct-answer identities remain unchanged.
-The compact investigation view was visually checked in the existing Safari tab: both MAC
-readings, question, answer targets and ninja fit together at the current window size.
-Checks cover automatic command changes, grouped readings, evidence coverage and repair gating.
-Safari verified the two-case opening screen (2 incidents / 8 decisions), both-case progression and handoffs. Earlier desktop
-inspection covered the workbench, command menu, missing-output feedback and answer targets. Browser tests cover native-select events, request history,
-literal output rendering, missing/locked states and shuriken keyboard submission. Dedicated narrow-layout, screen-reader, full manual
-playthrough and download-click acceptance remain pending. Historical results for the
-retired six-incident game do not certify this version. See
-[current scope and acceptance](specs/001-noc-ninja-training/guided-patrol.md).
+Current result (2026-11-19, guided-v20): **53/53 Node checks and 62/62 Safari browser checks pass**. Checks cover all three cases, shuffled grading and progression,
+source fidelity, both zero leaf-counter readings, required-capture rejection, leaf-first sequencing, both second-replacement
+conditions, diagnosis/outcome gating, handoffs and restart. Safari also showed the updated
+3-incident/12-decision briefing and the third case with readable evidence, choices and targets
+on guided-v18. Guided-v19 DOM checks verify the new teaching context before answers; a fresh
+Safari root launch confirms that players reach the briefing directly.
+Dedicated narrow-layout, screen-reader, full manual playthrough and download-click acceptance
+remain pending. See [current scope and acceptance](specs/001-noc-ninja-training/guided-patrol.md).
+
 
 
 Counter-history guidance follows the supplied environment: interface traffic/error counter clears
@@ -170,3 +189,10 @@ Compact workbench update: command selections display all available readings auto
 Its [StarterKit copy](StarterKit/ARCADE.md) has matching metadata. Publish the repository root;
 the StarterKit folder alone is documentation, not the app. The current listing image is
 [assets/arcade-card.webp](assets/arcade-card.webp). No hosted URL has been configured or verified.
+
+
+Current governing documents: [constitution 1.7.1](.specify/memory/constitution.md),
+[specification](specs/001-noc-ninja-training/spec.md) and
+[implementation/publishing plan](specs/001-noc-ninja-training/plan.md).
+The StarterKit SPEC, CONSTITUTION and PLAN are synchronized handoff copies. Superseded
+simulation requirements are archived under `specs/001-noc-ninja-training/history/`.

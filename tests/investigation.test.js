@@ -1,7 +1,7 @@
 import {test,assert,equal} from './harness.js';
-import {evidenceText,resolveCapture,captureManifest,commands,matchesCommand} from '../engine/investigation.js?v=guided-v17';
-import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v17';
-import {validateCases,caseReport} from '../engine/cases.js?v=guided-v17';
+import {evidenceText,resolveCapture,captureManifest,commands,matchesCommand} from '../engine/investigation.js?v=guided-v20';
+import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v20';
+import {validateCases,caseReport} from '../engine/cases.js?v=guided-v20';
 
 const initialState=content=>makeState(content,()=>0.999999);
 const transition=(state,event,content)=>step(state,event,content,()=>0.999999);
@@ -108,8 +108,8 @@ export function investigationTests(data){
     s=go(go(s,'restart'),'confirm-restart');equal(s,initialState(content));
     equal(s.patrol.activeCapture,null);equal(s.patrol.captureSelection,request('spine','status'));equal(s.patrol.progress.U13.captureRequests,[]);
   });
-  test('Two-case patrol preserves progression, completion gates and separate handoffs',()=>{
-    equal(content.cases.map(c=>c.id),['U13','U14']);
+  test('Three-case patrol preserves progression, completion gates and separate handoffs',()=>{
+    equal(content.cases.map(c=>c.id),['U13','U14','U15']);
     let s=begin();
     for(const incident of content.cases){
       equal(content.cases[s.patrol.caseIndex].id,incident.id);
@@ -131,6 +131,87 @@ export function investigationTests(data){
       s=go(s,'next');
     }
     equal(s.view,'session-summary');assert(Object.values(s.patrol.progress).every(p=>p.completed));
+  });
+  test('U15 retains its supplied inventory, fourteen recordings and paired zero leaf counters',()=>{
+    const c=content.cases[2];equal(c.id,'U15');equal(c.evidence.length,14);
+    equal(c.endpoints.map(e=>[e.name,e.port,e.model,e.optic,e.linecard]),[
+      ['spine-gw1','Et8/10/1','Arista DCS-7508N','C100Q020CWDM403B',null],
+      ['leaf-gw2','Et53/1','Arista DCS-7050SX3-48YC8-R','C100Q020CWDM403B',null]
+    ]);
+    equal(captureManifest(c).filter(r=>r.status==='captured').length,14);
+    for(const observationId of ['incident','monitoring']){
+      const r=resolveCapture(c,request('leaf','errors',observationId),true);
+      equal(r.status,'captured');
+      equal(r.evidence.text.trim().split('\n').at(-1).trim().split(/\s+/),['Et53/1','0','0','0','0','0','0','0']);
+    }
+    equal(resolveCapture(c,request('leaf','errors','after-repair'),true).status,'missing');
+    for(const e of c.evidence){equal(resolveCapture(c,request(e.endpointId,e.kind,e.observationId)).status,'captured');}
+    assert(c.questions[2].options.find(o=>o.correct).text.includes('all error counters stay zero'));
+  });
+  test('Playable cases reject every missing expected capture before admission',()=>{
+    for(const incident of data.cases)for(const endpoint of incident.endpoints){
+      for(const kind of ['status','optics','mac','errors'])for(const observationId of kind==='status'?['incident']:['incident','monitoring']){
+        const d=structuredClone(data),c=d.cases.find(c=>c.id===incident.id);
+        c.evidence=c.evidence.filter(e=>!(e.endpointId===endpoint.id&&e.kind===kind&&e.observationId===observationId));
+        const result=validateCases(d);equal(result.cases,[]);
+        assert(result.errors.some(e=>e.message.includes('Missing required capture')&&e.message.includes(endpoint.name)&&e.message.includes(kind)&&e.message.includes(observationId)));
+      }
+    }
+  });
+  test('U15 accepts the captured show int abbreviation without relaxing endpoint or command matching',()=>{
+    const c=content.cases[2],e=c.evidence.find(e=>e.id==='leaf-status'),leaf=c.endpoints[1];
+    assert(e.text.startsWith('leaf-gw2#show int ethernet 53/1 status'));
+    equal(evidenceText(c,e),e.text);assert(matchesCommand(e.text,leaf,'status'));
+    assert(!matchesCommand(e.text,c.endpoints[0],'status'));
+    assert(!matchesCommand(e.text,leaf,'errors'));
+    for(const replacement of ['show inventory','show interfacez','show int ethernet 55/1']){
+      const changed=e.text.replace(/show int ethernet 53\/1/,replacement);
+      assert(!matchesCommand(changed,leaf,'status'));
+    }
+  });
+  test('U15 teaches leaf-first replacement and both conditions for spine escalation without inventing recovery',()=>{
+    const c=content.cases[2],right=c.questions.map(q=>q.options.find(o=>o.correct));
+    equal(right.map(o=>o.id),['b','a','c','b']);
+    assert(right[0].text.includes('Replace leaf-gw2 Et53/1 first'));
+    assert(right[1].text.includes('36 mA of bias current variance between lanes'));
+    assert(right[3].text.includes('link remains down AND the bias current variance between lanes on spine-gw1 stays high after the leaf swap'));
+    const wrong=c.questions[3].options.filter(o=>!o.correct);
+    assert(wrong.some(o=>o.text.includes('even if the link has recovered')));
+    assert(wrong.some(o=>o.text.includes('even if the bias current variance between lanes has returned to normal')));
+    equal(c.outcome.status,'recommended-action');equal(c.commandCaptures,[]);
+    let s=transition(initialState({cases:[c]}),{type:'begin-guided'},{cases:[c]});
+    const go=event=>{s=transition(s,event,{cases:[c]});};
+    equal(caseReport(c,s.patrol.progress.U15),null);
+    for(const e of c.evidence)go({type:'inspect',outputId:e.id});
+    for(const q of c.questions){go({type:'select',answerId:q.options.find(o=>o.correct).id});go({type:'submit'});go({type:'question-next'});}
+    go({type:'reveal'});assert(s.patrol.progress.U15.completed);
+    const report=caseReport(c,s.patrol.progress.U15);
+    assert(report.includes('DIAGNOSIS REVIEW'));assert(!report.includes('REPORTED OUTCOME'));
+    assert(report.includes('not a completed repair or confirmed recovery'));
+    for(const id of ['leaf-errors','leaf-errors-followup'])assert(report.includes(c.evidence.find(e=>e.id===id).text));
+    assert(!report.includes('leaf error counters are unknown'));
+    for(const e of c.endpoints)for(const cmd of commands)equal(resolveCapture(c,request(e.id,cmd.id,'after-repair'),true).status,'missing');
+  });
+  test('U15 preserves low spine Rx, stable per-lane bias and unchanged paired MAC histories',()=>{
+    const c=content.cases[2],e=id=>c.evidence.find(e=>e.id===id).text;
+    for(const id of ['spine-optics','spine-optics-followup'])assert(e(id).includes('-13.87'));
+    for(const id of ['leaf-optics','leaf-optics-followup'])assert(e(id).includes('-5.36'));
+    assert(e('spine-optics').includes('63.35'));assert(e('spine-optics').includes('27.33'));
+    assert(e('spine-optics-followup').includes('63.39'));assert(e('spine-optics-followup').includes('27.30'));
+    for(const endpoint of ['spine','leaf']){
+      const states=t=>t.split('\n').filter(line=>/PHY State|Interface State|MAC Rx/.test(line)).map(line=>line.trim().split(/\s{2,}/).slice(0,3));
+      equal(states(e(endpoint+'-mac')),states(e(endpoint+'-mac-followup')));
+    }
+    assert(/MAC Rx Local Fault\s+True/.test(e('spine-mac')));
+    assert(/MAC Rx Remote Fault\s+True/.test(e('leaf-mac')));
+    assert(c.questions[1].explanation.includes('36.02 and 36.09 mA'));
+    for(const q of [c.questions[1],c.questions[3]]){
+      assert(q.context.includes('highest reading minus the lowest'));
+      assert(q.context.includes('63.35 − 27.33 = 36.02 mA'));
+      assert(q.context.includes('10–20 mA'));
+    }
+    assert(!/spine bias/i.test(JSON.stringify(c)));
+    assert(c.outcome.limits.includes('operator guidance for this environment'));
   });
   test('U14 preserves lane 4, counter deltas, false flags and original shortcut prompt',()=>{
     const c=content.cases[1],e=id=>c.evidence.find(e=>e.id===id);

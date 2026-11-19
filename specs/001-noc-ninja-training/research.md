@@ -1,4 +1,13 @@
-# Current research status — 2026-11-17
+# Current research scope — 2026-11-19
+
+Guided-v20 uses only supplied U13–U15 evidence, 42 recordings, 12 reviewed decisions and
+constitution 1.7.0. The current [spec](spec.md), [plan](plan.md) and [data model](data-model.md)
+govern. U15 leaf zero-counter samples complete its required capture set. Future cases must
+wait for the owner to supply any expected missing outputs before entering the quiz.
+Operator-scoped variance guidance is documented in the U15 source; no universal threshold
+classifier is active. The remainder is historical research, not current runtime requirements.
+
+# Historical research status — 2026-11-17
 
 The owner-requested mixed-incident redesign is governed by Constitution 1.1.0, current spec.md,
 plan.md and schema-2 contracts. All three diagnostic methods now run for every incident; there

@@ -1,5 +1,5 @@
 // Supplied captures support bounded evidence reasoning; missing telemetry is never generated.
-import {evidenceText,commandReadings,validSelection,defaultSelection,resolveCapture,captureKey,captureNeedsReport,statusLabels,matchesCommand} from './investigation.js?v=guided-v17';
+import {evidenceText,commandReadings,validSelection,defaultSelection,resolveCapture,captureKey,captureNeedsReport,statusLabels,matchesCommand} from './investigation.js?v=guided-v20';
 const nonempty=v=>typeof v==='string'&&v.trim().length>0;
 const unique=values=>new Set(values).size===values.length;
 const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};
@@ -15,7 +15,13 @@ export function validateCases(data){
       require(['10G','100G'].includes(c.speed)&&c.endpoints?.length===2&&unique(c.endpoints.map(e=>e.id)),'Two distinct endpoints and link speed are required.');
       for(const e of c.endpoints){require([e.id,e.name,e.port].every(nonempty),'Incomplete endpoint identity.');require([e.model,e.eos,e.manufacturer,e.optic,e.linecard??null].every(v=>v===null||nonempty(v)),'Inventory fields must be captured text or explicitly unknown.');}
       require(Array.isArray(c.evidence)&&unique(c.evidence.map(e=>e.id)),'Evidence IDs must be unique.');
-      for(const endpoint of c.endpoints)for(const kind of ['optics','errors','mac'])require(c.evidence.filter(e=>e.endpointId===endpoint.id&&e.kind===kind&&(e.observationId||'incident')==='incident').length===1,'Each endpoint needs incident optics, errors and MAC evidence.');
+      // Admission requires both endpoints' expected captures; collect gaps before publishing a case.
+      for(const endpoint of c.endpoints)for(const kind of ['status','optics','mac','errors']){
+        for(const observationId of kind==='status'?['incident']:['incident','monitoring']){
+          const recordings=c.evidence.filter(e=>e.endpointId===endpoint.id&&e.kind===kind&&(e.observationId||'incident')===observationId);
+          require(recordings.length===1&&nonempty(recordings[0].text),`Missing required capture: ${c.id} ${endpoint.name} ${endpoint.port} ${kind} (${observationId}). Collect the original output before adding this case to the quiz.`);
+        }
+      }
       require(c.evidence.filter(e=>e.kind==='script').length<=1,'Do not duplicate a supplied script assessment.');
       const commandEvidence=c.evidence.filter(e=>e.kind!=='script');
       require(unique(commandEvidence.map(e=>`${e.endpointId}:${e.kind}:${e.observationId||'incident'}`)),'Evidence command/observation keys must be unique.');
@@ -46,6 +52,7 @@ export function validateCases(data){
       }
       require(Array.isArray(c.questions)&&c.questions.length>0&&unique(c.questions.map(q=>q.id)),'Questions need unique identities.');
       for(const q of c.questions){
+        require(q.context===undefined||nonempty(q.context),'Question context must be nonempty when supplied.');
         require(nonempty(q.id)&&nonempty(q.prompt)&&nonempty(q.explanation)&&nonempty(q.commandHint)&&q.sourceIds?.includes(c.id),'Question needs an explanation, investigation hint and matching source.');
         require(q.options?.length===3&&unique(q.options.map(o=>o.id))&&q.options.every(o=>nonempty(o.id)&&nonempty(o.text)&&nonempty(o.feedback)&&typeof o.correct==='boolean')&&q.options.filter(o=>o.correct).length===1,'Each reviewed question needs exactly one supported answer.');
       }
@@ -55,7 +62,7 @@ export function validateCases(data){
   }catch(error){return {cases:[],errors:[{path:'Incident library',message:error.message}]};}
 }
 
-export async function loadCases(url=new URL('../data/cases.json?v=guided-v17',import.meta.url),fetcher=fetch){
+export async function loadCases(url=new URL('../data/cases.json?v=guided-v20',import.meta.url),fetcher=fetch){
   try{const response=await fetcher(url);if(!response.ok)throw Error(`HTTP ${response.status}`);return validateCases(await response.json());}
   catch(error){return {cases:[],errors:[{path:'Incident library',message:`Could not load case studies (${error.message}).`}]};}
 }

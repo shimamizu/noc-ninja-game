@@ -1,6 +1,6 @@
 import {test,assert,equal} from './harness.js';
-import {validateCases,loadCases,caseReport,patrolSummary} from '../engine/cases.js?v=guided-v17';
-import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v17';
+import {validateCases,loadCases,caseReport,patrolSummary} from '../engine/cases.js?v=guided-v20';
+import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v20';
 
 const initialState=content=>makeState(content,()=>0.999999);
 const transition=(state,event,content)=>step(state,event,content,()=>0.999999);

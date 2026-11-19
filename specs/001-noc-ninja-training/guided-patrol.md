@@ -1,3 +1,81 @@
+## Fuji and red maple quiz-page backdrop — 2026-11-19
+
+The owner requested Mount Fuji and red maple branches/leaves behind the quiz panels,
+excluding the homepage. A local WebP is applied through a fixed, noninteractive CSS
+layer scoped to `.compact-patrol`. Dark shading preserves readability. The Himeji
+Castle arena remains separate. ARCADE and spec/plan mirrors include this asset.
+
+## Himeji Castle arena — 2026-11-19
+
+The owner requested a Himeji Castle-inspired backdrop inside the ninja arena. The local
+WebP illustration shows a twilight castle, pines and stone courtyard. Existing 145×165
+ninja sizing, 300px arena height and clearance below target B are retained. CSS supplies
+contrast shading and replaces the previous grid/floor decoration. Artwork provenance and
+the final generation prompt are recorded in `assets/README.md`.
+
+## Required capture completion and intake gate — 2026-11-19
+
+The owner supplied both leaf-gw2 Et53/1 counters-errors samples for U15. All seven counters
+are zero in both. U15 now has 14 recordings; the patrol has 42 recordings and 12 decisions.
+Its counter lesson compares zero counters at both ends with the unchanged down-link MAC
+state. Original capture timestamps/reset history and repair results remain unknown.
+
+Future cases MUST include status once and optics/MAC/errors twice per endpoint before quiz
+admission. Ask the owner for missing required host/port/command/sample output and wait for it;
+do not add an incomplete case to the quiz. Runtime validation enforces this gate. Optional
+post-repair data remains separate. The U14 fault-count prompt now names
+`show interfaces ethernet XX mac detail` on each device, and the homepage no longer includes
+the generic missing-recording sentence. Current revisions: guided-v20, content v3,
+constitution 1.7.0. Older entries below describe earlier states of the library.
+
+> **Document role (2026-11-19):** Owner-decision and implementation history. The consolidated
+> current requirements are [spec.md](spec.md), [plan.md](plan.md) and constitution 1.6.0 at
+> `.specify/memory/constitution.md`. Older scope sections below record superseded stages.
+
+## Bias current variance teaching clarification — 2026-11-19
+
+Use “bias current variance between lanes” and explicitly define it here as the
+highest-to-lowest range in mA. Show the 63.35 − 27.33 = 36.02 mA calculation and the
+operator’s usual 10–20 mA maximum spread before the relevant answer choices, including
+when shuffled. Consider the spine-gw1 optic only after leaf replacement if the link
+remains down AND the high bias current variance between lanes persists. Hints, feedback,
+review and handoffs use the same terminology. Guided-v19: 52 Node / 61 Safari checks pass.
+
+## Third incident — U15 (2026-11-19)
+
+Current scope: U13–U15, four decisions each (12 total), with 40 supplied interface recordings.
+U15 links spine-gw1 Et8/10/1 (DCS-7508N) and leaf-gw2 Et53/1 (DCS-7050SX3-48YC8-R),
+EOS 4.31.10M and ColorChip C100Q020CWDM403B optics. Preserve the original inventory and
+all 12 interface recordings. Leaf error counters and all post-repair evidence are missing.
+
+Specification: teach leaf optic replacement first using spine Rx -13.87 dBm, spine Local
+Fault True, leaf Remote Fault True and leaf lane 1 Tx -5.36 dBm. Bias current variance between lanes means highest minus lowest in this lesson:
+63.35 − 27.33 = 36.02 mA, then 63.39 − 27.30 = 36.09 mA on spine-gw1.
+The operator normally sees at most about 10–20 mA between the four lanes in this environment;
+36 mA is a very large spread. This is operator guidance, not a universal alarm threshold.
+Show the definition, calculation and comparison before the variance/second-swap questions.
+Only recommend the spine optic after the leaf replacement AND a still-down link AND
+persistently high bias current variance between lanes on spine-gw1. Recovery with persistent spread does not satisfy this
+rule; continued link failure with normalized spread does not satisfy it either. No repair
+result has been supplied: reveal a diagnosis review, not confirmed recovery.
+
+Plan: add source-backed U15 data and four independent questions (replacement target, bias
+interpretation, repeated state/counter interpretation, conditional escalation). Permit absent
+incident error counters while continuing to require both-end optics/MAC evidence. Accept the
+captured `show int` abbreviation without altering its literal text. Reuse existing missing
+capture handling, shuffled progression, diagnosis review and export. Update totals and assets.
+
+Consistency review (C1–C7): owner-supplied captures and the explicit case-specific runbook
+support the answer key; no universal threshold/Remote Fault rule, generated telemetry, live
+commands or fabricated outcome is added. Missing outputs do not block evidence completion.
+Four questions must stand alone under shuffling. Validate source fidelity, all distractors,
+missing counters, conditional escalation, three-case completion and browser rendering.
+
+Verification: 52/52 Node checks and 61/61 Safari browser checks pass on guided-v18.
+Safari visual review confirmed three incidents/twelve decisions and the U15 investigation
+layout. The listing card was regenerated and visually checked. Dedicated narrow-layout,
+screen-reader, full manual playthrough and download-click acceptance remain pending.
+
 ## Session randomization — 2026-11-19
 
 Shuffle scenario order, question order within each scenario, and answer-choice order when

@@ -1,4 +1,4 @@
-import {bindAim} from './aim.js?v=guided-v17';
+import {bindAim} from './aim.js?v=guided-v20';
 export function bindControls(dispatch,reload){
   const app=document.querySelector('#app');
   bindAim(app,dispatch);

@@ -1,7 +1,7 @@
 import {test,assert,equal} from './harness.js';
-import {evidenceText,resolveCapture,captureManifest,commands,matchesCommand} from '../engine/investigation.js?v=guided-v20';
-import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v20';
-import {validateCases,caseReport} from '../engine/cases.js?v=guided-v20';
+import {evidenceText,resolveCapture,captureManifest,commands,matchesCommand} from '../engine/investigation.js?v=guided-v21';
+import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v21';
+import {validateCases,caseReport} from '../engine/cases.js?v=guided-v21';
 
 const initialState=content=>makeState(content,()=>0.999999);
 const transition=(state,event,content)=>step(state,event,content,()=>0.999999);

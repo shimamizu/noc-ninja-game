@@ -1,5 +1,5 @@
 // Supplied captures support bounded evidence reasoning; missing telemetry is never generated.
-import {evidenceText,commandReadings,validSelection,defaultSelection,resolveCapture,captureKey,captureNeedsReport,statusLabels,matchesCommand} from './investigation.js?v=guided-v20';
+import {evidenceText,commandReadings,validSelection,defaultSelection,resolveCapture,captureKey,captureNeedsReport,statusLabels,matchesCommand} from './investigation.js?v=guided-v21';
 const nonempty=v=>typeof v==='string'&&v.trim().length>0;
 const unique=values=>new Set(values).size===values.length;
 const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};
@@ -62,7 +62,7 @@ export function validateCases(data){
   }catch(error){return {cases:[],errors:[{path:'Incident library',message:error.message}]};}
 }
 
-export async function loadCases(url=new URL('../data/cases.json?v=guided-v20',import.meta.url),fetcher=fetch){
+export async function loadCases(url=new URL('../data/cases.json?v=guided-v21',import.meta.url),fetcher=fetch){
   try{const response=await fetcher(url);if(!response.ok)throw Error(`HTTP ${response.status}`);return validateCases(await response.json());}
   catch(error){return {cases:[],errors:[{path:'Incident library',message:`Could not load case studies (${error.message}).`}]};}
 }

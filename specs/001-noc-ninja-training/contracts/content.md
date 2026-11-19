@@ -1,7 +1,7 @@
 # Guided patrol content contract
 
-Current: guided-v20, `data/cases.json` schemaVersion 1, revision
-`guided-cases-u13-u14-u15-v3`, constitution 1.7.0. U13–U15 contain 42 recordings and 12 decisions.
+Current: guided-v21, `data/cases.json` schemaVersion 1, revision
+`guided-cases-u13-u14-u15-v3`, constitution 1.7.1. U13–U15 contain 42 recordings and 12 decisions.
 
 Load relative to the module, verify HTTP/JSON, then validate the whole library. Return frozen
 cases with no errors, or an empty set with an explanatory error. Never partially start or

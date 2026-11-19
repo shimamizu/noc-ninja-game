@@ -1,6 +1,6 @@
 # NOC Ninja — Implementation and publishing plan
 
-Updated 2026-11-19. Application `guided-v20`; content `guided-cases-u13-u14-u15-v3`;
+Updated 2026-11-19. Application `guided-v21`; content `guided-cases-u13-u14-u15-v3`;
 constitution 1.7.1. This describes the implemented architecture and remaining publication checks.
 See [spec.md](spec.md), [tasks.md](tasks.md) and [verification.md](verification.md).
 The previous simulation plan is [archived](history/plan-before-guided-v19-reconciliation.md).
@@ -86,7 +86,7 @@ Player preview: `http://127.0.0.1:8001/index.html` (or the server root).
 Developer browser checks: `http://127.0.0.1:8001/tests/`.
 Keep these URLs distinct; the test page is not an intermediate player screen.
 
-Publishing handoff rerun (2026-11-19), guided-v20 with stylesheet guided-v20-fuji2: **53/53 Node and 62/62 Safari checks pass**.
+Publishing handoff rerun (2026-11-19), guided-v21 with stylesheet guided-v20-fuji2: **53/53 Node and 62/62 Safari checks pass**.
 Coverage includes source fidelity, supported/distractor choices, missing captures, teaching
 context before answers, shuffled grading, three-case progression, gates, reports and restart.
 Shared aiming tests and Safari controls cover pointer/keyboard behavior and reduced motion.
@@ -110,7 +110,7 @@ acceptance. Browser DOM checks are not a claim that those manual acceptance task
 5. On the actual hosted URL, verify the Play target, briefing, asset MIME types, all three
    cases, input, missing-output states, outcome gates and handoff downloads. Invalidate stale
    cached files on updates. Repeat appropriate manual acceptance checks.
-6. Fill `runtime.hosted_url` in both ARCADE files only when the real URL is known. No Arcade
+6. Fill `runtime.hosted_url` in both ARCADE files only when the hosted URL is known. No Arcade
    upload or hosted validation is part of this documentation update; the field remains blank.
 
 ## Extension and consistency rules

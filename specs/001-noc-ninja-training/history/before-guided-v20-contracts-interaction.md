@@ -67,18 +67,18 @@ Reasoning uses native radio/fieldset controls, text feedback and a live announce
 focuses the reasoning section; completed reasoning focuses Next when coverage is complete.
 New visual/keyboard/download acceptance is pending as recorded in `../evidence/skill-adaptation.md`.
 
-## Real-case events — 2026-11-18
+## Incident events — 2026-11-18
 
-- `begin-real`: enter the real patrol from briefing or dojo summary; retain the return view.
-- `real-inspect`: select a valid case evidence panel and record a unique view.
-- `real-select`, `real-submit`: select and explicitly grade the current reviewed decision. Unknown
+- Start incident patrol: enter the incident patrol from briefing or dojo summary; retain the return view.
+- Inspect evidence: select a valid case evidence panel and record a unique view.
+- Select and submit: select and explicitly grade the current reviewed decision. Unknown
   options do nothing; empty input gives guidance without an attempt; correct completion freezes it.
-- `real-hint`: record assistance and show the current decision’s explanation; never complete it.
-- `real-question-next`: advance only after the current decision is correct.
-- `real-reveal`: mark case complete and show owner outcome only after all decisions and panel views.
-- `real-next`: proceed to the next case, or final real summary, only after outcome reveal.
-- `real-download`: local text export only for completed cases, including summary downloads.
-- `real-home`: restore the original dojo’s prior screen, preserving both tracks’ records.
+- Show hint: record assistance and show the current decision’s explanation; never complete it.
+- Next question: advance only after the current decision is correct.
+- Reveal outcome: mark case complete and show owner outcome only after all decisions and panel views.
+- Next incident: proceed to the next case, or final incident summary, only after outcome reveal.
+- Download handoff: local text export only for completed cases, including summary downloads.
+- Return to dojo: restore the original dojo’s prior screen, preserving both tracks’ records.
 
 The existing restart dialog freezes both tracks; cancel preserves and confirm clears their state.
-Real-case progress and question counts are separate from synthetic diagnosis progress.
+Incident progress and question counts are separate from synthetic diagnosis progress.

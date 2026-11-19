@@ -1,4 +1,4 @@
-import {initialPatrol,transitionPatrol} from './cases.js?v=guided-v20';
+import {initialPatrol,transitionPatrol} from './cases.js?v=guided-v21';
 // Fisher–Yates runs once per session; stable IDs keep grading independent of positions.
 export function shuffled(items,random=Math.random){
   const result=[...items];

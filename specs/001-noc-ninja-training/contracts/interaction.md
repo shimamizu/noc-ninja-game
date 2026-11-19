@@ -1,6 +1,6 @@
 # Guided patrol interaction contract
 
-Current: guided-v20, constitution 1.7.0. One briefing → three incidents → session summary.
+Current: guided-v21, constitution 1.7.1. One briefing → three incidents → session summary.
 
 | State/action | Result |
 | --- | --- |

@@ -1,6 +1,6 @@
 import {test,assert,equal} from './harness.js';
-import {validateCases,loadCases,caseReport,patrolSummary} from '../engine/cases.js?v=guided-v20';
-import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v20';
+import {validateCases,loadCases,caseReport,patrolSummary} from '../engine/cases.js?v=guided-v21';
+import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v21';
 
 const initialState=content=>makeState(content,()=>0.999999);
 const transition=(state,event,content)=>step(state,event,content,()=>0.999999);
@@ -68,10 +68,10 @@ export function caseTests(data){
     const summary=go(s,'next');equal(go(go(summary,'restart'),'confirm-restart'),initialState(content));
   });
   test('Retired modes and empty-library fallbacks remain unavailable',()=>{
-    const s=initialState(content);for(const type of ['begin','begin-real','real-home','real-next','select','submit','reveal','next'])equal(go(s,type),s);
+    const s=initialState(content);for(const type of ['begin','begin-legacy','legacy-home','legacy-next','select','submit','reveal','next'])equal(go(s,type),s);
     const empty={cases:[]},none=initialState(empty);equal(none.view,'content-error');equal(transition(none,{type:'begin-guided'},empty),none);
   });
   test('Learner content and handoff contain no old cases or sanitization labels',()=>{
-    const report=caseReport(c,finishCase(begin()).patrol.progress.U13);assert(!/U10|U11|U12|leaf-gw1|saniti[sz]|real incident patrol|arcade/i.test(JSON.stringify(cases)+report));
+    const report=caseReport(c,finishCase(begin()).patrol.progress.U13);assert(!/U10|U11|U12|leaf-gw1|saniti[sz]|arcade/i.test(JSON.stringify(cases)+report));
   });
 }

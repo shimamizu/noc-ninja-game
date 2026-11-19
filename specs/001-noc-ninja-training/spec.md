@@ -1,6 +1,6 @@
 # NOC Ninja — Guided NOC Patrol specification
 
-Updated 2026-11-19. Application `guided-v20`; content `guided-cases-u13-u14-u15-v3`;
+Updated 2026-11-19. Application `guided-v21`; content `guided-cases-u13-u14-u15-v3`;
 constitution 1.7.1. This is the current specification for the implemented game.
 [Change history](guided-patrol.md) records owner decisions; the former mixed-simulation
 specification is [archived](history/spec-before-guided-v19-reconciliation.md).
@@ -134,7 +134,7 @@ topology, separate modes and generic diagnosis categories are outside the curren
 | Outcome/export gates, three handoffs and restart preserve honest progress | Node and Safari checks |
 | Pointer/keyboard cancellation, answer mapping and reduced motion work | Shared aiming suite and Safari controls checks |
 
-Current guided-v20 result (2026-11-19): **53/53 Node and 62/62 Safari browser checks pass**.
+Current guided-v21 result (2026-11-19): **53/53 Node and 62/62 Safari browser checks pass**.
 The publishing handoff rerun passed both suites with stylesheet `guided-v20-fuji2`.
 Safari visual checks verified the quiz-only Fuji backdrop, Himeji Castle arena, larger ninja
 with target clearance, and opaque incident badge/capture notes. Dedicated narrow-layout, screen-reader, full manual

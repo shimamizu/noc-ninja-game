@@ -1,3 +1,17 @@
+# Documentation audit follow-up — guided-v21, 2026-11-19
+
+Application guided-v21, content guided-cases-u13-u14-u15-v3, stylesheet guided-v20-fuji2,
+constitution 1.7.1. Node: 53 discovered, 53 passed, 0 failed. Safari: 62 discovered,
+62 passed, 0 failed. Safari briefing confirmed the updated instruction to review which
+after-repair verification evidence to collect, then remained on the game briefing.
+The refreshed 1280×720 Arcade WebP was visually inspected and matches its SVG wording.
+Neutral example labels replace provenance-emphasizing wording in current and archived
+narrative content. The prior integration record was renamed with all links updated.
+The retired-runtime test now validates the allowed runtime directory contents; unsupported
+mode tests use generic legacy events. No capture values, question answers or grading changed.
+Dedicated narrow-layout, screen-reader, full manual playthrough, download-click and hosted
+acceptance remain pending. Earlier entries below describe earlier revisions.
+
 # Publishing handoff verification — 2026-11-19
 
 Final working tree: application `guided-v20`, content `guided-cases-u13-u14-u15-v3`,

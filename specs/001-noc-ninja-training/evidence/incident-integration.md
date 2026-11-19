@@ -1,9 +1,11 @@
 > **Historical integration record:** The separate track documented below was superseded by the [single guided patrol](../guided-patrol.md). It is no longer a playable mode.
 
-# Playable real incidents — 2026-11-18
+> Editorial note: mode names and retired module references below use neutral descriptive labels.
+
+# Playable incidents — 2026-11-18
 
 The owner explicitly requested adding the three supplied cases to the game. They are now accessible
-from **Play real incident patrol** on the opening screen and after completing the original dojo.
+from **Play incident patrol** on the opening screen and after completing the original dojo.
 The synthetic six-incident course remains available. No hosted deployment or live network action
 is part of this change.
 
@@ -27,15 +29,15 @@ reasoning. The current uncertainty on U11 and the possible aggregation problem o
 
 ## State and implementation
 
-- `data/real-cases.json`: schema 1, revision `real-cases-2026-11-18-v1`. Literal capture strings and
+- the retired incident-data module: schema 1, a dated content revision. Literal capture strings and
   tables are separate from explanation, script assessment and outcome.
-- `engine/real-cases.js`: validates endpoint/command identity, channel counts/labels, numeric fields,
-  source/revision links, unique answers and outcome types. Invalid real content fails closed for
-  the real patrol; the original course remains available with an explanatory error.
-- `engine/state.js`: integrates `real-case` / `real-summary` views with the common restart dialog.
-  Real progress is separate from dojo diagnosis and assistance records.
-- `ui/real-cases.js`: native radio groups, buttons, scrollable labeled evidence, outcome reveal and
-  patrol review. No animation is required to complete a real case.
+- the retired incident evaluator: validates endpoint/command identity, channel counts/labels, numeric fields,
+  source/revision links, unique answers and outcome types. Invalid incident content fails closed for
+  the incident patrol; the original course remains available with an explanatory error.
+- `engine/state.js`: integrates incident and summary views with the common restart dialog.
+  Incident progress is separate from dojo diagnosis and assistance records.
+- the retired incident renderer: native radio groups, buttons, scrollable labeled evidence, outcome reveal and
+  patrol review. No animation is required to complete a case.
 - Empty/unknown answers do not count. Wrong answers stay retryable; a correct decision freezes its
   attempt count. Hints mark assistance. Viewing panels is explicitly not proof of comprehension.
 - Outcomes require all five decisions correct and all seven panels viewed. Next case requires
@@ -46,7 +48,7 @@ reasoning. The current uncertainty on U11 and the possible aggregation problem o
 ## Verification
 
 **191 automated checks pass** under Node 26.13.0 (`node tests/run.mjs`): the previous 163 checks plus
-28 real-case checks covering validation failures, actual source fidelity, every distractor in all
+28 incident checks covering validation failures, actual source fidelity, every distractor in all
 15 decisions, progression/outcome gates, hints, attempts, reports, return navigation and restart.
 Both test runners register the new checks. Source-fidelity checks compare every shipped inventory,
 optical/counter row and literal MAC output against its source case document.
@@ -58,7 +60,7 @@ the preview could be observed. Do not treat old Chrome checks as acceptance of t
 
 Manual acceptance:
 
-1. Serve the repository, open the game and select **Play real incident patrol**.
+1. Serve the repository, open the game and select **Play incident patrol**.
 2. Verify the case inventory and each evidence panel against its source. In U12, check -0.00,
    -15.21, 236/40/277 and the separate script 533/267 values.
 3. Submit empty and wrong answers, request a reasoning hint, then correct the answers. Check
@@ -73,7 +75,7 @@ Manual acceptance:
 ## Adding future examples
 
 Record sanitized source evidence and distinguish confirmed outcomes from missing information first.
-Add a case to `data/real-cases.json` using the same endpoint/evidence/question/outcome structure,
+Add a case to the retired incident-data module using the same endpoint/evidence/question/outcome structure,
 advance the document and case revisions together, and review every supported answer against its
 source. Case counts, decision counts and progression derive from the data; the loader does not
 hard-code three cases. Add independent expected answers and source-fidelity checks for the new case.

@@ -1,44 +1,36 @@
-# Specification Quality Checklist: NOC Ninja Training — First Playable
+# Guided patrol requirements review
 
-**Purpose**: Validate specification completeness and quality before proceeding to planning
-**Created**: 2026-11-17
-**Feature**: [spec.md](../spec.md)
+Reviewed 2026-11-19 against [spec.md](../spec.md), [plan.md](../plan.md) and constitution 1.7.1.
+This checklist records document/content consistency; it does not certify unperformed manual checks.
+The [earlier first-playable review](../history/requirements-before-guided-v20.md) is historical.
 
-## Content Quality
+## Current scope and evidence
 
-- [x] No implementation details (languages, frameworks, APIs)
-- [x] Focused on user value and business needs
-- [x] Written for non-technical stakeholders
-- [x] All mandatory sections completed
+- [x] Three cases (U13–U15), twelve decisions and 42 supplied recordings agree across current artifacts.
+- [x] Each endpoint requires status once and transceiver/MAC/errors twice before case admission.
+- [x] Missing expected outputs require an owner request and wait; no generated replacement readings.
+- [x] U13/U14 reported recovery and U15 recommended action remain distinct.
+- [x] U15 defines interlane range before relevant questions and requires leaf-first replacement.
+- [x] Spine escalation requires both continued link failure and persistently high interlane range.
+- [x] Questions, answers and case order shuffle while stable identities govern grading.
+- [x] Correct decisions and evidence coverage gate outcome review and handoff export.
 
-## Requirement Completeness
+## Interaction and publishing requirements
 
-- [x] No [NEEDS CLARIFICATION] markers remain
-- [x] Requirements are testable and unambiguous
-- [x] Success criteria are measurable
-- [x] Success criteria are technology-agnostic (no implementation details)
-- [x] All acceptance scenarios are defined
-- [x] Edge cases are identified
-- [x] Scope is clearly bounded
-- [x] Dependencies and assumptions identified
+- [x] Four command selectors show grouped recordings without a request button or observation selector.
+- [x] Pointer/keyboard pickup, movement, drop and cancellation are specified and tested.
+- [x] Local castle/Fuji artwork, quiz-only page background and opaque text surfaces match the spec.
+- [x] Root index.html is the player entry; developer tests and StarterKit are separate.
+- [x] Publication manifests include both scenic assets and the separate listing card.
+- [x] Root and StarterKit governing documents/ARCADE are synchronized.
+- [x] Verification distinguishes completed automated/desktop checks from pending acceptance.
 
-## Feature Readiness
+## Remaining acceptance
 
-- [x] All functional requirements have clear acceptance criteria
-- [x] User scenarios cover primary flows
-- [x] Defined scope addresses measurable outcomes in Success Criteria
-- [x] No implementation details leak into specification
+- [ ] Dedicated narrow-layout review.
+- [ ] Screen-reader acceptance.
+- [ ] Full manual patrol playthrough and actual handoff download clicks.
+- [ ] Hosted launch, asset and interaction verification after a URL is configured.
 
-## Notes — redesign review, 2026-11-17
-
-Rechecked for the owner's mixed-incident and shuriken correction. Three categories are competing
-diagnoses, not sequential lessons. Six independent case expectations, AC1–AC22, FR-001–023 and
-SC-001–008 are explicit. Constitution 1.1.0 and current contracts describe the same scope.
-
-Source applicability uses the already confirmed setup and supplied thresholds; no new owner
-proof is requested. The optical examples include absent and degraded light, with distinct meanings.
-The graphical throw has no precision/timing requirement and retains keyboard/reduced-motion access.
-
-These checkboxes assess requirement quality, not whether gameplay, browser accessibility,
-representative-learner outcomes or release acceptance have passed. Actual results and pending
-checks are in verification.md. StarterKit inputs and earlier research remain historical context.
+See [verification.md](../verification.md) for executed checks and [quickstart.md](../quickstart.md)
+for the manual procedure. Pending items must be completed and recorded before claiming acceptance.

@@ -1,5 +1,5 @@
 import {test,assert,equal} from './harness.js';
-import {bindAim,animateThrow,targetAtPoint} from '../ui/aim.js?v=guided-v20';
+import {bindAim,animateThrow,targetAtPoint} from '../ui/aim.js?v=guided-v21';
 
 // Small event fixture: exercise pointer ownership, release hit testing and cleanup
 // without depending on a browser's timing or the diagnostic state machine.

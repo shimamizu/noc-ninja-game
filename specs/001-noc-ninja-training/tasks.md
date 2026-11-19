@@ -4,7 +4,7 @@
 
 **Input**: [spec.md](spec.md), [plan.md](plan.md), [research.md](research.md), [data-model.md](data-model.md), [contracts](contracts/), [quickstart.md](quickstart.md), and [constitution](../../.specify/memory/constitution.md).
 **Date**: 2026-11-17
-**Status**: Guided patrol U13–U15 implemented on guided-v20; documentation reconciled with constitution 1.7.1. Current verification: 53 Node / 62 Safari checks pass. Dedicated manual and hosted acceptance remain open. Earlier numbered tasks below are historical execution records, not current scope. See [verification.md](verification.md).
+**Status**: Guided patrol U13–U15 implemented on guided-v21; documentation reconciled with constitution 1.7.1. Current verification: 53 Node / 62 Safari checks pass. Dedicated manual and hosted acceptance remain open. Earlier numbered tasks below are historical execution records, not current scope. See [verification.md](verification.md).
 
 > T001–T042 below are the original build execution history. Their category-specific levels,
 > causal distractors, schema 1 and intermediate summaries are superseded by T043 onward and
@@ -284,11 +284,11 @@ supersedes conflicting details of historical tasks above, without closing outsta
 - [X] T064 Reconcile spec/plan/interaction/README and run 163 automated checks, module syntax checks and whitespace review.
 - [ ] T065 Accept the guided UI in a fresh browser: keyboard, report download, narrow viewport, reduced motion and representative learner review. Browser connector unavailable and native Safari in active use; see evidence/skill-adaptation.md.
 
-- [X] T066 Reconcile owner-authorized real-case scope with constitution 1.4.0, source reviews and spec.
+- [X] T066 Reconcile owner-authorized incident scope with constitution 1.4.0, source reviews and spec.
 - [X] T067 Preserve U10–U12 in versioned JSON; validate inventory, literal evidence, reviewed questions and outcome confidence.
-- [X] T068 Add playable real patrol with evidence panels, 15 decisions, safe retries/hints, gated outcomes, summary and downloads.
+- [X] T068 Add playable incident patrol with evidence panels, 15 decisions, safe retries/hints, gated outcomes, summary and downloads.
 - [X] T069 Preserve original dojo progress and restart semantics; verify 191 checks including exact source fidelity and every distractor.
-- [ ] T070 Complete fresh-browser keyboard, narrow-layout, screen-reader and download-click acceptance for real patrol. Browser connector unavailable; native browser attempt stalled/interrupted. See evidence/real-case-integration.md.
+- [ ] T070 Complete fresh-browser keyboard, narrow-layout, screen-reader and download-click acceptance for incident patrol. Browser connector unavailable; native browser attempt stalled/interrupted. See evidence/incident-integration.md.
 
 
 ## Single guided patrol — owner correction, 2026-11-18
@@ -376,3 +376,12 @@ T050/T065/T070 are historical requirements for retired flows; T075 tracks curren
 - [x] Reconcile constitution 1.7.1, spec, plan, ARCADE and StarterKit mirrors.
 - [x] Rerun Node (53/53) and Safari (62/62); leave preview at game briefing.
 - [ ] Publisher: configure hosted URL and complete hosted/manual acceptance already listed above.
+
+## Repository audit follow-up — 2026-11-19
+
+- [x] Replace the obsolete active checklist and preserve it as an explicitly historical review.
+- [x] Align active constitution references and repair archived relative links.
+- [x] Add visual acceptance steps to quickstart and clarify briefing verification guidance.
+- [x] Normalize example labels in current/archived docs and regenerate the Arcade card.
+- [x] Rename the historical integration record and update all references.
+- [x] Verify 53/53 Node and 62/62 Safari checks on guided-v21; retain existing manual/hosted gaps.

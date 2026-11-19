@@ -1,3 +1,20 @@
+## Documentation audit and neutral example labels — 2026-11-19
+
+Current application: guided-v21; content: guided-cases-u13-u14-u15-v3; stylesheet:
+guided-v20-fuji2; constitution: 1.7.1. The owner requested neutral incident/example labels
+throughout the repository and listing artwork. The promo SVG, WebP and preview now say
+three incidents and twelve decisions. Archived narrative labels were normalized as well;
+retired implementation identifiers are described by their roles. Capture values and
+case conclusions are unchanged. The historical integration record is now
+[evidence/incident-integration.md](evidence/incident-integration.md).
+
+The current requirements checklist replaces the archived first-playable review; active
+contract/version references and archived relative links are corrected. Quickstart includes
+visual acceptance checks. Briefing copy now asks players to review which verification
+evidence to collect, without suggesting another request control. Node 53/53 and Safari
+62/62 checks pass. Dedicated manual accessibility/playthrough/download and hosted checks
+remain pending; their status has not been promoted by this documentation cleanup.
+
 ## Fuji and red maple quiz-page backdrop — 2026-11-19
 
 The owner requested Mount Fuji and red maple branches/leaves behind the quiz panels,
@@ -29,7 +46,7 @@ the generic missing-recording sentence. Current revisions: guided-v20, content v
 constitution 1.7.0. Older entries below describe earlier states of the library.
 
 > **Document role (2026-11-19):** Owner-decision and implementation history. The consolidated
-> current requirements are [spec.md](spec.md), [plan.md](plan.md) and constitution 1.6.0 at
+> current requirements are [spec.md](spec.md), [plan.md](plan.md) and constitution 1.7.1 at
 > `.specify/memory/constitution.md`. Older scope sections below record superseded stages.
 
 ## Bias current variance teaching clarification — 2026-11-19
@@ -124,7 +141,7 @@ dedicated narrow-layout and screen-reader acceptance remain pending.
 # Guided NOC patrol — current scope
 
 Owner correction, 2026-11-18. This replaces the six simulated incidents and the separate
-real-incident/arcade modes. Historical specifications and verification records remain as history;
+incident/arcade modes. Historical specifications and verification records remain as history;
 this document governs the current implementation together with constitution 1.5.2.
 
 ## Specification

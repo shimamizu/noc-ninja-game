@@ -1,6 +1,6 @@
 # Guided patrol data model
 
-Current: guided-v20, schemaVersion 1, content `guided-cases-u13-u14-u15-v3`, constitution 1.7.0.
+Current: guided-v21, schemaVersion 1, content `guided-cases-u13-u14-u15-v3`, constitution 1.7.1.
 The runtime source is `data/cases.json`: three cases, twelve decisions, forty-two recordings.
 
 ## Library and case

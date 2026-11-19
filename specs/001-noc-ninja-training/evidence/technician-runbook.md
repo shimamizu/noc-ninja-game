@@ -2,7 +2,7 @@
 
 **Authority:** owner requirements, 2026-11-17. **Revision:** noc-v3-2026-11-17.
 This is the requested replacement policy for authored exercises, not a vendor guarantee that
-CRC or a fault flag proves an optic has failed. No real dispatch or replacement is performed.
+CRC or a fault flag proves an optic has failed. No live dispatch or replacement is performed.
 
 | Evidence | Game recommendation |
 | --- | --- |
@@ -38,4 +38,4 @@ L3-R2 now shows actual Remote Fault True snapshots on leaf during down intervals
 assert/clear pulses. Current False retains the aligned event age requested earlier. Static down-link
 PHY/fault distinctions remain unchanged. Completion records the diagnosis; the dispatch panel teaches
 where to send the technician and what to replace. Recheck optical levels, error deltas and stability
-after a real maintenance action; the game does not simulate a repair result.
+after a maintenance action; the game does not simulate a repair result.

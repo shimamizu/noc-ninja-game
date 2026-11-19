@@ -86,7 +86,7 @@ plus the source platform/EOS version and whether the example uses the selected o
 These samples can ground reviewed display formats once provenance is established. The game
 may use explicitly authored scenario values and consistent fictional device names; those must
 be clearly identified as simulated, reviewed against the supported behavior, and kept separate
-from the original samples. A real fault capture for each of the six authored numeric cases is
+from the original samples. A fault capture for each of the six authored numeric cases is
 not inherently required. Unsupported absent-light rendering or thresholds still cannot be invented.
 
 ## U4 — Working Troubleshooting Examples
@@ -179,7 +179,7 @@ Use U4a/U4b/U4c as user-supplied format evidence and U5 as the stated optical in
 Keep newly authored fault values clearly labeled simulated. The selected deployment remains
 the user-provided context; these excerpts alone are not version or inventory output. Existing
 technical review tasks should check applicability and scenario consistency rather than request
-these supplied headers, units or interpretation again. No real capture of each authored fault
+these supplied headers, units or interpretation again. No capture of each authored fault
 is required. For flapping, use a complete reviewed sequence of timestamped state observations;
 do not manufacture a vendor log format from this MAC-detail sample.
 

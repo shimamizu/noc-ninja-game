@@ -1,6 +1,6 @@
 # Guided patrol quickstart and manual validation
 
-Current revision: guided-v20, 2026-11-19. Three incidents, twelve decisions, forty-two recordings.
+Current revision: guided-v21, stylesheet guided-v20-fuji2, constitution 1.7.1, 2026-11-19. Three incidents, twelve decisions, forty-two recordings.
 
 ## Start
 
@@ -35,12 +35,21 @@ set the Arcade Play link to that page. Return the preview to the game after chec
 7. Cancel restart to preserve the session; confirm to clear and reshuffle. Repeat at narrow
    widths and with a screen reader; record actual results, not inferred compliance.
 
+## Visual acceptance
+
+- Confirm the homepage retains its original background; Fuji and red maple scenery appears only during quiz incidents.
+- Confirm the Himeji Castle courtyard fills the ninja arena separately from the page background.
+- Check the 145×165 ninja and hand control in the 300px arena, with clear space below target B.
+- Check the incident badge and capture notes/limits have solid dark backgrounds, both collapsed and expanded.
+- Repeat at narrow widths: headings, output scroll regions, targets, instructions and expanded notes remain readable and usable.
+- Return to the briefing and confirm the quiz-page background is removed.
+
 ## Future case intake and current status
 
 Collect the complete required 14 recordings before adding a new case. Ask the owner for each
 missing expected endpoint/port/command/sample and wait; draft outside the playable library.
 The validator rejects omissions. Post-repair recordings remain optional for recommendations.
 
-53/53 Node and 62/62 Safari checks pass on guided-v20. Dedicated narrow-layout, screen-reader,
+53/53 Node and 62/62 Safari checks pass on guided-v21. Dedicated narrow-layout, screen-reader,
 full manual playthrough and download-click acceptance remain pending, as does hosted validation.
 Use [ARCADE.md](../../ARCADE.md) and [plan.md](plan.md) for the actual publication handoff.

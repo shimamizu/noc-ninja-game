@@ -5,7 +5,7 @@ game:
   title: "NOC Ninja — Guided NOC Patrol"
   slug: "noc-ninja"
   tagline: "Investigate the link, explain the evidence, and verify the outcome."
-  summary: "Investigate three real Arista EOS link incidents through twelve guided decisions. Compare recorded commands at both endpoints, choose the replacement sequence, and review the diagnosis or reported repair. Scenario, question and answer order shuffle each patrol. Drag the shuriken to answer, learn from feedback, and download a handoff."
+  summary: "Investigate three Arista EOS link incidents through twelve guided decisions. Compare recorded commands at both endpoints, choose the replacement sequence, and review the diagnosis or reported repair. Scenario, question and answer order shuffle each patrol. Drag the shuriken to answer, learn from feedback, and download a handoff."
   topics:
     - "Arista EOS"
     - "Optical diagnostics"
@@ -17,7 +17,7 @@ game:
   play_minutes: 10
   levels: 3
   card_image: "assets/arcade-card.webp"
-  card_image_alt: "A ninja with a red headband beside NOC Ninja: Guided NOC Patrol. Three real incidents, twelve decisions; light levels, CRC errors and link flapping."
+  card_image_alt: "A ninja with a red headband beside NOC Ninja: Guided NOC Patrol. Three incidents, twelve decisions; light levels, CRC errors and link flapping."
   repo: "https://github.com/shimamizu/noc-ninja-game"
   repo_path: ""
   license: "Apache-2.0"
@@ -120,8 +120,8 @@ runtime:
   requires_api_key: false
   uses_ai_at_runtime: false
   browsers:
-    - "Safari (preferred; 62 browser checks passed on guided-v20, 2026-11-19)"
-  accessibility: "Keyboard pickup/move/drop, visible focus, textual feedback, reduced-motion support and live announcements implemented. Safari DOM/control checks pass on guided-v20. Dedicated screen-reader, narrow-layout, full manual playthrough and download-click acceptance remain pending."
+    - "Safari (preferred; 62 browser checks passed on guided-v21, 2026-11-19)"
+  accessibility: "Keyboard pickup/move/drop, visible focus, textual feedback, reduced-motion support and live announcements implemented. Safari DOM/control checks pass on guided-v21. Dedicated screen-reader, narrow-layout, full manual playthrough and download-click acceptance remain pending."
   save_state: "none; session progress is in memory and resets on page reload"
 verification:
   tests: "node tests/run.mjs"
@@ -140,7 +140,7 @@ verification:
 
 ## Current game — 2026-11-19
 
-One Guided NOC Patrol contains **three real incidents and twelve decisions**, using only the
+One Guided NOC Patrol contains **three incidents and twelve decisions**, using only the
 42 supplied command captures. Each new patrol shuffles scenarios, questions and answer
 positions; the order remains stable while investigating or retrying. Learners drag the
 shuriken to A/B/C (or use keyboard pickup/move/drop), receive explanatory feedback, and
@@ -176,7 +176,7 @@ displays as its full counters-errors command; U15’s captured `show int` abbrev
 literal. Captured measurement bodies are unchanged.
 
 The source library is `data/cases.json` (revision `guided-cases-u13-u14-u15-v3`); the application
-module revision is `guided-v20`; the stylesheet revision is `guided-v20-fuji2`
+module revision is `guided-v21`; the stylesheet revision is `guided-v20-fuji2`
 (larger ninja, target clearance, Himeji Castle arena and quiz-only Fuji/red maple page backdrop). Source documents retain original prompts. U13 and U14 have
 confirmed repair reports; U15 has a recommended sequence only. No recovery measurements
 are invented. Intentional transmitter disable is excluded from this training. The optics YAML is reference material, not a
@@ -238,7 +238,7 @@ and handoff downloads on the actual hosted URL. Refresh/invalidate cached files 
 do not strip the module and stylesheet revision queries.
 
 **Verification:** publishing handoff rerun passed 53/53 Node and 62/62 Safari browser checks
-on guided-v20 with stylesheet guided-v20-fuji2 (2026-11-19).
+on guided-v21 with stylesheet guided-v20-fuji2 (2026-11-19).
 Safari desktop visual review confirmed the quiz-only Fuji/red maple page background,
 Himeji Castle arena, larger ninja with target clearance, and opaque incident badge/capture
 notes. Guided-v20 checks verify pre-answer teaching context, both leaf-counter samples and

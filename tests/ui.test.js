@@ -1,8 +1,8 @@
-import {evidenceText} from '../engine/investigation.js?v=guided-v20';
+import {evidenceText} from '../engine/investigation.js?v=guided-v21';
 import {test,assert,equal} from './harness.js';
-import {render} from '../ui/render.js?v=guided-v20';
-import {bindControls} from '../ui/controls.js?v=guided-v20';
-import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v20';
+import {render} from '../ui/render.js?v=guided-v21';
+import {bindControls} from '../ui/controls.js?v=guided-v21';
+import {initialState as makeState,transition as step} from '../engine/state.js?v=guided-v21';
 const initialState=content=>makeState(content,()=>0.999999);
 const transition=(state,event,content)=>step(state,event,content,()=>0.999999);
 
@@ -17,8 +17,8 @@ export function uiTests(data){
     equal(app.querySelectorAll('[data-action="begin-guided"]').length,1);
     assert(app.textContent.includes('3 incidents · 12 decisions'));
     assert(app.textContent.includes('Build the evidence before the conclusion.'));
-    assert(!/saniti[sz]|real incident patrol|arcade|six simulated|six incidents/i.test(app.textContent));
-    assert(!app.querySelector('[data-action="begin"], [data-action="begin-real"]'));
+    assert(!/saniti[sz]|arcade|six simulated|six incidents/i.test(app.textContent));
+    assert(!app.querySelector('[data-action="begin"], [data-action="begin-legacy"]'));
   });
   test('Every rendered evidence panel preserves its captured rows or literal output',()=>{
     let s=begin();
@@ -48,7 +48,7 @@ export function uiTests(data){
       assert(app.querySelector('#download-handoff'));s=go(s,'next');
     }
     render(content,s);checkIds();equal(app.querySelectorAll('[data-action="download-handoff"]').length,3);
-    assert(app.textContent.includes('3 incidents · 12 decisions completed'));assert(!/back to|real incident|saniti[sz]/i.test(app.textContent));
+    assert(app.textContent.includes('3 incidents · 12 decisions completed'));assert(!/back to|saniti[sz]/i.test(app.textContent));
   });
   test('Invalid content renders a reload action without playable fallback',()=>{
     render(null,{view:'content-error'},[{path:'Incident library',message:'Invalid evidence'}]);

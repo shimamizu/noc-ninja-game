@@ -1,6 +1,6 @@
 > Archived 2026-11-19 from `specs/001-noc-ninja-training/plan.md`. Historical requirements only; superseded by the current constitution, spec and plan. Relative links below retain their original source context.
 
-> **Current scope (2026-11-19):** One guided NOC patrol using U13–U15: three incidents, twelve decisions. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+> **Current scope (2026-11-19):** One guided NOC patrol using U13–U15: three incidents, twelve decisions. See [guided-patrol.md](../guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
 
 # Implementation Plan: Mixed Incident Dojo
 
@@ -165,16 +165,16 @@ adaptation review. C1/C5 retain the existing simulated evidence and offline runt
 explicit reasoning with honest retries; C4 awaits browser/keyboard acceptance; C6 keeps derived
 answers separate from UI; C7 records acceptance gaps rather than claiming release completion.
 
-## Real-case implementation — 2026-11-18
+## Incident implementation — 2026-11-18
 
-Use separate JSON, validator, state and rendering modules for the owner’s real captures. This
+Use separate JSON, validator, state and rendering modules for the owner’s captures. This
 avoids weakening the fixed synthetic deployment validator or fabricating histories to satisfy it.
-`data/real-cases.json` owns evidence, inventory, reviewed questions and outcomes.
-`engine/real-cases.js` owns validation, deterministic answer checks, progression and report text.
-`ui/real-cases.js` renders native controls and exact evidence; main loads both tracks concurrently
+the retired incident-data module owns evidence, inventory, reviewed questions and outcomes.
+the retired incident evaluator owns validation, deterministic answer checks, progression and report text.
+the retired incident renderer renders native controls and exact evidence; main loads both tracks concurrently
 and handles local downloads and accessibility announcements. Counts derive from case data.
 
 Review C1–C7: source-fidelity checks protect literal captures; source-reviewed answers keep grading
 within available evidence; attempts/hints and outcome confidence stay distinct; runtime remains
 offline and deterministic. Keyboard/visual acceptance is not yet demonstrated. Existing six-incident
-checks still pass. See the [integration record](evidence/real-case-integration.md) for remaining QA.
+checks still pass. See the [integration record](../evidence/incident-integration.md) for remaining QA.

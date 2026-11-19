@@ -59,7 +59,8 @@ no hands, no ribbons, no background, no glow outside outline, no text, no waterm
 ## Arcade promotional card — updated 2026-11-19
 
 `arcade-card.webp` is the 1280×720 listing image. It now advertises Guided NOC Patrol,
-three real incidents, twelve decisions and a new order each patrol. Existing generated ninja
+three incidents, twelve decisions and a new order each patrol. The listing avoids provenance
+qualifiers; the SVG, preview text and rendered WebP use the same wording. Existing generated ninja
 and shuriken sprites are reused; the text/layout is a code-authored composition.
 
 `arcade-card.svg` is the editable source and references the sibling sprite PNGs.

@@ -1,6 +1,6 @@
 > Historical document archived on 2026-11-19 from `specs/001-noc-ninja-training/data-model.md`. Superseded by the current file; relative links retain original context.
 
-> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](../guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
 
 # Data Model: Mixed Incident Dojo
 
@@ -131,7 +131,7 @@ without a reset, and its displayed value must match. It need not equal a MAC cha
 The flap fixture models a brief Remote Fault assertion one second before each interface
 transition, cleared at that transition. Snapshots show False; each assert/clear pair adds two
 fault changes. These synthetic pulses explain updated Last Change ages and are not additional
-Interface State flaps or a claim that every real link behaves this way. Stable-down directional
+Interface State flaps or a claim that every link behaves this way. Stable-down directional
 examples retain their independent fault clocks.
 
 Leaf telemetry uses 32.32 °C / 3.27 V with lane-specific bias and Tx from the U8 working
@@ -144,4 +144,4 @@ Every light observation has four `txReadings` with channel, metric `tx_power`, f
 unit `dBm` and sourceIds. Both optical columns must match CLI text. `technicianDispatch`
 returns status `ready`, `insufficient` or `conflicting`, a computed interfaceId/endpoint when
 ready, and reasons. No target ID or answer key is stored. Dispatch is instructional feedback
-after a correct diagnosis; it does not add a second graded attempt or a real maintenance action.
+after a correct diagnosis; it does not add a second graded attempt or a maintenance action.

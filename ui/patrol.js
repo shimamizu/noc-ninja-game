@@ -1,5 +1,5 @@
-import {currentCase,patrolSummary,verificationChecklist,counterHistoryNote} from '../engine/cases.js?v=guided-v20';
-import {evidenceText,commandReadings,commands,commandText,resolveCapture,statusLabels} from '../engine/investigation.js?v=guided-v20';
+import {currentCase,patrolSummary,verificationChecklist,counterHistoryNote} from '../engine/cases.js?v=guided-v21';
+import {evidenceText,commandReadings,commands,commandText,resolveCapture,statusLabels} from '../engine/investigation.js?v=guided-v21';
 const el=(tag,cls='',text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
 function button(text,action,id){const b=el('button','',text);b.type='button';b.dataset.action=action;b.id=id;return b;}
 function title(text){const h=el('h1','',text);h.id='view-title';h.tabIndex=-1;return h;}
@@ -17,7 +17,7 @@ export function patrolBriefing(content){
     ['02 · Separate state from trend','LinkUp alone does not establish health. A cumulative counter is not an error rate. Ask for timed readings and reset history before concluding errors are increasing or a link is actively flapping.'],
     ['03 · Explain and verify','Check any supplied diagnosis against the outputs. State the suspected cause, supporting evidence and what is still unknown. After an authorized intervention, verify optics, new errors, stability and service.']
   ]){const card=el('article','guide-card');card.append(el('h3','',heading),el('p','',text));cards.append(card);}
-  guide.append(cards,el('p','intro','Training assumption: transmitters have not been intentionally disabled. The workbench opens saved evidence; it does not connect to switches. Complete the decisions and review each case’s available evidence to reveal its diagnosis review and any reported repair outcome, then request after-repair verification. Opening evidence alone does not demonstrate understanding.'));frag.append(guide);return frag;
+  guide.append(cards,el('p','intro','Training assumption: transmitters have not been intentionally disabled. The workbench opens saved evidence; it does not connect to switches. Complete the decisions and review each case’s available evidence to reveal its diagnosis review and any reported repair outcome, then review which after-repair verification evidence to collect. Opening evidence alone does not demonstrate understanding.'));frag.append(guide);return frag;
 }
 
 function commandWorkbench(c,patrol){

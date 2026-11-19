@@ -153,7 +153,7 @@ Coverage includes source fidelity, all supported answers and distractors, captur
 pre-answer teaching, shuffled progression, conditional replacement, outcome/export gates,
 restart and pointer/keyboard controls.
 
-Current revisions: application **guided-v20**, content **guided-cases-u13-u14-u15-v3**,
+Current revisions: application **guided-v21**, content **guided-cases-u13-u14-u15-v3**,
 stylesheet **guided-v20-fuji2**, constitution **1.7.1**. Safari desktop visual checks confirmed
 the quiz-only Fuji background, castle arena, ninja clearance and opaque notes/incident badge.
 Dedicated narrow-layout, screen-reader, full manual playthrough, download-click acceptance

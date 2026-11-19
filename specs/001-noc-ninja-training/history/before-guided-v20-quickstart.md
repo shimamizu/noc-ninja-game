@@ -1,6 +1,6 @@
 > Historical document archived on 2026-11-19 from `specs/001-noc-ninja-training/quickstart.md`. Superseded by the current file; relative links retain original context.
 
-> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+> **Current scope (2026-11-18):** One guided NOC patrol using only U10–U12. See [guided-patrol.md](../guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
 
 # Quickstart and Manual Validation
 
@@ -39,7 +39,7 @@ count and zero failures; loader/import errors are failures. Record exact browser
 Repeat the complete core flow by keyboard only. Check native radio arrows aim without submitting,
 visible focus, Throw activation, all help controls, Next and dialog focus containment/return.
 Check skip link, new-incident heading focus, and wrong feedback persistence while inspecting data.
-Use a real screen reader; record browser/reader pairing and feedback announcements.
+Use a screen reader; record browser/reader pairing and feedback announcements.
 
 Review at 1366 × 768 and 375 × 812 layout pixels. Essential labels/values/actions must remain
 reachable; terminal scrolling must not cause page-width overflow. Read numeric equivalents of
@@ -94,7 +94,7 @@ in feedback. Device-local counter-clear times and accumulated counts may differ.
 6. In case 5 inspect low leaf Tx and poor spine Rx; in case 6 inspect leaf Remote Fault True in
    historical snapshots despite current False. These clues must remain visible before answering.
 7. Repeat with touch and reduced motion. The destination must appear in persistent text and
-   the live-region announcement; no real dispatch action occurs.
+   the live-region announcement; no live dispatch action occurs.
 
 Optional repeatable Chrome checks (Node 26, server on port 8000): launch a separate Chrome
 profile with `--headless=new --remote-debugging-port=9228 --user-data-dir=/tmp/noc-ninja-qa`,

@@ -1,7 +1,7 @@
-import {loadCases,currentCase,caseReport} from './engine/cases.js?v=guided-v20';
-import {initialState,transition} from './engine/state.js?v=guided-v20';
-import {render,focusView} from './ui/render.js?v=guided-v20';
-import {bindControls} from './ui/controls.js?v=guided-v20';
+import {loadCases,currentCase,caseReport} from './engine/cases.js?v=guided-v21';
+import {initialState,transition} from './engine/state.js?v=guided-v21';
+import {render,focusView} from './ui/render.js?v=guided-v21';
+import {bindControls} from './ui/controls.js?v=guided-v21';
 let content=null,state={view:'loading'},errors=[],loading=false,restartInvoker=null;
 const dialog=document.querySelector('#restart-dialog');
 const announce=text=>{document.querySelector('#announcement').textContent=text;};

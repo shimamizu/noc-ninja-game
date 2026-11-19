@@ -1,6 +1,6 @@
 # Guided patrol grading contract
 
-Current: guided-v20, schemaVersion 1, constitution 1.7.0.
+Current: guided-v21, schemaVersion 1, constitution 1.7.1.
 
 The game grades reviewed choices by stable answer ID in `transitionPatrol`; it does not run
 a universal optical threshold or diagnostic category classifier. Each question has exactly

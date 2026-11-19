@@ -1,6 +1,6 @@
 > Archived 2026-11-19 from `specs/001-noc-ninja-training/spec.md`. Historical requirements only; superseded by the current constitution, spec and plan. Relative links below retain their original source context.
 
-> **Current scope (2026-11-19):** One guided NOC patrol using U13–U15: three incidents, twelve decisions. See [guided-patrol.md](guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
+> **Current scope (2026-11-19):** One guided NOC patrol using U13–U15: three incidents, twelve decisions. See [guided-patrol.md](../guided-patrol.md). Conflicting six-case, simulation and separate-mode details below are historical and superseded.
 
 # Feature Specification: NOC Ninja — Mixed Incident Dojo
 
@@ -30,13 +30,13 @@ practice**. Both modes share the six validated incidents and existing diagnostic
 - Runtime remains static and deterministic. No new network fault classes, command samples, live
   changes, AI grading or universal optical thresholds are introduced.
 
-Source scope and acceptance checks: [skill adaptation](evidence/skill-adaptation.md).
+Source scope and acceptance checks: [skill adaptation](../evidence/skill-adaptation.md).
 Implementation and automated checks complete; new browser/learner acceptance remains pending.
 
 **Branch:** main · **Created / amended:** 2026-11-17
 **Status:** Revised to the owner's gameplay correction; implemented, browser acceptance pending.
-**Governance:** [Constitution 1.4.0](../../.specify/memory/constitution.md).
-**Original input:** [StarterKit/SPEC.md](../../StarterKit/SPEC.md).
+**Governance:** [Constitution 1.4.0](../../../.specify/memory/constitution.md).
+**Original input:** [StarterKit/SPEC.md](../../../StarterKit/SPEC.md).
 
 The engineer investigates six mixed incidents and identifies whether each is a light-level,
 CRC/error, or link-flapping problem. These are competing diagnoses, not sequential lesson levels.
@@ -122,7 +122,7 @@ categories it supports. I learn from an explanation tied to the measurements.
   independent diagnoses disable grading (identical paired flap histories count once) with a content error, never a learner penalty.
 - **AC20:** Sources identify exact supported claims and deployment applicability. Simulations are
   labeled; displayed values, observations, hints and explanations agree. Source review does not
-  claim independent hardware qualification. See the [mixed review](evidence/mixed-incident-review.md).
+  claim independent hardware qualification. See the [mixed review](../evidence/mixed-incident-review.md).
 - **AC21:** Six incidents play using static files only, with no account, live device, external
   content service, or AI grading. Same observations and answer always yield the same result.
 - **AC22:** Record pass/fail/not-run with date and environment. README describes the actual game
@@ -230,10 +230,10 @@ No configuration changes, repairs, IPv6 faults, routing, VLANs, port channels, M
 accounts, multiplayer, persistence, live CLI, or generated questions. The initial workshop scope
 is extended by the owner's subsequent graphical/mixed-investigation request.
 
-## Playable real incidents — 2026-11-18
+## Playable incidents — 2026-11-18
 
-Owner instruction: add the three supplied real examples now; further examples may be supplied later.
-Add a separate **Real incident patrol** from the opening screen and original dojo summary, containing
+Owner instruction: add the three supplied examples now; further examples may be supplied later.
+Add a separate **Incident patrol** from the opening screen and original dojo summary, containing
 U10, U11 and U12 with five sequential decisions each. Preserve supplied evidence and platform
 identity. No additional incident or missing measurement is fabricated.
 
@@ -249,6 +249,6 @@ reports with evidence, answers, attempts and outcome limits, retained in the fin
 Return to the original dojo preserves its prior view/progress; confirmed restart clears both
 tracks, cancellation preserves them, and reload starts fresh.
 
-The real-case data validates separately and fails closed for that patrol without removing access
+The incident data validates separately and fails closed for that patrol without removing access
 to a valid original dojo. Browser/mobile/keyboard/download acceptance remains pending; source
-fidelity and state behavior pass automated checks. See [integration record](evidence/real-case-integration.md).
+fidelity and state behavior pass automated checks. See [integration record](../evidence/incident-integration.md).

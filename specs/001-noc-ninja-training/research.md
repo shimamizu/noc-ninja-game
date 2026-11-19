@@ -1,7 +1,7 @@
 # Current research scope — 2026-11-19
 
-Guided-v20 uses only supplied U13–U15 evidence, 42 recordings, 12 reviewed decisions and
-constitution 1.7.0. The current [spec](spec.md), [plan](plan.md) and [data model](data-model.md)
+Guided-v21 uses only supplied U13–U15 evidence, 42 recordings, 12 reviewed decisions and
+constitution 1.7.1. The current [spec](spec.md), [plan](plan.md) and [data model](data-model.md)
 govern. U15 leaf zero-counter samples complete its required capture set. Future cases must
 wait for the owner to supply any expected missing outputs before entering the quiz.
 Operator-scoped variance guidance is documented in the U15 source; no universal threshold
@@ -196,7 +196,7 @@ not supplied by the evidence.
 
 The six cases are authored simulations. Once command/field semantics, platform/release behavior,
 and optical diagnostics are supported, reviewed simulated values can instantiate the cases;
-there is no requirement to reproduce each numeric fixture as a real fault capture. Original
+there is no requirement to reproduce each numeric fixture as a fault capture. Original
 samples and derived simulated output must remain separately identified.
 
 ## User-Supplied ColorChip Reference Update
@@ -266,7 +266,7 @@ The project needs reviewed evidence of:
    with no reset/rollover and status evidence. U1 provides an explicit CRC field, but only one
    observation. Aggregate Rx errors are not interchangeable with CRC/FCS counts.
 5. Complete ordered up/down history for the flapping interval, including the preceding state,
-   so four real transitions can be distinguished from duplicate reports or a single last-flap time.
+   so four state transitions can be distinguished from duplicate reports or a single last-flap time.
 6. Reviewer, source section/capture provenance, and independent expected diagnosis for every
    shipped round. Sanitize labels consistently while preserving values and timestamps needed
    for the diagnostic reasoning. Authored numeric examples must be identified as such.
@@ -301,4 +301,4 @@ These updates supersede earlier requests above for transceiver headers, units an
 interpretation. They do not turn earlier samples into fault captures. Preserve the U4b system
 time without inventing its timezone, and never count MAC local/remote fault changes as interface
 up/down transitions. Complete reviewed authored histories can implement the flapping scenarios;
-a real capture of each numeric fault is not required.
+a capture of each numeric fault is not required.

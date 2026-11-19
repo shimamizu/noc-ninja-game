@@ -1,6 +1,6 @@
 # Capture collection guide — four-command investigations
 
-The current guided patrol has three real cases and twelve decisions. The exercise uses only:
+The current guided patrol has three cases and twelve decisions. The exercise uses only:
 
 - show interfaces ethernet <port> status
 - show interfaces ethernet <port> transceiver

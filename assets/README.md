@@ -26,3 +26,17 @@ shading, four swept angular steel blades, dark navy metal faces with bright silv
 red circular hub around a transparent round center hole. Symmetric balanced silhouette and bold
 readable at 40px. One single throwing star only, full silhouette comfortably inside frame. No ninja,
 no hands, no ribbons, no background, no glow outside outline, no text, no watermark.
+
+
+## Arcade promotional card — updated 2026-11-19
+
+`arcade-card.webp` is the 1280×720 listing image. It now advertises Guided NOC Patrol,
+two real incidents, eight decisions and a new order each patrol. Existing generated ninja
+and shuriken sprites are reused; the text/layout is a code-authored composition.
+
+`arcade-card.svg` is the editable source and references the sibling sprite PNGs.
+`arcade-card.html` previews that SVG as an object over HTTP, with the WebP as fallback.
+The WebP was exported using Sharp (quality 95) with the PNG references embedded in memory
+for rasterization, then visually checked. Sharp was installed only in a temporary directory;
+the game still requires no package installation or build step. Regenerate the WebP when
+changing the SVG; publishing uses the WebP, not the preview HTML.

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="720" viewBox="0 0 1280 720">
+  <title>NOC Ninja — Guided NOC Patrol</title>
+  <desc>Two real Arista EOS incidents, eight decisions, and a new order every patrol. A ninja stands beside light levels, CRC errors and link flapping topics.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1"><stop stop-color="#101426"/><stop offset="1" stop-color="#30253f"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#674252" stop-opacity=".65"/><stop offset="1" stop-color="#674252" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 0V80" stroke="#8b86a4" stroke-opacity=".13"/></pattern>
+  </defs>
+  <rect width="1280" height="720" fill="url(#background)"/>
+  <ellipse cx="1030" cy="470" rx="500" ry="380" fill="url(#glow)"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+  <circle cx="1060" cy="245" r="157" fill="#e5b18e"/>
+  <ellipse cx="1040" cy="619" rx="222" ry="37" fill="#101424" fill-opacity=".7" stroke="#ab6d80" stroke-opacity=".25"/>
+  <image x="70" y="61" width="52" height="52" xlink:href="shuriken.png"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="139" y="94" fill="#a4f6d5" font-size="19" font-weight="700" letter-spacing="2">GUIDED NOC PATROL</text>
+    <text x="70" y="192" fill="#c3addf" font-family="monospace" font-size="15" letter-spacing="3">OBSERVE / REASON / RESPOND</text>
+    <text x="66" y="295" fill="#f4f2ff" font-size="96" font-weight="900" letter-spacing="-5">NOC NINJA</text>
+    <text x="70" y="357" fill="#b7f5db" font-size="37">Master the link.</text>
+    <g fill="#d2d4e7" font-size="24">
+      <text x="70" y="421">Investigate real switch outputs.</text>
+      <text x="70" y="458">Find the fault. Choose the right optic.</text>
+    </g>
+    <g fill="#181e30" stroke="#61576e">
+      <rect x="70" y="495" width="126" height="37" rx="18"/>
+      <rect x="207" y="495" width="134" height="37" rx="18"/>
+      <rect x="352" y="495" width="146" height="37" rx="18"/>
+    </g>
+    <g fill="#f7d1ac" font-family="monospace" font-size="13" text-anchor="middle">
+      <text x="133" y="519">LIGHT LEVELS</text>
+      <text x="274" y="519">CRC / ERRORS</text>
+      <text x="425" y="519">LINK FLAPPING</text>
+    </g>
+    <text x="70" y="582" fill="#a4f6d5" font-size="19" font-weight="700">2 REAL INCIDENTS · 8 DECISIONS</text>
+    <text x="70" y="614" fill="#c3c9dd" font-size="17">New order every patrol. Drag the shuriken to answer.</text>
+    <text x="70" y="682" fill="#9ba6c3" font-family="monospace" font-size="13" letter-spacing="2">ARISTA EOS · PLAY IN YOUR BROWSER</text>
+  </g>
+  <image x="822" y="116" width="435" height="510" xlink:href="ninja.png"/>
+  <image x="831" y="111" width="96" height="96" transform="rotate(22 879 159)" xlink:href="shuriken.png"/>
+</svg>

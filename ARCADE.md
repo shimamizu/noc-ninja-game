@@ -5,7 +5,7 @@ game:
   title: "NOC Ninja — Guided NOC Patrol"
   slug: "noc-ninja"
   tagline: "Investigate the link, explain the evidence, and verify the outcome."
-  summary: "Work through three supplied Arista EOS link incidents and fifteen guided decisions. Compare both endpoints, challenge automated assessments, learn from feedback, and prepare evidence-supported handoffs before reviewing reported repair outcomes."
+  summary: "Investigate two real Arista EOS link incidents through eight guided decisions. Compare recorded commands at both endpoints, identify the failed optic, and review the confirmed repair. Scenario, question and answer order shuffle each patrol. Drag the shuriken to answer, learn from feedback, and download a handoff."
   topics:
     - "Arista EOS"
     - "Optical diagnostics"
@@ -15,9 +15,9 @@ game:
   category: "switching"
   skill_level: "beginner"
   play_minutes: 10
-  levels: 3
+  levels: 2
   card_image: "assets/arcade-card.webp"
-  card_image_alt: "A cartoon ninja with a red headband stands beside the NOC Ninja title and the three topics: light levels, CRC errors and link flapping."
+  card_image_alt: "A ninja with a red headband beside NOC Ninja: Guided NOC Patrol. Two real incidents, eight decisions; light levels, CRC errors and link flapping."
   repo: "https://github.com/shimamizu/noc-ninja-game"
   repo_path: ""
   license: "Apache-2.0"
@@ -49,8 +49,8 @@ build:
       - "data-model"
       - "contracts"
       - "verification"
-    task_count: 60
-    loops_or_phases: 7
+    task_count: "unknown"
+    loops_or_phases: "unknown"
   model: "unknown"
   helper_models:
     - "unknown"
@@ -65,7 +65,7 @@ build:
     - "StarterKit/SPEC.md"
     - "StarterKit/PLAN.md"
     - "Owner-supplied Arista EOS command captures and deployment confirmation"
-    - "Owner-supplied ColorChip C100Q020CWDM403B thresholds and no-light interpretation"
+    - "Owner-supplied optics-reference.yaml (authoring reference; not a runtime classifier)"
     - "Owner-defined technician replacement runbook"
     - "Arista EOS Ethernet Ports and Transceiver Performance Monitoring manuals"
     - "Arista 7050X3 and 7800R3 datasheets"
@@ -92,7 +92,7 @@ build:
     - "curl"
     - "Shell commands and file patches"
     - "Web search and image inspection tools"
-  human_prompts: 0
+  human_prompts: "unknown"
   usage:
     input_tokens: "unknown"
     output_tokens: "unknown"
@@ -100,7 +100,7 @@ build:
   ai_generated_assets:
     - "assets/ninja.png — original transparent ninja sprite generated with built-in image_gen"
     - "assets/shuriken.png — original transparent shuriken sprite generated with built-in image_gen; also used as the browser favicon"
-    - "assets/arcade-card.webp — browser-rendered HTML/CSS composition using the generated sprites"
+    - "assets/arcade-card.webp — rendered promotional composition using the existing generated sprites"
 runtime:
   kind: "static-web"
   stack:
@@ -109,8 +109,8 @@ runtime:
     - "JavaScript ES modules"
     - "Authored JSON"
     - "Local PNG/WebP assets"
-  start: "python3 -m http.server 8000 --bind 127.0.0.1"
-  url_after_start: "http://127.0.0.1:8000/index.html"
+  start: "python3 -m http.server 8001 --bind 127.0.0.1"
+  url_after_start: "http://127.0.0.1:8001/index.html"
   hosted_url: ""
   static_root: "."
   requires_install: false
@@ -118,39 +118,91 @@ runtime:
   requires_api_key: false
   uses_ai_at_runtime: false
   browsers:
-    - "Safari (preferred; current visual and DOM acceptance pending)"
-  accessibility: "Keyboard pickup/move/drop, visible focus, textual feedback and live announcements implemented. Current keyboard, screen-reader, narrow-layout and download-click acceptance pending."
+    - "Safari (preferred; 56 browser checks passed on guided-v17, 2026-11-19)"
+  accessibility: "Keyboard pickup/move/drop, visible focus, textual feedback, reduced-motion support and live announcements implemented. Safari DOM/control checks pass. Dedicated screen-reader, narrow-layout, full manual playthrough and download-click acceptance remain pending."
   save_state: "none; session progress is in memory and resets on page reload"
 verification:
   tests: "node tests/run.mjs"
-  tests_passing: 42
+  tests_passing: 48
   facts_sourced_from:
-    - "Owner-supplied U10, U11 and U12 captures and follow-up in specs/001-noc-ninja-training/evidence/"
+    - "Owner-supplied U13 and U14 captures and confirmed repair outcomes in specs/001-noc-ninja-training/evidence/"
     - "Source-reviewed questions and evidence limits in data/cases.json"
   known_limits:
-    - "Three captured incidents; no generated telemetry, live device operations or runtime AI."
-    - "Not all cases include confirmed recovery or post-repair measurements."
+    - "Two captured incidents, eight decisions and 28 recorded outputs; no generated telemetry, live device operations or runtime AI."
+    - "Spine optic replacement resolved both incidents according to the operator. Numerical post-repair measurements and stability intervals were not supplied."
     - "Historical counters alone do not establish current rates."
     - "Ten minutes is an unmeasured planning target."
-    - "Current Safari visual, keyboard, narrow-layout and download-click acceptance remain pending."
+    - "Dedicated screen-reader, narrow-layout, full manual playthrough and download-click acceptance remain pending. Other browsers have not been requalified for this version."
 
 ---
 
-## In one paragraph
+## Current game — 2026-11-19
 
-NOC Ninja teaches physical-link troubleshooting in one guided NOC patrol using three supplied
-incident captures. Learners compare both endpoints, interpret optical channels and fault flags,
-question counter claims and prepare a bounded diagnosis. Shuriken targets submit the selected evidence decision. Fifteen decisions provide specific
-feedback and optional reasoning hints. Reported interventions and their evidence limits are
-revealed after each investigation; handoffs remain downloadable at the end.
+One Guided NOC Patrol contains **two real incidents and eight decisions**, using only the
+28 supplied command captures. Each new patrol shuffles scenarios, questions and answer
+positions; the order remains stable while investigating or retrying. Learners drag the
+shuriken to A/B/C (or use keyboard pickup/move/drop), receive explanatory feedback, and
+review the confirmed repair after completing each case's decisions and available evidence.
+Handoffs remain downloadable from the final summary.
 
-## Current build
+- **U13 — The DMZ handoff:** spine-gw1 Et6/2/1 ↔ dmz-gw2 Et6/21/1. Down link,
+  paired fault flags and all four DMZ Rx channels at −30 dBm; spine optic replacement fixed it.
+- **U14 — The unstable fourth lane:** leaf-gw2 Et55/1 ↔ spine-gw1 Et4/28/1.
+  Increasing leaf errors, lane 4 Rx −14.91 dBm and increasing paired fault counts;
+  spine optic replacement fixed it.
 
-The earlier six-case simulation, alternate modes and threshold/dispatch classifier were removed
-at the owner's request on 2026-11-18. All playable readings now come from U10–U12. The historical
-build metadata above records tools used across earlier versions, not current browser acceptance.
+The command menu contains only interface-scoped **status**, **transceiver**, **mac detail**,
+and **counters errors**. Selection displays all available readings immediately. The compact
+layout keeps the question and ninja beside the outputs. Personal command shortcuts display
+as their full standard commands; captured measurement bodies are unchanged.
+
+The source library is `data/cases.json` (revision `guided-cases-u13-u14-v2`); the application
+asset revision is `guided-v17`. Source documents retain original prompts. Both cases have
+confirmed repair reports but no invented recovery measurements. Intentional transmitter
+disable is excluded from this training. The optics YAML is reference material, not a
+runtime threshold engine. Earlier simulated cases and alternate game modes are retired.
+
+## Publishing handoff for John
+
+Publish the **repository root**, not the `StarterKit/` directory. There is no build or
+package-install step. Use an HTTP(S) static host that serves ES modules as JavaScript and
+JSON as JSON, preserves relative paths and query strings, and uses `index.html` as the entry.
+File URLs are unsupported. A subdirectory deployment is supported by the relative asset URLs.
+
+Minimum playable files:
+
+```text
+index.html
+style.css
+main.js
+engine/*.js
+ui/*.js
+data/cases.json
+assets/ninja.png
+assets/shuriken.png
+LICENSE.md
+```
+
+For the Arcade listing, also include root `ARCADE.md` and `assets/arcade-card.webp`.
+Keep the source repository, README, StarterKit, optics reference and evidence documents
+with the handoff. They provide authoring history and verification context, not live-switch
+integration. The tests page additionally needs `tests/` and the case evidence source files.
+
+Preview locally with the `runtime.start` command above, then open the listed URL in Safari.
+Run `node tests/run.mjs` and open `/tests/` on the local server to repeat browser checks.
+For deployment, upload the same directory structure and verify both cases, shuriken input
+and handoff downloads on the actual hosted URL. Refresh/invalidate cached files when updating;
+do not strip the module and stylesheet revision queries.
+
+**Verification:** 48/48 Node checks rerun on 2026-11-19; latest Safari run 56/56 on guided-v17.
+These cover shuffle stability, answer mapping, both-case progression, evidence fidelity,
+restart and handoff contents. Dedicated screen-reader, narrow-layout, full manual playthrough
+and download-click acceptance remain pending. No hosted deployment or hosted smoke check
+has been performed; `hosted_url` remains blank until publication.
+
+Creator and consent fields above retain the owner's previously confirmed values. Build tools
+and skills record the project's history, including older versions; they are not required to
+host or play the game. Unknown build counts and usage remain unknown. The ten-minute duration
+is a planning estimate, not a measured completion time.
+
 See [README](README.md) and [current scope](specs/001-noc-ninja-training/guided-patrol.md).
-
-Future examples must use actual supplied captures. Missing readings remain unknown. Preserve
-measurement provenance, intervention order, and the distinction between suspected and confirmed
-causes. Preview the game in Safari and verify browser behavior as well as pure logic.

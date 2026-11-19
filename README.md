@@ -162,3 +162,11 @@ is not a universal EOS guarantee. Lessons teach timed deltas and post-repair mon
 is needed just to obtain a monitoring baseline. U13 preserves spine Remote Fault True and DMZ Local Fault True; U14 preserves False current flags alongside increasing fault histories.
 
 Compact workbench update: command selections display all available readings automatically, with no observation selector or request button. Repair recordings remain gated until outcome review.
+
+
+## Publishing handoff
+
+[ARCADE.md](ARCADE.md) contains current listing metadata and publishing instructions for John.
+Its [StarterKit copy](StarterKit/ARCADE.md) has matching metadata. Publish the repository root;
+the StarterKit folder alone is documentation, not the app. The current listing image is
+[assets/arcade-card.webp](assets/arcade-card.webp). No hosted URL has been configured or verified.

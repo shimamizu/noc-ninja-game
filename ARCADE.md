@@ -171,8 +171,9 @@ range in this environment. This is operator guidance, not a universal manufactur
 
 The command menu contains only interface-scoped **status**, **transceiver**, **mac detail**,
 and **counters errors**. Selection displays all available readings immediately. The compact
-layout keeps the question and ninja beside the outputs. Personal command shortcuts display
-as their full standard commands; captured measurement bodies are unchanged.
+layout keeps the question and ninja beside the outputs. The reviewed U14 `senz` shortcut
+displays as its full counters-errors command; U15’s captured `show int` abbreviation remains
+literal. Captured measurement bodies are unchanged.
 
 The source library is `data/cases.json` (revision `guided-cases-u13-u14-u15-v3`); the application
 module revision is `guided-v20`; the stylesheet revision is `guided-v20-fuji2`
@@ -238,9 +239,10 @@ do not strip the module and stylesheet revision queries.
 
 **Verification:** publishing handoff rerun passed 53/53 Node and 62/62 Safari browser checks
 on guided-v20 with stylesheet guided-v20-fuji2 (2026-11-19).
-Safari visual review confirmed the third case and updated totals on guided-v18; guided-v19
-checks verify pre-answer teaching context. Guided-v20 verifies both leaf-counter samples
-and rejects missing required captures. The public root launch opens the briefing directly. Tests cover
+Safari desktop visual review confirmed the quiz-only Fuji/red maple page background,
+Himeji Castle arena, larger ninja with target clearance, and opaque incident badge/capture
+notes. Guided-v20 checks verify pre-answer teaching context, both leaf-counter samples and
+rejection of missing required captures. The public root launch opens the briefing directly. Tests cover
 three-case progression, shuffled answer mapping, source fidelity, both zero leaf-counter readings, required-capture rejection,
 conditional replacement, restart and handoffs. Dedicated screen-reader, narrow-layout,
 full manual playthrough and download-click acceptance remain pending. No hosted deployment
